@@ -16,11 +16,11 @@ export class ArticleComponent {
     this.data = this._api.getArticle(this.page_id); 
 
     this._r.events.subscribe((val) => {
-      this.getArticle();
+      this.onRouteChange();
     });
   }
   
-  getArticle(){
+  onRouteChange(){
     this.page_id = this._r.url.substr(1);
     this.data = this._api.getArticle(this.page_id); 
   }
