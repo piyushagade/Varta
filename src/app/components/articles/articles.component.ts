@@ -1,24 +1,13 @@
 import { Component } from '@angular/core';
+import * as config from '../../config/config';
 
 @Component({
-  selector: 'app-blogs',
-  templateUrl: './blogs.component.html',
-  styleUrls: ['./blogs.component.css']
+  selector: 'app-articles',
+  templateUrl: './articles.component.html',
+  styleUrls: ['./articles.component.css']
 })
-export class BlogsComponent {
+export class ArticlesComponent {
   blogs = {};
-  config = {
-      'admin' : {
-        name : 'Piyush Agade',
-        title : '',
-        organization : '', 
-      },
-      'dirs' : {
-        images : '../../../assets/images/',
-        css : '../../../assets/css/',
-        js : '../../../assets/js/'
-      }
-    }
 
   constructor(){
     this.blogs = {
@@ -27,22 +16,22 @@ export class BlogsComponent {
           'title' : 'Project First',
           'data' : 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia.',
           'link' : '/first',
-          'image' : this.config.dirs.images + 'work_1.jpg',
-          'author' : this.config.admin.name,
+          'image' : config.constants.dirs.images + 'work_1.jpg',
+          'author' : config.constants.admin.name,
         },
         {
           'title' : 'Project Second',
           'data' : 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia.',
           'link' : '/first',
-          'image' : this.config.dirs.images + 'work_1.jpg',
-          'author' : this.config.admin.name,
+          'image' : config.constants.dirs.images + 'work_1.jpg',
+          'author' : config.constants.admin.name,
         },
         {
           'title' : 'Project Third',
           'data' : 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia.',
           'link' : '/first',
-          'image' : this.config.dirs.images + 'work_1.jpg',
-          'author' : this.config.admin.name,
+          'image' : config.constants.dirs.images + 'work_1.jpg',
+          'author' : config.constants.admin.name,
         },
       ]
     };    
