@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class AppComponent {
 
   onActivate(e, outlet){
-    outlet.scrollTop = 0;
+    // outlet.scrollTop = 0;
   }
 
   constructor(private router: Router){

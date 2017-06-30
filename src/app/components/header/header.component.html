@@ -7,13 +7,11 @@
 					<div class="navbar-header"> 
 					<!-- Mobile Toggle Menu Button -->
 					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle visible-xs-block" data-toggle="collapse" data-target="#fh5co-navbar" aria-expanded="false" aria-controls="navbar"><i></i></a>
-					<a class="navbar-brand" routerLink="/blogs">Piyush's Blog</a>
+					<a class="navbar-brand" [routerLink]="menuItems[0].link">{{ config.parameters.blog }}</a>
 					</div>
 					<div id="fh5co-navbar" class="navbar-collapse collapse">
 						<ul class="nav navbar-nav navbar-right">
-							<li [ngClass]="{'active': activeMenuItem == 'Home'}"><a (click)="activateMenuItem('Home');" routerLink="/blogs"><span>Home <span class="border"></span></span></a></li>
-							<li [ngClass]="{'active': activeMenuItem == 'Me'}"><a (click)="activateMenuItem('Me');" routerLink="/first"><span>Me <span class="border"></span></span></a></li>
-							<li [ngClass]="{'active': activeMenuItem == 'This'}"><a (click)="activateMenuItem('This');" href="/left-sidebar"><span>This <span class="border"></span></span></a></li>
+							<li *ngFor="let menuItem of menuItems" [ngClass]="{'active': activeMenuItem == menuItem }"><a (click)="activateMenuItem(menuItem.title);" [routerLink]="menuItem.link"><span>{{ menuItem.title }} <span class="border"></span></span></a></li>
 						</ul>
 					</div>
 				</div>

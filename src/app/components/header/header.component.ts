@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../../services/api.service';
+import * as menu from '../../config/menu';
+import * as config from '../../config/config';
 
 @Component({
   selector: 'app-header',
@@ -10,30 +12,15 @@ import { ApiService } from '../../services/api.service';
 })
 
 export class HeaderComponent {
-  menuItems = {
-    items : [
-      { 
-        title : 'Home',
-        link : '/'
-      },
-      { 
-        title : 'Me',
-        link : '/first'
-      },
-      { 
-        title : 'This',
-        link : '/this'
-      },
-    ]
-  };
   activeMenuItem;
+  menuItems = menu.menuItems.items;
+  config = config.constants;
 
   activateMenuItem(item){
     this.activeMenuItem = item;
   }
 
   constructor(private _r : Router){
-
     this._r.events.subscribe((val) => {
       this.onRouteChange();
     });
@@ -42,20 +29,24 @@ export class HeaderComponent {
   onRouteChange(){
     // Active Home menu item
     if(this._r.url.substr(1) == ''){
-      this.activateMenuItem(this.menuItems['items'][0]);
+      this.activateMenuItem(this.menuItems[0]);
+      
     }
-
     // Activate only those items which are in the menuItems object (when clicked)
-    let flag = false;
-    for(let item of this.menuItems.items){
-      if(item.title.indexOf(this._r.url.substr(1)) != -1){
-        this.activateMenuItem(item);
-        flag = true;
+    else{
+      let flag = false;
+      for(let item of this.menuItems){if(item.link.indexOf(this._r.url.substr(1)) != -1 && item.link == this._r.url){
+          this.activateMenuItem(item);
+          flag = true;
+        }
+      }
+      
+      // Activate none for all other routess
+      if(!flag){
+        this.activateMenuItem({});
       }
     }
 
-    if(!flag){
-      this.activateMenuItem({});
-    }
+    
   }
 }
