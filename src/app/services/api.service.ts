@@ -13,7 +13,7 @@ export class ApiService{
         this.blogs = {
                 
             404 : {
-                'title' : '404',
+                'title' : 'error',
                 'data' : ['404'],
                 'link' : '/404',
                 'image' : '',

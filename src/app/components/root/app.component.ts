@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
   onActivate(e, outlet){
     outlet.scrollTop = 0;
   }
@@ -16,5 +17,5 @@ export class AppComponent {
 
   onDeactivate() {
     document.body.scrollTop = 0;
-}
+  }
 }

@@ -10,6 +10,7 @@ import { ApiService } from '../../services/api.service';
 })
 export class ArticlesComponent {
   blogs = {};
+  config = config.constants;
 
   constructor(private _api : ApiService){
     this.blogs = _api.getArticles();

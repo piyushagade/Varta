@@ -1,11 +1,10 @@
-
 	<div id="fh5co-main">
 		<div class="fh5co-intro text-center">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2">
-						<h1 class="intro-lead">Make something you love</h1>
-						<p class="">100% Free HTML5 Template by <a href="http://freehtml5.co/" target="_blank">FREEHTML5.co</a></p>
+						<h1 class="intro-lead">{{ config.parameters.heading }}</h1>
+						<p [innerHTML]="config.parameters.subheading"></p>
 					</div>
 				</div>
 			</div>
@@ -14,7 +13,7 @@
 		<!--Articles thumbnails-->
 		<div id="fh5co-portfolio">
 			<div *ngFor='let blog of blogs["all"]; let i = index;'>
-				<app-thumbnail 
+				<app-thumbnail *ngIf="i < config.parameters.maxNoOfThumbnails"
 					[data] = "blog"
 					[index] = "i"> 
 				</app-thumbnail>
