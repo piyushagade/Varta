@@ -7,7 +7,7 @@
 					<div class="navbar-header"> 
 					<!-- Mobile Toggle Menu Button -->
 					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle visible-xs-block" data-toggle="collapse" data-target="#fh5co-navbar" aria-expanded="false" aria-controls="navbar"><i></i></a>
-					<a class="navbar-brand" href="index.html">Piyush's Blog</a>
+					<a class="navbar-brand" routerLink="/blogs">Piyush's Blog</a>
 					</div>
 					<div id="fh5co-navbar" class="navbar-collapse collapse">
 						<ul class="nav navbar-nav navbar-right">
@@ -25,3 +25,14 @@
 
 <router-outlet (activate)="onActivate($event, outlet)" (deactivate)="onDeactivate()" #outlet>
 </router-outlet>
+
+<!--Footer-->
+<footer id="fh5co-footer">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1 text-center">
+				<p>&copy; All Rights Reserved. <br>Created by <a href="https://linkedin.com/in/piyushagade" target="_blank">Piyush Agade</a></p>
+			</div>
+		</div>
+	</div>
+</footer>
