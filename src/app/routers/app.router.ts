@@ -5,8 +5,8 @@ import { BlogsComponent } from '../components/blogs/blogs.component';
 import { ArticleComponent } from '../components/article/article.component';
 
 export const router: Routes = [
-    { path: '', redirectTo: 'blogs', pathMatch: 'full' },
-    { path: 'blogs', component: BlogsComponent },
+    { path: 'blogs', redirectTo: '', pathMatch: 'full' },
+    { path: '', component: BlogsComponent },
     { path: '**', component: ArticleComponent },
 ];
 
