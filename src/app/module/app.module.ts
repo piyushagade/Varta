@@ -8,6 +8,7 @@ import { AppComponent } from '../components/root/app.component';
 import { ArticlesComponent } from '../components/articles/articles.component';
 import { ArticleComponent } from '../components/article/article.component';
 import { ThumbnailComponent } from '../components/thumbnail/thumbnail.component';
+import { ApiService } from '../services/api.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,9 @@ import { ThumbnailComponent } from '../components/thumbnail/thumbnail.component'
     HttpModule,
     routes
   ],
-  providers: [],
+  providers: [
+    ApiService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
