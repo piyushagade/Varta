@@ -31,12 +31,20 @@
 								<div class="form-group">
 									<label for="key">Author secret key <span class="text-warning"><strong>*</strong></span></label>
 									<input type="password" class="form-control" formControlName="key" aria-describedby="key" placeholder="Your secret key">
+									<div class="alert alert-danger" *ngIf="articleForm.controls['key'].hasError('required') && articleForm.controls['key'].touched">You must enter a title.</div>
+									<div class="alert alert-danger" *ngIf="articleForm.controls['key'].hasError('maxlength') && articleForm.controls['key'].touched">Length limit exceeded.</div>
+									<div class="alert alert-danger" *ngIf="articleForm.controls['key'].hasError('minlength') && articleForm.controls['key'].touched">Add more characters.</div>
 								</div>
 
 								<!--Submit-->
 								<div class="form-group">
-									<button type="submit" class="btn btn-primary">Publish</button>
+									<button type="submit" class="btn btn-primary" [disabled]="!articleForm.valid">Publish</button>
 								</div>
+
+								
+								
+								
+							
 							</div>
 
 							<!--Main form-->
@@ -47,20 +55,30 @@
 									<label for="title">Title <span class="text-warning"><strong>*</strong></span></label>
 									<input type="text" class="form-control" formControlName="title" name="title" aria-describedby="title" placeholder="Article title" [(ngModel)] = "articleTitle">
 									<small class="form-text text-muted">Used {{ articleTitle | limitChars: '35' }} characters</small>
+									<div class="alert alert-danger" *ngIf="articleForm.controls['title'].hasError('required') && articleForm.controls['title'].touched">You must enter a title.</div>
+									<div class="alert alert-danger" *ngIf="articleForm.controls['title'].hasError('maxlength') && articleForm.controls['title'].touched">Length limit exceeded.</div>
+									<div class="alert alert-danger" *ngIf="articleForm.controls['title'].hasError('minlength') && articleForm.controls['title'].touched">Add more characters.</div>
+									
 								</div>
 
-								<!--Introdiction-->
+								<!--Introduction-->
 								<div class="form-group">
 									<label for="article">Article introduction <span class="text-warning"><strong>*</strong></span></label>
 									<textarea class="form-control" formControlName="introduction" name="articleIntroduction" rows="4" [(ngModel)] = "articleIntroduction"></textarea>
 									<small class="form-text text-muted">Used {{ articleIntroduction | limitChars: '200' }} characters</small>
+									<div class="alert alert-danger" *ngIf="articleForm.controls['introduction'].hasError('required') && articleForm.controls['introduction'].touched">You must enter an introduction.</div>
+									<div class="alert alert-danger" *ngIf="articleForm.controls['introduction'].hasError('maxlength') && articleForm.controls['introduction'].touched">Length limit exceeded.</div>
+									<div class="alert alert-danger" *ngIf="articleForm.controls['introduction'].hasError('minlength') && articleForm.controls['introduction'].touched">Add more characters.</div>
 								</div>
 
 								<!--Text-->
 								<div class="form-group">
-									<label for="article">Article text <span class="text-warning"><strong>*</strong></span></label>
+									<label for="article">Article body <span class="text-warning"><strong>*</strong></span></label>
 									<textarea class="form-control" formControlName="text" name="articleText" rows="16" [(ngModel)] = "articleText"></textarea>
 									<small class="form-text text-muted">Used {{ articleText | limitChars: 'Infinite' }} characters</small>
+									<div class="alert alert-danger" *ngIf="articleForm.controls['text'].hasError('required') && articleForm.controls['text'].touched">You must enter a body.</div>
+									<div class="alert alert-danger" *ngIf="articleForm.controls['text'].hasError('maxlength') && articleForm.controls['text'].touched">Length limit exceeded.</div>
+									<div class="alert alert-danger" *ngIf="articleForm.controls['text'].hasError('minlength') && articleForm.controls['text'].touched">Add more characters.</div>
 								</div>
 
 								<!--Image-->
