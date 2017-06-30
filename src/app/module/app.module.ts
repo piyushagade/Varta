@@ -12,6 +12,9 @@ import { ArticlesComponent } from '../components/articles/articles.component';
 import { ArticleComponent } from '../components/article/article.component';
 import { ThumbnailComponent } from '../components/thumbnail/thumbnail.component';
 import { ApiService } from '../services/api.service';
+import { DashifyPipe } from '../pipes/dashify.pipe';
+import { CapitalizePipe } from '../pipes/capitalize.pipe';
+import { LimitCharsPipe } from '../pipes/limitChars.pipe';
 
 @NgModule({
   declarations: [
@@ -22,12 +25,15 @@ import { ApiService } from '../services/api.service';
     ArticleComponent,
     ThumbnailComponent,
     AddComponent,
+    DashifyPipe,
+    CapitalizePipe,
+    LimitCharsPipe,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    routes
+    routes,
   ],
   providers: [
     ApiService,

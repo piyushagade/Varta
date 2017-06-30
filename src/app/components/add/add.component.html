@@ -26,13 +26,14 @@
 								<h3>Review</h3>
 								<div class="form-group">
 									<ul class="fh5co-list-check">
+										<li><small id="disclaimer" class="form-text text-muted">Article's identifier: <br/>{{ articleTitle | dashify}}</small></li>
 										<li><small id="disclaimer" class="form-text text-muted">This article will be first reviewed by moderators before publishing. <br/>Check back in 24 hrs.</small></li>
 									</ul>
 								</div>
 
 								<div class="form-group">
 									<label for="key">Author secret key <span class="text-warning"><strong>*</strong></span></label>
-									<input type="text" class="form-control" id="key" aria-describedby="key" placeholder="Your secret key">
+									<input type="password" class="form-control" id="key" aria-describedby="key" placeholder="Your secret key">
 								</div>
 
 								<div class="form-group">
@@ -40,17 +41,24 @@
 								</div>
 							</div>
 
-							<!--Form-->
 							<div class="col-md-9 col-md-pull-3">
 								<p class="animate-box-disabled">To add a new article, fill the data below and click on 'Publish'.</p>
 								<div class="form-group">
 									<label for="title">Title <span class="text-warning"><strong>*</strong></span></label>
-									<input type="text" class="form-control" id="title" aria-describedby="title" placeholder="Article title">
+									<input type="text" class="form-control" name="title" aria-describedby="title" placeholder="Article title" [(ngModel)] = "articleTitle">
+									<small id="articleIntroduction" class="form-text text-muted">Used {{ articleTitle | limitChars: '35' }} characters</small>
+								</div>
+
+								<div class="form-group">
+									<label for="article">Article introduction <span class="text-warning"><strong>*</strong></span></label>
+									<textarea class="form-control" name="article" rows="4" [(ngModel)] = "articleIntroduction"></textarea>
+									<small id="articleIntroduction" class="form-text text-muted">Used {{ articleIntroduction | limitChars: '200' }} characters</small>
 								</div>
 
 								<div class="form-group">
 									<label for="article">Article text <span class="text-warning"><strong>*</strong></span></label>
-									<textarea class="form-control" id="article" rows="12"></textarea>
+									<textarea class="form-control" name="article" rows="16" [(ngModel)] = "articleText"></textarea>
+									<small id="articleIntroduction" class="form-text text-muted">Used {{ articleText | limitChars: 'Infinite' }} characters</small>
 								</div>
 							</div>
 						</div>
