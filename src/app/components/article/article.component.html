@@ -4,7 +4,7 @@
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2">
 					<h1 class="intro-lead">{{ data.title }}</h1>
-					<p class="">Written on {{ data.date }} by <a target="_blank">{{ data.author }}</a></p>
+					<p class="">Written on {{ (data.date / 1000 | amFromUnix) | amDateFormat:'LL' }} by <a target="_blank">{{ data.author }}</a></p>
 				</div>
 			</div>
 		</div>
@@ -17,13 +17,13 @@
 					<div class="row">
 						<div class="col-md-3 col-md-push-9 animate-box-disabled">
 							<h3>Paragraph</h3>
-							<p>{{ data.summary }}</p>
+							<p>{{ data.introduction }}</p>
 							<ul class="fh5co-list-check">
 								<li *ngFor="let tag of data.tags">{{ tag }}</li>
 							</ul>
 						</div>
 						<div class="col-md-9 col-md-pull-3">
-							<p *ngFor="let paragraph of data.data" class="animate-box-disabled">{{ paragraph }}</p>
+							<p class="animate-box-disabled">{{ data.text }}</p>
 						</div>
 					</div>
 				</div>

@@ -16,6 +16,7 @@ import { ApiService } from '../services/api.service';
 import { DashifyPipe } from '../pipes/dashify.pipe';
 import { CapitalizePipe } from '../pipes/capitalize.pipe';
 import { LimitCharsPipe } from '../pipes/limitChars.pipe';
+import { MomentModule } from 'angular2-moment';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { LimitCharsPipe } from '../pipes/limitChars.pipe';
     FormsModule,
     HttpModule,
     ReactiveFormsModule,
+    MomentModule,
     routes,
   ],
   providers: [
