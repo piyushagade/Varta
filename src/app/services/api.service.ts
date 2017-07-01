@@ -13,7 +13,7 @@ export class ApiService{
     }
 
     getArticles(){
-        return this._http.get('http://localhost:3000' + "/blog/")
+        return this._http.get('http://localhost:3000' + "/blog/" + config.constants.admin.username)
             .map(response => response.json())
             .catch(error => {
                 console.log("Error fetching JSON");
@@ -23,7 +23,7 @@ export class ApiService{
 
     
     getArticle(page_id : string){
-        return this._http.get('http://localhost:3000' + "/blog/" + page_id)
+        return this._http.get('http://localhost:3000' + "/blog/" + config.constants.admin.username + '/' + page_id)
             .map(response => response.json())
             .catch(error => {
                 console.log("Error fetching JSON");
@@ -34,12 +34,17 @@ export class ApiService{
     
     addArticle(article){
         let key = article.key;
+        let username = config.constants.admin.username;
+
         delete article.key;
+        article.username = username;
+
+        console.log([article, key][1]);
         
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
-        return this._http.post('http://localhost:3000' + "/blog/add", [article, key], {
+        return this._http.post('http://localhost:3000' + "/blog/add/", [article, key], {
             headers: headers
             })
             

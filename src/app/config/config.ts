@@ -1,5 +1,12 @@
 export const constants = {
+      'parameters' : {
+        blog : 'Piyush\'s Blog',
+        heading : 'Make something you love',
+        subheading : 'This is my blog\'s <span class="accent">slogan</span>',
+        maxNoOfThumbnails : 4, 
+      },
       'admin' : {
+        username : 'piyushagade',
         name : 'Piyush Agade',
         title : '',
         organization : '', 
@@ -12,11 +19,5 @@ export const constants = {
       'server' : {
         url : '',
         port : ''
-      },
-      'parameters' : {
-        blog : 'Piyush\'s Blog',
-        heading : 'Make something you love',
-        subheading : '100% Free Template by <a href="https://linkedin.com/in/piyushagade" target="_blank">Piyush Agade</a>',
-        maxNoOfThumbnails : 4, 
       },
     }
