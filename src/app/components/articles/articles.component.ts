@@ -10,7 +10,10 @@ import { ApiService } from '../../services/api.service';
 })
 export class ArticlesComponent {
   blog;
-  config = config.constants;
+  noArticles;
+  dirs = config.constants.dirs;
+  admin = config.constants.admin;
+  parameters = config.constants.parameters;
 
   constructor(private _api : ApiService){
     _api.getArticles().subscribe(
@@ -20,5 +23,7 @@ export class ArticlesComponent {
 
   onGetArticles(res){
     this.blog = res;
+    if(this.blog.length == 0) this.noArticles = true;
+    else this.noArticles = false;
   }
 }

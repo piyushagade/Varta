@@ -2,7 +2,7 @@ export const constants = {
       'parameters' : {
         blog : 'Piyush\'s Blog',
         heading : 'Make something you love',
-        subheading : 'This is my blog\'s <span class="accent">slogan</span>',
+        subheading : 'This is my blog\'s slogan',
         maxNoOfThumbnails : 4, 
       },
       'admin' : {
