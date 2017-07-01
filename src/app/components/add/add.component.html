@@ -1,8 +1,8 @@
 
 <div id="fh5co-main">
 	<form [formGroup]="articleForm" (ngSubmit)="onNewArticleSubmit($event)">
-		<div class="fh5co-intro text-center">
-			<div class="container">
+		<div class="cover" [ngStyle]="{'background-image': 'url(' + dirs.images + 'varta.jpg' + ')', 'background-position': 'center center'}">
+			<div class="container-fluid text-center card-heading">
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2">
 						<h1 class="intro-lead">Add an article</h1>
@@ -18,12 +18,18 @@
 					<div class="col-md-10 col-md-offset-1">
 						<div class="row">
 							<!--Options-->
-							<div class="col-md-3 col-md-push-9 animate-box-disabled">
+							<div class="col-md-4 col-md-push-9 animate-box-disabled">
 								<h3>Review</h3>
 								<div class="form-group">
 									<ul class="fh5co-list-check">
 										<li><small id="disclaimer" class="form-text text-muted">Article's identifier: <br/>{{ articleTitle | dashify}}</small></li>
-										<li><small id="disclaimer" class="form-text text-muted">This article will be first reviewed by moderators before publishing. <br/>Check back in 24 hrs.</small></li>
+										<li>
+											<small id="disclaimer" class="form-text text-muted">
+												Permalink: <br/>
+												<a *ngIf="(articleTitle | dashify) != 'N/A'">{{ origin }}/{{ articleTitle | dashify}}</a>
+												<a *ngIf="(articleTitle | dashify) == 'N/A'">N/A</a>
+											</small>
+										</li>
 									</ul>
 								</div>
 
@@ -38,8 +44,8 @@
 
 								<!--Submit-->
 								<div class="form-group">
-									<button type="submit" class="btn btn-primary" [disabled]="!articleForm.valid">Publish</button>
-									<button routerLink="/varta-key" class="btn btn-secondary">Get VartaKey</button>
+									<button type="submit" class="btn btn-primary" [disabled]="!articleForm.valid">Publish</button><br/>
+									<button routerLink="/varta-key" class="btn btn-grey">Get a VartaKey</button>
 								</div>
 
 								
@@ -49,7 +55,7 @@
 							</div>
 
 							<!--Main form-->
-							<div class="col-md-9 col-md-pull-3">
+							<div class="col-md-8 col-md-pull-3">
 								<p class="animate-box-disabled">To add a new article, fill the data below and click on 'Publish'.</p>
 								<!--Title-->
 								<div class="form-group">

@@ -7687,14 +7687,21 @@ pre {
   border: 2px solid #f0ad4e;
 }
 
+.btn-grey {
+  background: #ddd;
+  border: 2px solid #f0ad4e;
+}
+
 .btn-primary,
 .btn-success,
 .btn-info,
 .btn-warning,
-.btn-danger {
+.btn-danger,
+.btn-grey {
   border-color: transparent;
 }
 
+.btn-grey:hover, .btn-grey:active, .btn-grey:focus,
 .btn-default:hover, .btn-default:active, .btn-default:focus,
 .btn-primary:hover,
 .btn-primary:active,

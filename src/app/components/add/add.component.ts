@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Location } from '@angular/common';
+
 import { Router } from '@angular/router';
 import * as config from '../../config/config';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -14,7 +16,9 @@ import { ApiService } from '../../services/api.service';
 })
 export class AddComponent {
   author;
-  public articleForm = this._fb.group({
+  origin;
+  dirs = config.constants.dirs;
+    public articleForm = this._fb.group({
       title: ["", Validators.compose([Validators.required, Validators.maxLength(35), Validators.minLength(6)])],
       introduction: ["", Validators.compose([Validators.required, Validators.maxLength(200), Validators.minLength(15)])],
       text: ["", Validators.compose([Validators.required, Validators.minLength(20)])],
@@ -22,8 +26,10 @@ export class AddComponent {
       image: [""]
   });
 
-  constructor(private _fb: FormBuilder, private _api: ApiService, private _r: Router){
+  constructor(private _fb: FormBuilder, private _api: ApiService, private _r: Router, location: Location){
     this.author = config.constants.admin.name;
+    this.origin = document.location.origin;
+    
   }
 
   onNewArticleSubmit(event) {
