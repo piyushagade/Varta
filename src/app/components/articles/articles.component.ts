@@ -9,10 +9,16 @@ import { ApiService } from '../../services/api.service';
   providers: [ ApiService ]
 })
 export class ArticlesComponent {
-  blogs = {};
+  blog;
   config = config.constants;
 
   constructor(private _api : ApiService){
-    this.blogs = _api.getArticles();
+    _api.getArticles().subscribe(
+      res => this.onGetArticles(res)
+    );
+  }
+
+  onGetArticles(res){
+    this.blog = res;
   }
 }

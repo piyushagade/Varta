@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import * as config from '../../config/config';
 import { ApiService } from '../../services/api.service';
 
 @Component({
@@ -9,11 +10,12 @@ import { ApiService } from '../../services/api.service';
   providers: [ ApiService ]
 })
 export class ArticleComponent {
-  page_id : string;
-  data : {};
+  data = {
+    tags : '',
+    image : ''
+  };
 
-  constructor(private _r : Router, private _api : ApiService){  
-    this.data = this._api.getArticle(this.page_id); 
+  constructor(private _r : Router, private _api : ApiService){
 
     this._r.events.subscribe((val) => {
       this.onRouteChange();
@@ -21,7 +23,12 @@ export class ArticleComponent {
   }
   
   onRouteChange(){
-    this.page_id = this._r.url.substr(1);
-    this.data = this._api.getArticle(this.page_id); 
+    this._api.getArticle(this._r.url.substr(1)).subscribe(
+      res => this.onGetArticle(res[0])
+    );
+  }
+
+  onGetArticle(res){
+    this.data = res;
   }
 }

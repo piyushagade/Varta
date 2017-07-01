@@ -12,9 +12,9 @@
 
 		<!--Articles thumbnails-->
 		<div id="fh5co-portfolio">
-			<div *ngFor='let blog of blogs["all"]; let i = index;'>
+			<div *ngFor='let article of blog; let i = index;'>
 				<app-thumbnail *ngIf="i < config.parameters.maxNoOfThumbnails"
-					[data] = "blog"
+					[data] = "article"
 					[index] = "i"> 
 				</app-thumbnail>
 			</div>

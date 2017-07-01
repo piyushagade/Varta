@@ -1,12 +1,12 @@
 export const menuItems = {
     items : [
       { 
-        title : 'Home',
+        title : 'All',
         link : '/home'
       },
       { 
         title : 'Me',
-        link : '/first'
+        link : '/me'
       },
       { 
         title : 'Add',

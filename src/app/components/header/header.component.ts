@@ -30,8 +30,8 @@ export class HeaderComponent {
     // Active Home menu item
     if(this._r.url.substr(1) == ''){
       this.activateMenuItem(this.menuItems[0]);
-      
     }
+
     // Activate only those items which are in the menuItems object (when clicked)
     else{
       let flag = false;
@@ -45,8 +45,6 @@ export class HeaderComponent {
       if(!flag){
         this.activateMenuItem({});
       }
-    }
-
-    
+    } 
   }
 }

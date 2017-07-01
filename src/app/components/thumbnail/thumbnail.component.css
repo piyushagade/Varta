@@ -1,0 +1,10 @@
+.blur{
+    -webkit-filter: blur(1px);
+    -webkit-transform: translate3d(0, 0, 0);
+    transition: 0.8s all ease-in-out;
+}
+
+.blur:hover{
+    -webkit-filter: blur(0px);
+    -webkit-transform: translate3d(0, 0, 0);
+}

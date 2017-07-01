@@ -3,3 +3,31 @@
     vertical-align:middle;
     float:none;
 }
+
+.card-heading{
+    background: rgba(250, 250, 250, 0.90);
+    padding: 60px;
+    margin-bottom: 40px;
+    transition: 1s all ease-in-out;
+}
+
+.card-heading:hover{
+    background: rgba(250, 250, 250, 0.70);
+}
+
+.blur{
+    -webkit-filter: blur(3px);
+    -webkit-transform: translate3d(0, 0, 0);
+    transition: 0.8s all ease-in-out;
+}
+
+.blur:hover{
+    -webkit-filter: blur(0px);
+    -webkit-transform: translate3d(0, 0, 0);
+}
+
+.cover{
+    background-image : url('') no-repeat center center;
+    background-size: cover;
+    transition: 1s all ease-in-out;
+}

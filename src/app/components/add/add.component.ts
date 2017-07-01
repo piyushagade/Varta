@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import * as config from '../../config/config';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
@@ -21,7 +22,7 @@ export class AddComponent {
       image: [""]
   });
 
-  constructor(private _fb: FormBuilder, private _api: ApiService){
+  constructor(private _fb: FormBuilder, private _api: ApiService, private _r: Router){
     this.author = config.constants.admin.name;
   }
 
@@ -34,9 +35,17 @@ export class AddComponent {
     data.date = new Date().getTime();
 
     // Update data store
-    this._api.addArticle(data);
+    this._api.addArticle(data).subscribe(
+        res => {
+          this.onPostArticle(res, data);
+        },
+        err => console.log(err.json().message),
+        () => console.log('Transaction complete')
+    );    
+  }
 
-    console.log(data.date);
+  onPostArticle(res, data){
+    if(JSON.parse(res._body).status) this._r.navigateByUrl(data.link);
     
   }
 }
