@@ -1,8 +1,10 @@
 <div [ngClass]="index % 2 != 0 ? 'fh5co-img-right' : ''" class="fh5co-portfolio-item">
-	<div class="fh5co-portfolio-figure animate-box-disabled blur" [ngStyle]="{'background-image': 'url(' + data.image + ')'}"></div>
+	<div class="fh5co-portfolio-figure animate-box-disabled blur" *ngIf="data.image !== ''" [ngStyle]="{'background-image': 'url(' + data.image + ')'}"></div>
+	<div class="fh5co-portfolio-figure animate-box-disabled blur" *ngIf="data.image === ''" [ngStyle]="{'background-image': 'url(' + dirs.images + 'work_1.jpg' + ')'}"></div>
 	<div class="fh5co-portfolio-description">
 		<h2>{{ data.title }}</h2>
 		<p>{{ data.introduction }}</p>
 		<p><a [routerLink]="data.link" class="btn btn-primary">Read more</a></p>
 	</div>
 </div>
+

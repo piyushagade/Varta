@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import * as config from '../../config/config';
 
 @Component({
   selector: 'app-thumbnail',
@@ -8,4 +9,8 @@ import { Component, Input } from '@angular/core';
 export class ThumbnailComponent {
   @Input() data;
   @Input() index;
+  dirs = config.constants.dirs;
+
+  constructor(){
+  }
 }

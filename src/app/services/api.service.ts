@@ -33,10 +33,13 @@ export class ApiService{
 
     
     addArticle(article){
+        let key = article.key;
+        delete article.key;
+        
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
-        return this._http.post('http://localhost:3000' + "/blog/add", article, {
+        return this._http.post('http://localhost:3000' + "/blog/add", [article, key], {
             headers: headers
             })
             
