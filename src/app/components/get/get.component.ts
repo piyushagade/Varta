@@ -14,6 +14,7 @@ export class GetComponent {
   admin = config.constants.admin;
   parameters = config.constants.parameters;
   available: boolean;
+  accountAlreadyCreated = false;
   newUsername;
   key = '';
 
@@ -22,7 +23,9 @@ export class GetComponent {
   });
 
   constructor(private _fb: FormBuilder, private _api : ApiService){
- 
+    
+    // check if the username in the config exists on the backend
+    this.userExists(this.admin.username);
   }
 
   onUserNameSubmit(value){
@@ -31,6 +34,16 @@ export class GetComponent {
         this.key = res.code;
       }
     );
+  }
+
+  userExists(value){
+    this._api.getUserAvailability(value).subscribe(
+        res => {
+          if(!res.available){
+            this.accountAlreadyCreated = true;
+          }
+        }
+      );
   }
 
   onUsernameChange(value){
@@ -44,5 +57,6 @@ export class GetComponent {
 
   onGetAvailability(res){
     this.available = res.available;
+    return this.available;
   }
 }

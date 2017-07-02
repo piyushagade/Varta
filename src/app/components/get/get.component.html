@@ -2,7 +2,7 @@
 		<div class="fh5co-intro text-center">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-8 col-md-offset-2" *ngIf="key == ''">
+					<div class="col-md-8 col-md-offset-2" *ngIf="!accountAlreadyCreated && key == ''">
 						<h1 class="intro-lead">Get a VartaKey</h1>
 						<p>Fill in the form to get your own VartaKey</p>
 
@@ -22,12 +22,12 @@
 									<button type="submit" class="btn btn-primary" [disabled]="!userForm.valid || !available || newUsername == ''">Next Step</button>
 									
 									<div style="margin: 36px 0 10px 0;">Or, did you forget your VartaKey?</div>
-									<button type="submit" class="btn btn-grey">Reset my VartaKey</button>
+									<button routerLink="/reset-key" class="btn btn-grey">Reset my VartaKey</button>
 								</div>
 						</form>
 					</div>
 
-					<div class="col-md-8 col-md-offset-2" *ngIf="key != ''">
+					<div class="col-md-8 col-md-offset-2" *ngIf="!accountAlreadyCreated && key != ''">
 						<h1 class="intro-lead">Congrats!</h1>
 						<p>You have successfully created a Varta account</p>
 
@@ -42,6 +42,18 @@
 									<button class="btn btn-primary" routerLink="/add">Hell yeah!</button>
 								</div>
 						</form>
+					</div>
+
+					<div class="col-md-8 col-md-offset-2" *ngIf="accountAlreadyCreated">
+						<h1 class="intro-lead">Is there a problem?</h1>
+						<p>You already have Varta account. And you should have a VartaKey.</p>
+						<div class="form-group col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">							
+							<div style="margin: 20px 0 10px 0;">If you landed here by mistake</div>
+							<button class="btn btn-primary" routerLink="/home">Home Page</button>
+									
+							<div style="margin: 60px 0 10px 0;">Or, did you forget your VartaKey? <br/>Click below to reset it.</div>
+							<button class="btn btn-grey" routerLink="/reset-key">Reset my VartaKey</button>
+						</div>
 					</div>
 				</div>
 			</div>
