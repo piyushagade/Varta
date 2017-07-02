@@ -6,8 +6,8 @@ export const constants = {
         maxNoOfThumbnails : 4, 
       },
       'admin' : {
-        username : 'piyushagade',
-        name : 'Piyush Agade',
+        username : 'ruchaagade',
+        name : 'Rucha Agade',
         title : '',
         organization : '', 
       },

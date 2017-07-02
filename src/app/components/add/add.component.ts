@@ -18,7 +18,7 @@ export class AddComponent {
   author;
   origin;
   dirs = config.constants.dirs;
-    public articleForm = this._fb.group({
+  public articleForm = this._fb.group({
       title: ["", Validators.compose([Validators.required, Validators.maxLength(35), Validators.minLength(6)])],
       introduction: ["", Validators.compose([Validators.required, Validators.maxLength(200), Validators.minLength(15)])],
       text: ["", Validators.compose([Validators.required, Validators.minLength(20)])],

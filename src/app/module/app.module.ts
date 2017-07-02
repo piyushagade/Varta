@@ -12,6 +12,7 @@ import { AddComponent } from '../components/add/add.component';
 import { ArticlesComponent } from '../components/articles/articles.component';
 import { ArticleComponent } from '../components/article/article.component';
 import { ThumbnailComponent } from '../components/thumbnail/thumbnail.component';
+import { GetComponent } from '../components/get/get.component';
 import { ApiService } from '../services/api.service';
 import { DashifyPipe } from '../pipes/dashify.pipe';
 import { CapitalizePipe } from '../pipes/capitalize.pipe';
@@ -26,6 +27,7 @@ import { MomentModule } from 'angular2-moment';
     ArticlesComponent,
     ArticleComponent,
     ThumbnailComponent,
+    GetComponent,
     AddComponent,
     DashifyPipe,
     CapitalizePipe,

@@ -13,8 +13,8 @@ export const menuItems = {
         link : '/add'
       },
       { 
-        title : '404',
-        link : '/404'
+        title : 'Edit',
+        link : '/admin'
       },
     ]
   };

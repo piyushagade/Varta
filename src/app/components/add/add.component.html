@@ -40,12 +40,15 @@
 									<div class="alert alert-danger" *ngIf="articleForm.controls['key'].hasError('required') && articleForm.controls['key'].touched">You must enter the key.</div>
 									<div class="alert alert-danger" *ngIf="articleForm.controls['key'].hasError('maxlength') && articleForm.controls['key'].touched">Length limit exceeded.</div>
 									<div class="alert alert-danger" *ngIf="articleForm.controls['key'].hasError('minlength') && articleForm.controls['key'].touched">Add more characters.</div>
+									
+									<div style="margin: 20px 0 10px 0;">If you don't have one, click below</div>
+									<button routerLink="/varta-key" class="btn btn-grey">Get a VartaKey</button>
 								</div>
 
 								<!--Submit-->
 								<div class="form-group">
-									<button type="submit" class="btn btn-primary" [disabled]="!articleForm.valid">Publish</button><br/>
-									<button routerLink="/varta-key" class="btn btn-grey">Get a VartaKey</button>
+									<div style="margin: 0 0 10px 0;">If everything looks good, click 'Publish'.</div>
+									<button type="submit" class="btn btn-primary" [disabled]="!articleForm.valid">Publish</button>
 								</div>
 
 								
@@ -75,6 +78,7 @@
 									<small class="form-text text-muted">Used {{ articleIntroduction | limitChars: '200' }} characters</small>
 									<div class="alert alert-danger" *ngIf="articleForm.controls['introduction'].hasError('required') && articleForm.controls['introduction'].touched">You must enter an introduction.</div>
 									<div class="alert alert-danger" *ngIf="articleForm.controls['introduction'].hasError('maxlength') && articleForm.controls['introduction'].touched">Length limit exceeded.</div>
+									<div class="alert alert-danger" *ngIf="articleForm.controls['introduction'].hasError('minlength') && articleForm.controls['introduction'].touched">Add more characters.</div>
 									<div class="alert alert-danger" *ngIf="articleForm.controls['introduction'].hasError('minlength') && articleForm.controls['introduction'].touched">Add more characters.</div>
 								</div>
 

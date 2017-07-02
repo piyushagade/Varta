@@ -49,4 +49,24 @@ export class ApiService{
             })
             
     }
+
+    // Get availability of a username
+    getUserAvailability(username : string){
+        return this._http.get('http://localhost:3000' + "/user/check/" + username)
+            .map(response => response.json())
+            .catch(error => {
+                console.log("Error fetching JSON");
+                return Observable.throw(error.json())
+            });
+    }
+
+    // Register a username
+    registerUsername(username : string){
+        return this._http.get('http://localhost:3000' + "/user/key/" + username)
+            .map(response => response.json())
+            .catch(error => {
+                console.log("Error fetching JSON");
+                return Observable.throw(error.json())
+            });
+    }
 }

@@ -2,43 +2,51 @@
 		<div class="fh5co-intro text-center">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-8 col-md-offset-2">
-						<h1 class="intro-lead">{{ parameters.heading }}</h1>
-						<p [innerHTML]="parameters.subheading"></p>
+					<div class="col-md-8 col-md-offset-2" *ngIf="key == ''">
+						<h1 class="intro-lead">Get a VartaKey</h1>
+						<p>Fill in the form to get your own VartaKey</p>
+
+						<form [formGroup]="userForm" (ngSubmit)="onUserNameSubmit(newUsername)">
+								<!--Username-->
+								<div class="form-group col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+									<label for="username" style="margin: 40px 0 10px 0;">Enter a username </label>
+									<input autocomplete="off" type="text" class="form-control text-center" formControlName="username" aria-describedby="username" placeholder="bruce-wayne" (keyup)="onUsernameChange(newUsername)" [(ngModel)]="newUsername">
+									<div class="alert alert-danger" *ngIf="userForm.controls['username'].hasError('required') && userForm.controls['username'].touched">You must enter a username.</div>
+									<div class="alert alert-warning" *ngIf="userForm.controls['username'].hasError('maxlength') && userForm.controls['username'].touched">Length limit exceeded.</div>
+									<div class="alert alert-warning" *ngIf="userForm.controls['username'].hasError('minlength') && userForm.controls['username'].touched">Add more characters.</div>
+									<div class="alert alert-success" *ngIf="available && userForm.valid">Username available</div>
+									<div class="alert alert-danger" *ngIf="!available && userForm.valid">Username already taken.</div>
+									<small class="form-text text-muted">Used {{ newUsername | limitChars: '20' }} characters</small>
+									
+									<div style="margin: 60px 0 10px 0;">All set? Click below.</div>
+									<button type="submit" class="btn btn-primary" [disabled]="!userForm.valid || !available || newUsername == ''">Next Step</button>
+									
+									<div style="margin: 36px 0 10px 0;">Or, did you forget your VartaKey?</div>
+									<button type="submit" class="btn btn-grey">Reset my VartaKey</button>
+								</div>
+						</form>
+					</div>
+
+					<div class="col-md-8 col-md-offset-2" *ngIf="key != ''">
+						<h1 class="intro-lead">Congrats!</h1>
+						<p>You have successfully created a Varta account</p>
+
+						<form [formGroup]="userForm" (ngSubmit)="onUserNameSubmit(newUsername)">
+								<!--Username-->
+								<div class="form-group col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+									<label for="username" style="margin: 40px 0 10px 0;">Your VartaKey is </label>
+									<p class="key accent">{{ key }}</p>
+									<small class="form-text text-muted">Keep it safe, don't share it with anyone.</small>
+									
+									<div style="margin: 80px 0 10px 0;">Ready to write your first article?</div>
+									<button class="btn btn-primary" routerLink="/add">Hell yeah!</button>
+								</div>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<!--Articles thumbnails-->
-		<div id="fh5co-portfolio">
-			<div *ngFor='let article of blog; let i = index;'>
-				<app-thumbnail *ngIf="i < parameters.maxNoOfThumbnails"
-					[data] = "article"
-					[index] = "i"> 
-				</app-thumbnail>
-			</div>
-
-			<div *ngIf="noArticles">
-				<div class="fh5co-img-right" class="fh5co-portfolio-item">
-					<div class="fh5co-portfolio-figure animate-box-disabled blur" [ngStyle]="{'background-image': 'url(' + dirs.images + 'varta.jpg' + ')'}"></div>
-					<div class="fh5co-portfolio-description" style="padding: 44px 60px 44px 60px;">
-						<h2>Hey {{ admin.name }}</h2>
-						<div class="form-group">
-							<p>Welcome to Varta.<br/>
-							You don't have any articles yet. Let's get writing.</p>
-							<button routerLink="/add" class="btn btn-primary">Add an article</button>
-						</div>
-						
-						<div class="form-group">
-							<p>To add an article you will need a 'VartaKey'. To get one, click on the button below.</p>
-							<button routerLink="/varta-key" class="btn btn-grey">Get a VartaKey</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!--Article thumbnails END-->
 
 		<!--Team-->
 		<!--<div id="fh5co-team">
