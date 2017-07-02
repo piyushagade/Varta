@@ -1,6 +1,6 @@
 export const constants = {
       'parameters' : {
-        blog : 'My Blog',
+        blog : 'Varta',
         heading : 'Make something you love',
         subheading : 'This is my blog\'s slogan',
         maxNoOfThumbnails : 4, 

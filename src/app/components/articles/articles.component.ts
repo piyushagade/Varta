@@ -17,6 +17,7 @@ export class ArticlesComponent {
   parameters = config.constants.parameters;
   username;
   userAlreadyExists;
+  user = {};
 
   constructor(private _r: Router, private _api : ApiService){
     this.username = this._r.url.substr(1).split("/")[0];
@@ -43,6 +44,13 @@ export class ArticlesComponent {
             
             this._api.getArticles(this.username).subscribe(
               res => this.onGetArticles(res)
+            );
+
+            // Get user data
+            this._api.getUserData(this.username).subscribe(
+              res => {
+                this.user = res;
+              }
             );
           }
 

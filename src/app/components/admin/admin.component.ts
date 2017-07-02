@@ -21,7 +21,8 @@ export class AdminComponent {
   keyError = false;
 
   public adminForm = this._fb.group({
-      name: ["", Validators.compose([Validators.required, Validators.maxLength(15), Validators.minLength(3)])],
+      authorName: ["", Validators.compose([Validators.required, Validators.maxLength(25), Validators.minLength(3)])],
+      blogName: ["", Validators.compose([Validators.required, Validators.maxLength(15), Validators.minLength(3)])],
       heading: ["", Validators.compose([Validators.required, Validators.maxLength(25), Validators.minLength(3)])],
       subheading: ["", Validators.compose([Validators.required, Validators.maxLength(45), Validators.minLength(3)])],
       key: ["", Validators.compose([Validators.required, Validators.maxLength(8), Validators.minLength(4)])],
@@ -49,12 +50,13 @@ export class AdminComponent {
 
     let data = {
       username : this.username,
-      name : more.name,
+      name : more.authorName,
+      blogName : more.blogName,
       heading : more.heading,
       subheading : more.subheading,
       key: more.key
     };
-    
+
     this.keyError = false;
 
     // Update user

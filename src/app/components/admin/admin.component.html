@@ -20,14 +20,24 @@
 							<div class="alert alert-danger" *ngIf="keyError">Wrong VartaKey inserted</div>
 												
 							<form [formGroup]="adminForm" (ngSubmit)="savePreferences()" style="margin-top: 32px;">
+								<!--Author name-->
+								<div class="form-group">
+									<label for="authorName">Author's name <span class="text-warning"><strong>*</strong></span></label>
+									<input type="text" class="form-control" formControlName="authorName" name="authorName" aria-describedby="authorName" placeholder="Author's name" [(ngModel)] = "authorName">
+									<small class="form-text text-muted">Used {{ authorName | limitChars: '25' }} characters</small>
+									<div class="alert alert-danger" *ngIf="adminForm.controls['authorName'].hasError('required') && adminForm.controls['authorName'].touched">You must enter a name.</div>
+									<div class="alert alert-warning" *ngIf="adminForm.controls['authorName'].hasError('maxlength') && adminForm.controls['authorName'].touched">Length limit exceeded.</div>
+									<div class="alert alert-warning" *ngIf="adminForm.controls['authorName'].hasError('minlength') && adminForm.controls['authorName'].touched">Add more characters.</div>
+								</div>
+
 								<!--Blog name-->
 								<div class="form-group">
-									<label for="name">Blog name <span class="text-warning"><strong>*</strong></span></label>
-									<input type="text" class="form-control" formControlName="name" name="name" aria-describedby="name" placeholder="Blog name" [(ngModel)] = "blogName">
+									<label for="blogName">Blog name <span class="text-warning"><strong>*</strong></span></label>
+									<input type="text" class="form-control" formControlName="blogName" name="blogName" aria-describedby="name" placeholder="Blog name" [(ngModel)] = "blogName">
 									<small class="form-text text-muted">Used {{ blogName | limitChars: '15' }} characters</small>
-									<div class="alert alert-danger" *ngIf="adminForm.controls['name'].hasError('required') && adminForm.controls['name'].touched">You must enter a name.</div>
-									<div class="alert alert-warning" *ngIf="adminForm.controls['name'].hasError('maxlength') && adminForm.controls['name'].touched">Length limit exceeded.</div>
-									<div class="alert alert-warning" *ngIf="adminForm.controls['name'].hasError('minlength') && adminForm.controls['name'].touched">Add more characters.</div>
+									<div class="alert alert-danger" *ngIf="adminForm.controls['blogName'].hasError('required') && adminForm.controls['blogName'].touched">You must enter a name.</div>
+									<div class="alert alert-warning" *ngIf="adminForm.controls['blogName'].hasError('maxlength') && adminForm.controls['blogName'].touched">Length limit exceeded.</div>
+									<div class="alert alert-warning" *ngIf="adminForm.controls['blogName'].hasError('minlength') && adminForm.controls['blogName'].touched">Add more characters.</div>
 								</div>
 
 								<!--Heading-->

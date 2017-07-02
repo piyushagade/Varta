@@ -16,15 +16,18 @@ export class HeaderComponent {
   menuItems = menu.menuItems.items;
   config = config.constants;
   @Input() username;
+  user = {};
 
   activateMenuItem(item){
     this.activeMenuItem = item;
   }
 
-  constructor(private _r : Router){
+  constructor(private _r : Router, private _api: ApiService){
     this._r.events.subscribe((val) => {
       this.onRouteChange();
     });
+
+
   }
 
   onRouteChange(){
@@ -47,5 +50,12 @@ export class HeaderComponent {
         this.activateMenuItem({});
       }
     } 
+
+    // Get user data
+    this._api.getUserData(this.username).subscribe(
+      res => {
+        this.user = res;
+      }
+    );
   }
 }

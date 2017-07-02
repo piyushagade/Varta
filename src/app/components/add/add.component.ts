@@ -15,7 +15,6 @@ import { ApiService } from '../../services/api.service';
   ]
 })
 export class AddComponent {
-  author;
   origin;
   username;
   dirs = config.constants.dirs;
@@ -26,6 +25,7 @@ export class AddComponent {
   imageGallery;
   galleryVisible = true;
   previewVisible = false;
+  user = {};
 
   public articleForm = this._fb.group({
       title: ["", Validators.compose([Validators.required, Validators.maxLength(35), Validators.minLength(6)])],
@@ -36,9 +36,15 @@ export class AddComponent {
   });
 
   constructor(private _fb: FormBuilder, private _api: ApiService, private _r: Router, location: Location){
-    this.author = config.constants.admin.name;
     this.origin = document.location.origin;
     this.username = document.location.pathname.substr(1).split('/')[0];
+
+    // Get user data
+    this._api.getUserData(this.username).subscribe(
+      res => {
+        this.user = res;
+      }
+    );
   }
 
   onNewArticleSubmit(event) {

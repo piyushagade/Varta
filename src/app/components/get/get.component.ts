@@ -36,7 +36,7 @@ export class GetComponent {
     let data = {
       username : username,
       key : '0',
-      name : 'notset',
+      name : 'Anonymous',
       blogName : config.constants.parameters.blog,
       heading : config.constants.parameters.heading,
       subheading : config.constants.parameters.subheading

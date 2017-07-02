@@ -87,4 +87,15 @@ export class ApiService{
             })
             
     }
+
+
+    // Get user data
+    getUserData(username){
+        return this._http.get('http://localhost:3000' + "/user/get/" + username)
+            .map(response => response.json())
+            .catch(error => {
+                console.log("Error fetching JSON");
+                return Observable.throw(error.json())
+            });
+    }
 }
