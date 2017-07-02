@@ -10,7 +10,7 @@ export const menuItems = {
       },
       { 
         title : 'Add',
-        link : '/add'
+        link : 'add'
       },
       { 
         title : 'Edit',

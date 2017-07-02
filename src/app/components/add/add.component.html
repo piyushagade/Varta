@@ -26,7 +26,7 @@
 										<li>
 											<small id="disclaimer" class="form-text text-muted">
 												Permalink: <br/>
-												<a *ngIf="(articleTitle | dashify) != 'N/A'">{{ origin }}/{{ articleTitle | dashify}}</a>
+												<a *ngIf="(articleTitle | dashify) != 'N/A'">{{ origin }}/{{ username }}/{{ articleTitle | dashify}}</a>
 												<a *ngIf="(articleTitle | dashify) == 'N/A'">N/A</a>
 											</small>
 										</li>
@@ -59,7 +59,7 @@
 									<div class="alert alert-danger" *ngIf="articleForm.controls['key'].hasError('minlength') && articleForm.controls['key'].touched">Add more characters.</div>
 									
 									<div style="margin: 20px 0 10px 0;">If you don't have one, click below</div>
-									<button routerLink="/varta-key" class="btn btn-grey">Get a VartaKey</button>
+									<button [routerLink]="'/' + username + '/varta-key'" class="btn btn-grey">Get a VartaKey</button>
 								</div>
 
 								<!--Submit-->
@@ -107,11 +107,22 @@
 								<!--Image-->
 								<div class="form-group">
 									<label for="articleImage">Image </label>
-									<input type="text" class="form-control" formControlName="image" name="articleImage" [(ngModel)]="imageGallery">
+									<input (keyup)="hidePreview()" type="text" class="form-control" formControlName="image" name="articleImage" [(ngModel)]="imageGallery">
 									<small class="form-text text-muted">Add URL of the image you want.</small>
-									
-									<p class="form-text text-muted" style="margin-top: 26px;">Or, select from the default Varta gallery.</p>
-									<div id="scroll" class="flexcroll">
+									<br/>
+
+									<!--Preview-->
+									<div class="alert alert-success" *ngIf="previewVisible">
+										Image URL added.
+										<!--<br/><br/>
+										Preview:<br/>
+										<img style="margin: 4px 10px 20px 10px; " [src]="imageGallery"  height="150px">-->
+									</div>
+
+									<br/>
+									<button class="btn btn-primary" *ngIf="!galleryVisible" (click)="showGallery()">See Gallery</button>
+
+									<div id="scroll" class="flexcroll" *ngIf="galleryVisible">
 										<ul>
 											<li><a (click)="setGalleryImage(gallery[0])"><img [src]="dirs.images + 'gallery/1.jpg'" alt=""></a></li>
 											<li><a (click)="setGalleryImage(gallery[1])"><img [src]="dirs.images + 'gallery/2.jpg'" alt=""></a></li>
@@ -135,7 +146,6 @@
 											<li><a (click)="setGalleryImage(gallery[19])"><img [src]="dirs.images + 'gallery/20.jpg'" alt=""></a></li>
 										</ul>
 									</div>
-
 								</div>								
 							</div>
 						</div>

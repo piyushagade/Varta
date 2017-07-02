@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import * as config from '../../config/config';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-thumbnail',
@@ -9,8 +10,11 @@ import * as config from '../../config/config';
 export class ThumbnailComponent {
   @Input() data;
   @Input() index;
+  @Input() username;
   dirs = config.constants.dirs;
+  config = config.constants;
 
-  constructor(){
+  constructor(private _r : Router){
+
   }
 }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -7,12 +8,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  username;
 
   onActivate(e, outlet){
     // outlet.scrollTop = 0;
   }
 
-  constructor(private router: Router){
+  constructor(private _r: Router){
+    this.username = document.location.pathname.substr(1).split('/')[0];
   }
 
   onDeactivate() {

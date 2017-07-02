@@ -13,7 +13,7 @@
 									<input autocomplete="off" type="text" class="form-control text-center" formControlName="username" aria-describedby="username" placeholder="bruce-wayne" (keyup)="onUsernameChange(newUsername)" [(ngModel)]="newUsername">
 									<div class="alert alert-danger" *ngIf="userForm.controls['username'].hasError('required') && userForm.controls['username'].touched">You must enter a username.</div>
 									<div class="alert alert-warning" *ngIf="userForm.controls['username'].hasError('maxlength') && userForm.controls['username'].touched">Length limit exceeded.</div>
-									<div class="alert alert-warning" *ngIf="userForm.controls['username'].hasError('minlength') && userForm.controls['username'].touched">Add more characters.</div>
+									<div class="alert alert-warning" *ngIf="(userForm.controls['username'].hasError('minlength') && userForm.controls['username'].touched) || notEnoughCharsError">Add more characters.</div>
 									<div class="alert alert-success" *ngIf="available && userForm.valid">Username available</div>
 									<div class="alert alert-danger" *ngIf="!available && userForm.valid">Username already taken.</div>
 									<small class="form-text text-muted">Used {{ newUsername | limitChars: '20' }} characters</small>
@@ -22,7 +22,7 @@
 									<button type="submit" class="btn btn-primary" [disabled]="!userForm.valid || !available || newUsername == ''">Next Step</button>
 									
 									<div style="margin: 36px 0 10px 0;">Or, did you forget your VartaKey?</div>
-									<button routerLink="/reset-key" class="btn btn-grey">Reset my VartaKey</button>
+									<button [routerLink]="'/' + username + '/reset-key'" class="btn btn-grey">Reset my VartaKey</button>
 								</div>
 						</form>
 					</div>
@@ -31,15 +31,18 @@
 						<h1 class="intro-lead">Congrats!</h1>
 						<p>You have successfully created a Varta account</p>
 
-						<form [formGroup]="userForm" (ngSubmit)="onUserNameSubmit(newUsername)">
+						<form [formGroup]="userForm">
 								<!--Username-->
 								<div class="form-group col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
 									<label for="username" style="margin: 40px 0 10px 0;">Your VartaKey is </label>
 									<p class="key accent">{{ key }}</p>
 									<small class="form-text text-muted">Keep it safe, don't share it with anyone.</small>
 									
+									<div style="margin: 80px 0 10px 0;">Great, click below to change the name, heading, and sub-heading of your blog.</div>
+									<button style="margin: 40px 0 10px 0;" [disabled]="!userCreated" class="btn btn-primary" [routerLink]="'/' + username + '/admin'">Proceed</button>
+<!--
 									<div style="margin: 80px 0 10px 0;">Ready to write your first article?</div>
-									<button class="btn btn-primary" routerLink="/add">Hell yeah!</button>
+									<button class="btn btn-primary" [routerLink]="'/' + username + '/add'">Hell yeah!</button>-->
 								</div>
 						</form>
 					</div>
@@ -49,10 +52,10 @@
 						<p>You already have Varta account. And you should have a VartaKey.</p>
 						<div class="form-group col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">							
 							<div style="margin: 20px 0 10px 0;">If you landed here by mistake</div>
-							<button class="btn btn-primary" routerLink="/home">Home Page</button>
+							<button class="btn btn-primary" [routerLink]="'/' + username + '/home'">Home Page</button>
 									
 							<div style="margin: 60px 0 10px 0;">Or, did you forget your VartaKey? <br/>Click below to reset it.</div>
-							<button class="btn btn-grey" routerLink="/reset-key">Reset my VartaKey</button>
+							<button class="btn btn-grey" [routerLink]="'/' + username + '/reset-key'">Reset my VartaKey</button>
 						</div>
 					</div>
 				</div>

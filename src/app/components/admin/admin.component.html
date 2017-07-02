@@ -2,56 +2,77 @@
 		<div class="fh5co-intro text-center">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-8 col-md-offset-2">
-						<h1 class="intro-lead">{{ parameters.heading }}</h1>
-						<p [innerHTML]="parameters.subheading"></p>
+					<div class="col-md-8 col-md-offset-2" *ngIf="!accountAlreadyCreated">
+						<h1 class="intro-lead">Admin panel</h1>
+						<p>No Varta account with the name '{{ username }}' found.</p>
+						<div class="form-group col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">							
+							<div style="margin: 20px 0 10px 0;">If you landed here by mistake</div>
+							<button class="btn btn-primary" [routerLink]="'/' + username + '/varta-key'">Create Account</button>
+						</div>
+					</div>
+
+
+					<div class="col-md-8 col-md-offset-2" *ngIf="accountAlreadyCreated">
+						<h1 class="intro-lead">Admin panel</h1>
+						<p>This is your admin panel. You need a VartaKey to make changes.</p>
+						<div class="form-group col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 text-left">
+							<div class="alert alert-success" *ngIf="userUpdated">Blog preferences updated</div>
+							<div class="alert alert-danger" *ngIf="keyError">Wrong VartaKey inserted</div>
+												
+							<form [formGroup]="adminForm" (ngSubmit)="savePreferences()" style="margin-top: 32px;">
+								<!--Blog name-->
+								<div class="form-group">
+									<label for="name">Blog name <span class="text-warning"><strong>*</strong></span></label>
+									<input type="text" class="form-control" formControlName="name" name="name" aria-describedby="name" placeholder="Blog name" [(ngModel)] = "blogName">
+									<small class="form-text text-muted">Used {{ blogName | limitChars: '15' }} characters</small>
+									<div class="alert alert-danger" *ngIf="adminForm.controls['name'].hasError('required') && adminForm.controls['name'].touched">You must enter a name.</div>
+									<div class="alert alert-warning" *ngIf="adminForm.controls['name'].hasError('maxlength') && adminForm.controls['name'].touched">Length limit exceeded.</div>
+									<div class="alert alert-warning" *ngIf="adminForm.controls['name'].hasError('minlength') && adminForm.controls['name'].touched">Add more characters.</div>
+								</div>
+
+								<!--Heading-->
+								<div class="form-group">
+									<label for="heading">Blog heading <span class="text-warning"><strong>*</strong></span></label>
+									<input type="text" class="form-control" formControlName="heading" name="heading" aria-describedby="heading" placeholder="Blog heading" [(ngModel)] = "blogHeading">
+									<small class="form-text text-muted">Used {{ blogHeading | limitChars: '25' }} characters</small>
+									<div class="alert alert-danger" *ngIf="adminForm.controls['heading'].hasError('required') && adminForm.controls['heading'].touched">You must enter a heading.</div>
+									<div class="alert alert-warning" *ngIf="adminForm.controls['heading'].hasError('maxlength') && adminForm.controls['heading'].touched">Length limit exceeded.</div>
+									<div class="alert alert-warning" *ngIf="adminForm.controls['heading'].hasError('minlength') && adminForm.controls['heading'].touched">Add more characters.</div>
+								</div>
+
+								<!--Subheading-->
+								<div class="form-group">
+									<label for="subheading">Sub-heading <span class="text-warning"><strong>*</strong></span></label>
+									<input type="text" class="form-control" formControlName="subheading" name="subheading" aria-describedby="subheading" placeholder="Blog subheading" [(ngModel)] = "blogSubheading">
+									<small class="form-text text-muted">Used {{ blogSubheading | limitChars: '45' }} characters</small>
+									<div class="alert alert-danger" *ngIf="adminForm.controls['subheading'].hasError('required') && adminForm.controls['subheading'].touched">You must enter a subheading.</div>
+									<div class="alert alert-warning" *ngIf="adminForm.controls['subheading'].hasError('maxlength') && adminForm.controls['subheading'].touched">Length limit exceeded.</div>
+									<div class="alert alert-warning" *ngIf="adminForm.controls['subheading'].hasError('minlength') && adminForm.controls['subheading'].touched">Add more characters.</div>
+								</div>
+
+								<!--VartaKey-->
+								<div class="form-group">
+									<label for="key">VartaKey <span class="text-warning"><strong>*</strong></span></label>
+									<input type="password" class="form-control" formControlName="key" aria-describedby="key" placeholder="Your secret key">
+									<div class="alert alert-danger" *ngIf="adminForm.controls['key'].hasError('required') && adminForm.controls['key'].touched">You must enter the key.</div>
+									<div class="alert alert-warning" *ngIf="adminForm.controls['key'].hasError('maxlength') && adminForm.controls['key'].touched">Length limit exceeded.</div>
+									<div class="alert alert-warning" *ngIf="adminForm.controls['key'].hasError('minlength') && adminForm.controls['key'].touched">Add more characters.</div>
+								</div>
+
+								<div class="form-group text-center">
+									<div style="margin: 20px 0 10px 0;">If everything looks good, click below</div>
+									<button class="btn btn-primary" [disabled]="!adminForm.valid" (click)="savePreferences(adminForm)">Save</button>
+											
+									<div style="margin: 36px 0 10px 0;">Or, did you forget your VartaKey? <br/>Click below to reset it.</div>
+									<button class="btn btn-grey" [routerLink]="'/' + username + '/reset-key'">Reset my VartaKey</button>
+								</div>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<!--Articles thumbnails-->
-		<div id="fh5co-portfolio">
-			<div *ngFor='let article of blog; let i = index;'>
-				<app-thumbnail *ngIf="i < parameters.maxNoOfThumbnails"
-					[data] = "article"
-					[index] = "i"
-					[username]="username"> 
-				</app-thumbnail>
-			</div>
-
-			<div *ngIf="noArticles">
-				<div class="fh5co-img-right" class="fh5co-portfolio-item">
-					<div class="fh5co-portfolio-figure animate-box-disabled blur" [ngStyle]="{'background-image': 'url(' + dirs.images + 'varta.jpg' + ')'}"></div>
-					<div class="fh5co-portfolio-description" style="padding: 50px 60px 44px 70px;" *ngIf="userAlreadyExists">
-						<h2>Hey {{ admin.name }}</h2>
-						<div class="form-group">
-							<p>Welcome to Varta.<br/>
-							You don't have any articles yet. Let's write one.</p>
-							<button [routerLink]="'/' + username + '/add'" class="btn btn-primary">Add an article</button>
-						</div>
-						
-						<div class="form-group">
-							<p>To add an article you will need a 'VartaKey'. <br/>To get one, create a Varta account.</p>
-							<button [routerLink]="'/' + username + '/varta-key'" class="btn btn-grey">Get a VartaKey</button>
-						</div>
-					</div>
-
-
-					<div class="fh5co-portfolio-description" style="padding: 50px 60px 44px 70px;" *ngIf="!userAlreadyExists">
-						<h2>Hey there.</h2>
-						<div class="form-group">
-							<p>Welcome to Varta.<br/>
-							You don't have a Varta account yet.</p>
-						
-							<p>To add an article you will need a 'VartaKey'. <br/>To get one, create a Varta account.</p>
-							<button [routerLink]="'/' + username + '/varta-key'" class="btn btn-primary">Get a VartaKey</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!--Article thumbnails END-->
 
 		<!--Team-->
 		<!--<div id="fh5co-team">

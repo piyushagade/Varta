@@ -15,25 +15,42 @@ export class GetComponent {
   parameters = config.constants.parameters;
   available: boolean;
   accountAlreadyCreated = false;
-  newUsername;
+  newUsername = '';
   key = '';
+  username: string;
+  notEnoughCharsError = false;
+  userCreated = false;
 
   public userForm = this._fb.group({
       username: ["", Validators.compose([Validators.required, Validators.maxLength(35), Validators.minLength(6)])],
   });
 
   constructor(private _fb: FormBuilder, private _api : ApiService){
-    
+    this.username = document.location.pathname.substr(1).split('/')[0];
+
     // check if the username in the config exists on the backend
-    this.userExists(this.admin.username);
+    this.userExists(this.username);
   }
 
-  onUserNameSubmit(value){
-    this._api.registerUsername(value).subscribe(
+  onUserNameSubmit(username){
+    let data = {
+      username : username,
+      key : '0',
+      name : 'notset',
+      blogName : config.constants.parameters.blog,
+      heading : config.constants.parameters.heading,
+      subheading : config.constants.parameters.subheading
+    }
+
+    this._api.getKey(username).subscribe(
       res => {
         this.key = res.code;
       }
-    );
+    )
+
+    this._api.registerUsername(data).subscribe(() => {
+      this.userCreated = true;
+    });
   }
 
   userExists(value){
@@ -41,6 +58,18 @@ export class GetComponent {
         res => {
           if(!res.available){
             this.accountAlreadyCreated = true;
+          }
+          else{
+            for(let i = 0; i < this.username.length; i++){
+              if(this.username)
+               this.newUsername += this.username.charAt(i);
+               if(i == this.username.length - 1) this.onUsernameChange(this.newUsername);
+               
+               if(this.username.length < 6) { 
+                 this.notEnoughCharsError = true;
+               }
+            }
+            
           }
         }
       );

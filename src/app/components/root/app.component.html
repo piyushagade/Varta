@@ -1,4 +1,5 @@
-<app-header>
+<app-header
+    [username] = "username">
 </app-header>
 
 <router-outlet (activate)="onActivate($event, outlet)" (deactivate)="onDeactivate()" #outlet>

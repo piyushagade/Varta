@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import * as menu from '../../config/menu';
@@ -15,6 +15,7 @@ export class HeaderComponent {
   activeMenuItem;
   menuItems = menu.menuItems.items;
   config = config.constants;
+  @Input() username;
 
   activateMenuItem(item){
     this.activeMenuItem = item;

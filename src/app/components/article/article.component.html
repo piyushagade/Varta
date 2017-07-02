@@ -18,12 +18,14 @@
 						<div class="col-md-3 col-md-push-9 animate-box-disabled">
 							<h3>Summary</h3>
 							<p>{{ data.introduction }}</p>
-							<ul class="fh5co-list-check" *ngIf="data.tags && data.tags.length > 0">
-								<li *ngFor="let tag of data.tags.split(',')">{{ tag }}</li>
-							</ul>
+							<small>Category:</small><br/>
+							<span class="accent">{{ data.category }}</span>
+							<!--<ul class="fh5co-list-check">
+								<li>{{ data.category }}</li>
+							</ul>-->
 						</div>
 						<div class="col-md-9 col-md-pull-3">
-							<p class="animate-box-disabled">{{ data.text }}</p>
+							<p class="animate-box-disabled text-break">{{ data.text }}</p>
 						</div>
 					</div>
 				</div>

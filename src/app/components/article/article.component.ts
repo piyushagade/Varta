@@ -14,8 +14,10 @@ export class ArticleComponent {
     tags : '',
     image : ''
   };
+  username;
 
   constructor(private _r : Router, private _api : ApiService){
+    this.username = this._r.url.substr(1).split('/')[0];
 
     this._r.events.subscribe((val) => {
       this.onRouteChange();
@@ -23,7 +25,7 @@ export class ArticleComponent {
   }
   
   onRouteChange(){
-    this._api.getArticle(this._r.url.substr(1)).subscribe(
+    this._api.getArticle(this._r.url.substr(1).split("/")[1], this.username).subscribe(
       res => this.onGetArticle(res[0])
     );
   }

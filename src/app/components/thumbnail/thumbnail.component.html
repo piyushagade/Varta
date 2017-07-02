@@ -4,6 +4,6 @@
 	<div class="fh5co-portfolio-description">
 		<h2>{{ data.title }}</h2>
 		<p>{{ data.introduction }}</p>
-		<p><a [routerLink]="data.link" class="btn btn-primary">Read more</a></p>
+		<p><a [routerLink]="'/' + username + '/' + data.link" class="btn btn-primary">Read more</a></p>
 	</div>
 </div>

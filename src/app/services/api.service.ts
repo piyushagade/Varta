@@ -12,8 +12,8 @@ export class ApiService{
     constructor(private _http: Http){
     }
 
-    getArticles(){
-        return this._http.get('http://localhost:3000' + "/blog/" + config.constants.admin.username)
+    getArticles(username){
+        return this._http.get('http://localhost:3000' + "/blog/" + username)
             .map(response => response.json())
             .catch(error => {
                 console.log("Error fetching JSON");
@@ -22,8 +22,8 @@ export class ApiService{
     }
 
     
-    getArticle(page_id : string){
-        return this._http.get('http://localhost:3000' + "/blog/" + config.constants.admin.username + '/' + page_id)
+    getArticle(page_id, username){
+        return this._http.get('http://localhost:3000' + "/blog/" + username + '/' + page_id)
             .map(response => response.json())
             .catch(error => {
                 console.log("Error fetching JSON");
@@ -32,20 +32,16 @@ export class ApiService{
     }
 
     
-    addArticle(article){
+    addArticle(article, username){
         let key = article.key;
-        let username = config.constants.admin.username;
-
         delete article.key;
         article.username = username;
-
-        console.log([article, key][1]);
         
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
         return this._http.post('http://localhost:3000' + "/blog/add/", [article, key], {
-            headers: headers
+                headers: headers
             })
             
     }
@@ -61,12 +57,34 @@ export class ApiService{
     }
 
     // Register a username
-    registerUsername(username : string){
+    getKey(username){
         return this._http.get('http://localhost:3000' + "/user/key/" + username)
             .map(response => response.json())
             .catch(error => {
                 console.log("Error fetching JSON");
                 return Observable.throw(error.json())
             });
+    }
+    
+    // Register a username
+    registerUsername(data){        
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        return this._http.post('http://localhost:3000' + "/user/register", data, { 
+                headers: headers
+            })
+            
+    }
+    
+    // Update a username
+    updateUsername(data){        
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        return this._http.post('http://localhost:3000' + "/user/update", data, { 
+                headers: headers
+            })
+            
     }
 }
