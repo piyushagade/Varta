@@ -19,6 +19,7 @@ export class AddComponent {
   origin;
   dirs = config.constants.dirs;
   keyError = false;
+  category = 'Journal';
   gallery = [
     'http://seodzen.ru/wp-content/uploads/images/550_3_5f702bcf18e8b244653462d7f0a5ce9c.jpg',
     'https://static1.squarespace.com/static/55393e52e4b045984a736948/t/5807a23b414fb58dd37bbc42/1476895300381/blog-header.jpg?format=2500w',
@@ -63,6 +64,8 @@ export class AddComponent {
     data.link = '/' + data.title.toLowerCase().replace(/\s/g, "-");    
     data.author = config.constants.admin.name;
     data.date = new Date().getTime();
+    data.category = this.category;
+    if(data.image == undefined) data.image = '';
 
     // Update data store
     this._api.addArticle(data).subscribe(
@@ -82,5 +85,9 @@ export class AddComponent {
 
   setGalleryImage(url){
     this.imageGallery = url;
+  }
+
+  selectCategory(category){
+    this.category = category;
   }
 }

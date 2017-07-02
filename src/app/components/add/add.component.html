@@ -33,6 +33,23 @@
 									</ul>
 								</div>
 
+								<!--Category-->
+								<div class="btn-group">
+									<label for="category">Select a category <span class="text-warning"><strong>*</strong></span></label>
+									<button type="button" class="form-control" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name="category">{{ category }}</button>
+									<div class="dropdown-menu">
+										<a class="dropdown-item" (click)="selectCategory('Journal')">Journal</a>
+										<a class="dropdown-item" (click)="selectCategory('Politics')">Politics</a>
+										<a class="dropdown-item" (click)="selectCategory('Travel')">Travel</a>
+										<a class="dropdown-item" (click)="selectCategory('Food')">Food</a>
+										<a class="dropdown-item" (click)="selectCategory('Academics')">Academics</a>
+										<a class="dropdown-item" (click)="selectCategory('Fitness')">Fitness</a>
+										<a class="dropdown-item" (click)="selectCategory('Sports')">Sports</a>
+										<a class="dropdown-item" (click)="selectCategory('Skills')">Skills</a>
+										<a class="dropdown-item" (click)="selectCategory('How-to')">How-to</a>
+									</div>
+								</div>
+
 								<!--VartaKey-->
 								<div class="form-group">
 									<label for="key">Author VartaKey <span class="text-warning"><strong>*</strong></span></label>
@@ -47,7 +64,7 @@
 
 								<!--Submit-->
 								<div class="form-group">
-									<div style="margin: 0 0 10px 0;">If everything looks good, click 'Publish'.</div>
+									<div style="margin: 0 0 10px 0;">Everything looks good?</div>
 									<button type="submit" class="btn btn-primary" [disabled]="!articleForm.valid">Publish</button>
 									<div class="alert alert-danger" *ngIf="keyError">You entered wrong VartaKey</div>
 								</div>
