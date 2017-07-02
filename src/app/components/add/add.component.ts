@@ -18,6 +18,7 @@ export class AddComponent {
   author;
   origin;
   dirs = config.constants.dirs;
+  keyError = false;
   public articleForm = this._fb.group({
       title: ["", Validators.compose([Validators.required, Validators.maxLength(35), Validators.minLength(6)])],
       introduction: ["", Validators.compose([Validators.required, Validators.maxLength(200), Validators.minLength(15)])],
@@ -45,13 +46,14 @@ export class AddComponent {
         res => {
           this.onPostArticle(res, data);
         },
-        err => console.log(err.json().message),
-        () => console.log('Transaction complete')
+        err => console.log(err.json().message)
     );    
   }
 
   onPostArticle(res, data){
-    if(JSON.parse(res._body).status) this._r.navigateByUrl(data.link);
+    console.log(JSON.parse(res._body).status);
     
+    if(JSON.parse(res._body).status == 'success') this._r.navigateByUrl(data.link); 
+    else if(JSON.parse(res._body).status == 'key-error') this.keyError = true; 
   }
 }
