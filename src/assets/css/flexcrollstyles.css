@@ -1,0 +1,59 @@
+#scroll {
+    width: 100%;
+    height: 200px;
+    margin: auto auto;
+    overflow: auto;
+}
+#scroll ul {
+    float:left;
+    margin-right:-999em;
+    white-space: nowrap;
+    list-style: none;
+}
+#scroll li {
+    margin:15px 15px 0 0;
+    text-align: center;
+    float: left;
+    display:inline;           
+}
+#scroll img {
+    border: 0;
+    display: block;
+    width: 118px;
+    height: 118px;
+}
+#scroll a:active img, #scroll a:focus img, #scroll a:hover img {
+    border: 0px solid #000;
+}
+#scroll a {
+    text-decoration:none;
+    font-weight:bold;
+    color:#FFF;
+}
+#scroll a:active, #scroll a:focus, #scroll a:hover {
+    color:#FFF;
+}
+#scroll span {
+    padding: 5px 0 0;
+    display:block;
+}
+/* ------------- Flexcroll CSS ------------ */
+.scrollgeneric {
+    line-height:1px;
+    font-size:1px;
+    position:absolute;
+    top:0;left:0;
+}
+.hscrollerbase {
+    height: 18px;
+}
+.hscrollerbar {
+    height:8px;
+    background:#f44;
+    cursor: pointer;
+    padding:3px;
+    border-radius: 8px;
+}
+.hscrollerbar:hover {
+    background:#B44;
+}

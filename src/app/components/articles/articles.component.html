@@ -22,16 +22,16 @@
 			<div *ngIf="noArticles">
 				<div class="fh5co-img-right" class="fh5co-portfolio-item">
 					<div class="fh5co-portfolio-figure animate-box-disabled blur" [ngStyle]="{'background-image': 'url(' + dirs.images + 'varta.jpg' + ')'}"></div>
-					<div class="fh5co-portfolio-description" style="padding: 44px 60px 44px 60px;">
+					<div class="fh5co-portfolio-description" style="padding: 50px 60px 44px 70px;">
 						<h2>Hey {{ admin.name }}</h2>
 						<div class="form-group">
 							<p>Welcome to Varta.<br/>
-							You don't have any articles yet. Let's get writing.</p>
+							You don't have any articles yet. Let's write one.</p>
 							<button routerLink="/add" class="btn btn-primary">Add an article</button>
 						</div>
 						
 						<div class="form-group">
-							<p>To add an article you will need a 'VartaKey'. To get one, click on the button below.</p>
+							<p>To add an article you will need a 'VartaKey'. <br/>To get one, create a Varta account.</p>
 							<button routerLink="/varta-key" class="btn btn-grey">Get a VartaKey</button>
 						</div>
 					</div>
