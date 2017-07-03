@@ -17,6 +17,7 @@ export class HeaderComponent {
   config = config.constants;
   @Input() username;
   user = {};
+  onLoginPage = false;
 
   activateMenuItem(item){
     this.activeMenuItem = item;
@@ -26,8 +27,12 @@ export class HeaderComponent {
     this._r.events.subscribe((val) => {
       this.onRouteChange();
     });
+  }
 
-
+  ngOnInit(){
+    if(this.username == 'varta-key' || this.username == 'login'){
+      this.onLoginPage = true;
+    }
   }
 
   onRouteChange(){
@@ -52,6 +57,7 @@ export class HeaderComponent {
     } 
 
     // Get user data
+    if(this.username != 'varta-key')
     this._api.getUserData(this.username).subscribe(
       res => {
         this.user = res;

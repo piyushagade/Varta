@@ -22,14 +22,15 @@ export class GetComponent {
   userCreated = false;
 
   public userForm = this._fb.group({
-      username: ["", Validators.compose([Validators.required, Validators.maxLength(35), Validators.minLength(6)])],
+      username: ["", Validators.compose([Validators.required, Validators.maxLength(15), Validators.minLength(6)])],
   });
 
   constructor(private _fb: FormBuilder, private _api : ApiService){
     this.username = document.location.pathname.substr(1).split('/')[0];
+    this.username = this.username == 'varta-key' ? '' : this.username;
 
     // check if the username in the config exists on the backend
-    this.userExists(this.username);
+    if(this.username != '') this.userExists(this.username);
   }
 
   onUserNameSubmit(username){
@@ -53,6 +54,7 @@ export class GetComponent {
     });
   }
 
+  // Check if user exists
   userExists(value){
     this._api.getUserAvailability(value).subscribe(
         res => {

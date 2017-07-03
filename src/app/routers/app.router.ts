@@ -6,8 +6,12 @@ import { ArticleComponent } from '../components/article/article.component';
 import { AddComponent } from '../components/add/add.component';
 import { GetComponent } from '../components/get/get.component';
 import { AdminComponent } from '../components/admin/admin.component';
+import { LoginComponent } from '../components/login/login.component';
 
 export const router: Routes = [
+    { path: '', redirectTo: '/login', pathMatch: 'full' },
+    { path: 'login', component: LoginComponent },
+    { path: 'varta-key', component: GetComponent },
     { path: ':username', redirectTo: ':username/home', pathMatch: 'full' },
     { path: ':username/home', component: ArticlesComponent },
     { path: ':username/add', component: AddComponent },
