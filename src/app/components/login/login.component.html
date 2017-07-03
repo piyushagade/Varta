@@ -11,16 +11,16 @@
 
 					<div class="row card-heading">
 						<div class="form-group">
-							<div class="col-md-4 col-md-offset-4 text-left">
+							<div class="col-md-2 col-md-offset-5 text-left">
 								<label for="username">Varta Username <span class="text-warning"><strong>*</strong></span></label>
 								<input type="text" class="form-control" formControlName="username" aria-describedby="username" placeholder="bruce-wayne" (keyup)="onUserNameChange(username)" [(ngModel)]="username">
 								<div class="alert alert-danger" *ngIf="loginForm.controls['username'].hasError('required') && loginForm.controls['username'].touched">You must enter a username.</div>
 								<div class="alert alert-warning" *ngIf="loginForm.controls['username'].hasError('maxlength') && loginForm.controls['username'].touched">Length limit exceeded.</div>
-								<div class="alert alert-danger" *ngIf="!userAlreadyExists && loginForm.valid">This username (blog) doesn't exist.</div>
+								<div class="alert alert-danger" *ngIf="!userAlreadyExists && loginForm.valid">This username doesn't exist.</div>
 							</div>
 
 							<div class="col-md-8 col-md-offset-2">
-								<button style="margin: 20px 0 10px 0;" [routerLink]="'/' + username + '/varta-key'" class="btn btn-primary" [disabled]="!loginForm.valid">Proceed</button>
+								<button style="margin: 20px 0 10px 0;" [routerLink]="'/' + username + '/home'" class="btn btn-primary" [disabled]="!userAlreadyExists || !loginForm.valid">Proceed</button>
 							</div>
 
 							<div class="col-md-8 col-md-offset-2">
@@ -42,7 +42,7 @@
 					<div class="col-md-10 col-md-offset-1">
 						<div class="row">
 							<h2 class="section-lead text-center">Leadership</h2>
-							<div class="col-md-3 col-sm-6 col-xs-6 col-xxs-12 fh5co-staff to-animate">
+							<div class="col-md-3 col-sm-6 col-xs-6 col-xxs-12 fh5co-staff to-animate-disabled">
 								<figure>
 								<img src="../../../assets/images/user.jpg" alt="Free HTML5 Template by FREEHTML5.co" class="img-responsive">
 								</figure>
@@ -53,7 +53,7 @@
 									<li><a href="#"><i class="icon-github"></i></a></li>
 								</ul> 	
 							</div>
-							<div class="col-md-3 col-sm-6 col-xs-6 col-xxs-12 fh5co-staff to-animate">
+							<div class="col-md-3 col-sm-6 col-xs-6 col-xxs-12 fh5co-staff to-animate-disabled">
 								<figure>
 								<img src="../../../assets/images/user_2.jpg" alt="Free HTML5 Template by FREEHTML5.co" class="img-responsive">
 								</figure>
@@ -65,7 +65,7 @@
 								</ul> 	
 							</div>
 							<div class="clearfix visible-sm-block visible-xs-block"></div>
-							<div class="col-md-3 col-sm-6 col-xs-6 col-xxs-12 fh5co-staff to-animate">
+							<div class="col-md-3 col-sm-6 col-xs-6 col-xxs-12 fh5co-staff to-animate-disabled">
 								<figure>
 								<img src="../../../assets/images/user_3.jpg" alt="Free HTML5 Template by FREEHTML5.co" class="img-responsive">
 								</figure>
@@ -76,7 +76,7 @@
 									<li><a href="#"><i class="icon-github"></i></a></li>
 								</ul> 	
 							</div>
-							<div class="col-md-3 col-sm-6 col-xs-6 col-xxs-12 fh5co-staff to-animate">
+							<div class="col-md-3 col-sm-6 col-xs-6 col-xxs-12 fh5co-staff to-animate-disabled">
 								<figure>
 								<img src="../../../assets/images/user.jpg" alt="Free HTML5 Template by FREEHTML5.co" class="img-responsive">
 								</figure>
@@ -101,14 +101,14 @@
 						<div class="row">
 							<h2 class="section-lead text-center">Features</h2>
 							<div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12 fh5co-service">
-								<div class="fh5co-icon to-animate"><i class="icon-present"></i></div>
+								<div class="fh5co-icon to-animate-disabled"><i class="icon-present"></i></div>
 								<div class="fh5co-desc">
 									<h3>100% Free</h3>
 									<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
 								</div>	
 							</div>
 							<div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12 fh5co-service">
-								<div class="fh5co-icon to-animate"><i class="icon-eye"></i></div>
+								<div class="fh5co-icon to-animate-disabled"><i class="icon-eye"></i></div>
 								<div class="fh5co-desc">
 									<h3>Retina Ready</h3>
 									<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
@@ -116,7 +116,7 @@
 							</div>
 							<div class="clearfix visible-sm-block visible-xs-block"></div>
 							<div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12 fh5co-service">
-								<div class="fh5co-icon to-animate"><i class="icon-crop"></i></div>
+								<div class="fh5co-icon to-animate-disabled"><i class="icon-crop"></i></div>
 								<div class="fh5co-desc">
 									<h3>Fully Responsive</h3>
 									<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
@@ -124,7 +124,7 @@
 							</div>
 
 							<div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12 fh5co-service">
-								<div class="fh5co-icon to-animate"><i class="icon-speedometer"></i></div>
+								<div class="fh5co-icon to-animate-disabled"><i class="icon-speedometer"></i></div>
 								<div class="fh5co-desc">
 									<h3>Lightweight</h3>
 									<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
@@ -132,14 +132,14 @@
 							</div>
 							<div class="clearfix visible-sm-block visible-xs-block"></div>
 							<div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12 fh5co-service">
-								<div class="fh5co-icon to-animate"><i class="icon-heart"></i></div>
+								<div class="fh5co-icon to-animate-disabled"><i class="icon-heart"></i></div>
 								<div class="fh5co-desc">
 									<h3>Made with Love</h3>
 									<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
 								</div>
 							</div>
 							<div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12 fh5co-service">
-								<div class="fh5co-icon to-animate"><i class="icon-umbrella"></i></div>
+								<div class="fh5co-icon to-animate-disabled"><i class="icon-umbrella"></i></div>
 								<div class="fh5co-desc">
 									<h3>Eco Friendly</h3>
 									<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>

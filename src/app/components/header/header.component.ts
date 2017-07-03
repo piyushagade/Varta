@@ -30,7 +30,7 @@ export class HeaderComponent {
   }
 
   ngOnInit(){
-    if(this.username == 'varta-key' || this.username == 'login'){
+    if(this.username == 'varta-key' || this.username == 'login' || this.username == '404'){
       this.onLoginPage = true;
     }
   }

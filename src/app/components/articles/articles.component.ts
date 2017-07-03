@@ -27,34 +27,36 @@ export class ArticlesComponent {
 
     
   }
+  // Check if user exists
+  userExists(value){
+    this._api.getUserAvailability(value).subscribe(
+      res => {
 
-    userExists(value){
-      this._api.getUserAvailability(value).subscribe(
-        res => {
+        // User exists
+        if(!res.available){
+          this.userAlreadyExists = true;
+          
+          this._api.getPublishedArticles(this.username).subscribe(
+            res => this.onGetArticles(res)
+          );
 
-          // User exists
-          if(!res.available){
-            this.userAlreadyExists = true;
-            
-            this._api.getPublishedArticles(this.username).subscribe(
-              res => this.onGetArticles(res)
-            );
-
-            // Get user data
-            this._api.getUserData(this.username).subscribe(
-              res => {
-                this.user = res;
-              }
-            );
-          }
-
-          // No user with that username
-          else{
-            this.userAlreadyExists = false;
-            this.noArticles = true;
-          }
+          // Get user data
+          this._api.getUserData(this.username).subscribe(
+            res => {
+              this.user = res;
+            }
+          );
         }
-      );
+
+        // No user with that username, then show a 404
+        else{
+          this.userAlreadyExists = false;
+          this.noArticles = true;
+
+          this._r.navigateByUrl('/404');
+        }
+      }
+    );
   }
 
 

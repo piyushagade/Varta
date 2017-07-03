@@ -10,14 +10,23 @@ import { LoginComponent } from '../components/login/login.component';
 
 export const router: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
+    { path: 'home', redirectTo: '/login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
     { path: 'varta-key', component: GetComponent },
+
+    
+    { path: 'add', component: ArticleComponent },
+    { path: 'admin', component: ArticleComponent },
+    { path: 'me', component: ArticleComponent },
+    { path: '404', component: ArticleComponent },
+
     { path: ':username', redirectTo: ':username/home', pathMatch: 'full' },
     { path: ':username/home', component: ArticlesComponent },
     { path: ':username/add', component: AddComponent },
     { path: ':username/varta-key', component: GetComponent },
     { path: ':username/admin', component: AdminComponent },
     { path: ':username/:article', component: ArticleComponent },
+    { path: '**', component: ArticleComponent },
 ];
 
 export const routes: ModuleWithProviders = RouterModule.forRoot(router);
