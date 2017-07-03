@@ -14,7 +14,7 @@ export class ApiService{
 
     getPublishedArticles(username){
 
-        return this._http.get('http://localhost:3000' + "/blog/published/" + username)
+        return this._http.get(config.constants.server.url + ':' + config.constants.server.port + "/blog/published/" + username)
             .map(response => response.json())
             .catch(error => {
                 console.log("Error fetching JSON");
@@ -24,7 +24,7 @@ export class ApiService{
 
     getArticles(username){
 
-        return this._http.get('http://localhost:3000' + "/blog/" + username)
+        return this._http.get(config.constants.server.url + ':' + config.constants.server.port + "/blog/" + username)
             .map(response => response.json())
             .catch(error => {
                 console.log("Error fetching JSON");
@@ -34,7 +34,7 @@ export class ApiService{
 
     
     getArticle(page_id, username){
-        return this._http.get('http://localhost:3000' + "/blog/" + username + '/' + page_id)
+        return this._http.get(config.constants.server.url + ':' + config.constants.server.port + "/blog/" + username + '/' + page_id)
             .map(response => response.json())
             .catch(error => {
                 console.log("Error fetching JSON");
@@ -53,7 +53,7 @@ export class ApiService{
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
-        return this._http.post('http://localhost:3000' + "/blog/add/", [article, key], {
+        return this._http.post(config.constants.server.url + ':' + config.constants.server.port + "/blog/add/", [article, key], {
                 headers: headers
             })
             
@@ -61,7 +61,7 @@ export class ApiService{
 
     // Get availability of a username
     getUserAvailability(username : string){
-        return this._http.get('http://localhost:3000' + "/user/check/" + username)
+        return this._http.get(config.constants.server.url + ':' + config.constants.server.port + "/user/check/" + username)
             .map(response => response.json())
             .catch(error => {
                 console.log("Error fetching JSON");
@@ -71,7 +71,7 @@ export class ApiService{
 
     // Register a username
     getKey(username){
-        return this._http.get('http://localhost:3000' + "/user/key/" + username)
+        return this._http.get(config.constants.server.url + ':' + config.constants.server.port + "/user/key/" + username)
             .map(response => response.json())
             .catch(error => {
                 console.log("Error fetching JSON");
@@ -84,7 +84,7 @@ export class ApiService{
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
-        return this._http.post('http://localhost:3000' + "/user/register", data, { 
+        return this._http.post(config.constants.server.url + ':' + config.constants.server.port + "/user/register", data, { 
                 headers: headers
             })
             
@@ -95,7 +95,7 @@ export class ApiService{
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
-        return this._http.post('http://localhost:3000' + "/user/update", data, { 
+        return this._http.post(config.constants.server.url + ':' + config.constants.server.port + "/user/update", data, { 
                 headers: headers
             })
             
@@ -104,7 +104,7 @@ export class ApiService{
 
     // Get user data
     getUserData(username){
-        return this._http.get('http://localhost:3000' + "/user/get/" + username)
+        return this._http.get(config.constants.server.url + ':' + config.constants.server.port + "/user/get/" + username)
             .map(response => response.json())
             .catch(error => {
                 console.log("Error fetching JSON");
@@ -115,7 +115,7 @@ export class ApiService{
 
     // Publish article
     publishArticle(id){
-        return this._http.get('http://localhost:3000' + "/blog/publish/" + id)
+        return this._http.get(config.constants.server.url + ':' + config.constants.server.port + "/blog/publish/" + id)
             .map(response => response.json())
             .catch(error => {
                 console.log("Error fetching JSON");
@@ -126,7 +126,7 @@ export class ApiService{
 
     // Unpublish article
     unpublishArticle(id){
-        return this._http.get('http://localhost:3000' + "/blog/unpublish/" + id)
+        return this._http.get(config.constants.server.url + ':' + config.constants.server.port + "/blog/unpublish/" + id)
             .map(response => response.json())
             .catch(error => {
                 console.log("Error fetching JSON");
@@ -137,7 +137,7 @@ export class ApiService{
 
     // Delete article
     deleteArticle(id){
-        return this._http.get('http://localhost:3000' + "/blog/remove/" + id)
+        return this._http.get(config.constants.server.url + ':' + config.constants.server.port + "/blog/remove/" + id)
             .map(response => response.json())
             .catch(error => {
                 console.log("Error fetching JSON");

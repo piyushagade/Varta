@@ -13,7 +13,7 @@ export const menuItems = {
         link : 'add'
       },
       { 
-        title : 'Edit',
+        title : 'Admin',
         link : '/admin'
       },
     ]

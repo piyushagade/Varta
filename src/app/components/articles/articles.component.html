@@ -3,8 +3,10 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2">
-						<h1 class="intro-lead">{{ user.heading }}</h1>
-						<p [innerHTML]="user.subheading"></p>
+						<h1 class="intro-lead" *ngIf="!(user.heading)">Ready to create your blog?</h1>
+						<h1 class="intro-lead" *ngIf="(user.heading)">{{ user.heading }}</h1>
+						<p *ngIf="user.subheading" [innerHTML]="user.subheading"></p>
+						<p *ngIf="!(user.subheading)">Get started by creating a Varta account.</p>
 					</div>
 				</div>
 			</div>
@@ -14,11 +16,21 @@
 		<div id="fh5co-portfolio">
 			<!--If articles present-->
 			<div *ngFor='let article of blog; let i = index;'>
-				<app-thumbnail *ngIf="i < parameters.maxNoOfThumbnails"
+				<!--<app-thumbnail *ngIf="i < parameters.maxNoOfThumbnails"
 					[data] = "article"
 					[index] = "i"
 					[username]="username"> 
-				</app-thumbnail>
+				</app-thumbnail>-->
+
+				<div  [ngClass]="i % 2 != 0 ? 'fh5co-img-right' : ''" class="fh5co-portfolio-item">
+					<div class="fh5co-portfolio-figure animate-box-disabled blur" *ngIf="article.image !== ''" [ngStyle]="{'background-image': 'url(' + article.image + ')'}"></div>
+					<div class="fh5co-portfolio-figure animate-box-disabled blur" *ngIf="article.image === ''" [ngStyle]="{'background-image': 'url(' + dirs.images + 'work_1.jpg' + ')'}"></div>
+					<div class="fh5co-portfolio-description">
+						<h2>{{ article.title }}</h2>
+						<p>{{ article.introduction }}</p>
+						<p><button [routerLink]="'/' + username + article.link" class="btn btn-primary">Continue reading</button></p>
+					</div>
+				</div>
 			</div>
 
 			<!--If not signed in and no articles exists-->
@@ -27,7 +39,7 @@
 
 					<div class="fh5co-portfolio-figure animate-box-disabled blur" [ngStyle]="{'background-image': 'url(' + dirs.images + 'varta.jpg' + ')'}"></div>
 					<div class="fh5co-portfolio-description" style="padding: 50px 60px 44px 70px;" *ngIf="userAlreadyExists">
-						<h2>Hey {{ user.name == 'Anonymous' ? 'there.' : user.name}}</h2>
+						<h2>Hey {{ user.name == 'Anonymous' || '' || !(user.name) ? 'there.' : user.name}}</h2>
 						<div class="form-group">
 							<p>Welcome to Varta.<br/>
 							You don't have any articles yet. Let's write one.</p>

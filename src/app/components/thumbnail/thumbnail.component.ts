@@ -17,4 +17,8 @@ export class ThumbnailComponent {
   constructor(private _r : Router){
 
   }
+
+  continueReading(link){
+    console.log(link);
+  }
 }

@@ -26,6 +26,7 @@ export class AddComponent {
   galleryVisible = true;
   previewVisible = false;
   user = {};
+  accountAlreadyCreated = false;
 
   public articleForm = this._fb.group({
       title: ["", Validators.compose([Validators.required, Validators.maxLength(35), Validators.minLength(6)])],
@@ -39,12 +40,26 @@ export class AddComponent {
     this.origin = document.location.origin;
     this.username = document.location.pathname.substr(1).split('/')[0];
 
+    // Check if the username exists
+    this.userExists(this.username);
+
     // Get user data
     this._api.getUserData(this.username).subscribe(
       res => {
         this.user = res;
       }
     );
+  }
+
+  // Check if a user exists
+  userExists(value){
+    this._api.getUserAvailability(value).subscribe(
+        res => {
+          if(!res.available){
+            this.accountAlreadyCreated = true;
+          }
+        }
+      );
   }
 
   onNewArticleSubmit(event) {

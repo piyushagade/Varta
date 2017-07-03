@@ -3,16 +3,23 @@
 	<form [formGroup]="articleForm" (ngSubmit)="onNewArticleSubmit($event)">
 		<div class="cover" [ngStyle]="{'background-image': 'url(' + dirs.images + 'varta.jpg' + ')', 'background-position': 'center center'}">
 			<div class="container-fluid text-center card-heading">
-				<div class="row">
-					<div class="col-md-8 col-md-offset-2">
-						<h1 class="intro-lead">Add an article</h1>
-						<p class="">Author: <a *ngIf="user.name == ''" target="_blank">Anonymous</a><a *ngIf="user.name != ''" target="_blank">{{ user.name }}</a></p>
+				<div class="col-md-8 col-md-offset-2" *ngIf="accountAlreadyCreated">
+					<h1 class="intro-lead">Add an article</h1>
+					<p class="">Author: <a *ngIf="user.name == '' || !(user.name)" target="_blank">Anonymous</a><a *ngIf="user.name != ''">{{ user.name }}</a></p>
+				</div>
+
+				<div class="col-md-8 col-md-offset-2" *ngIf="!accountAlreadyCreated">
+					<h1 class="intro-lead">Add an article</h1>
+					<p>No Varta account with the name '{{ username }}' found. <br/>You need a Varta account to add articles.</p>
+					<div class="form-group col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">							
+						<div style="margin: 20px 0 10px 0;">Let's change that.</div>
+						<button class="btn btn-primary" [routerLink]="'/' + username + '/varta-key'">Create Account</button>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div id="fh5co-content">
+		<div id="fh5co-content" *ngIf="accountAlreadyCreated">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-10 col-md-offset-1">

@@ -17,8 +17,8 @@ export const constants = {
         js : '../../../assets/js/'
       },
       'server' : {
-        url : '',
-        port : ''
+        url : 'http://ec2-34-210-238-35.us-west-2.compute.amazonaws.com',
+        port : '3001'
       },
       'gallery' : [
         'http://seodzen.ru/wp-content/uploads/images/550_3_5f702bcf18e8b244653462d7f0a5ce9c.jpg',

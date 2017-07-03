@@ -40,6 +40,7 @@ export class AdminComponent {
     this.getArticles();
   }
 
+  // Check if a user exists
   userExists(value){
     this._api.getUserAvailability(value).subscribe(
         res => {
@@ -76,8 +77,8 @@ export class AdminComponent {
     );
   }
 
+  // Get all articles
   getArticles(){
-    // Get all articles
     this._api.getArticles(this.username).subscribe(
       res => {
         this.allArticles = res;
@@ -103,6 +104,10 @@ export class AdminComponent {
   }
 
   deleteArticle(i){
-    console.log(i);
+    this._api.deleteArticle(i).subscribe(
+      res => {
+        this.getArticles();
+      }
+    )
   }
 }
