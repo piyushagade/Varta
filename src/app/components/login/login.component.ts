@@ -24,16 +24,24 @@ export class LoginComponent {
   });
 
   constructor(private _r: Router, private _api : ApiService, private _fb : FormBuilder){
-    
+    this._r.events.subscribe((val) => {
+      // this.onRouteChange();
+    });
   }
+
+
+  // On route change
+  // onRouteChange(){
+  //   this.username = this._r.url.substr(1).split("/")[0];
+  // }
 
   // On username field change
   onUserNameChange(username){
-    this.userExists(username);
+    if(username && username != '') this.userExists(username);
   }
 
   // Check if user exists
-  userExists(value){
+  userExists(value){    
     this._api.getUserAvailability(value).subscribe(
       res => {
         // User exists

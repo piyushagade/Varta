@@ -37,11 +37,21 @@ export class HeaderComponent {
     }
     else{
       this.onLoginPage = false;
-      this.userExists(this.username);
+      if(this.username) this.userExists(this.username);
     }
   }
 
   onRouteChange(){
+    let username = this._r.url.substr(1).split("/")[0]
+    if(username && username != '')
+    if(username == 'varta-key' || username == 'login' || username == '404'){
+      this.onLoginPage = true;
+    }
+    else{
+      this.onLoginPage = false;
+      this.username = username;
+    }
+
     // Active Home menu item
     if(this._r.url.substr(1) == ''){
       this.activateMenuItem(this.menuItems[0]);

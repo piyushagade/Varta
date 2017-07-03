@@ -16,7 +16,6 @@
 					<h1 class="intro-lead" *ngIf="userAlreadyExists">{{ user.heading }}</h1>
 					<p *ngIf="!userAlreadyExists">Get started by creating a Varta account.</p>
 					<p *ngIf="userAlreadyExists" [innerHTML]="user.subheading"></p>
-					<p> isBusy: {{ isBusy }} </p>
 				</div>
 			</div>
 		</div>
