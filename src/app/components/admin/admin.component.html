@@ -1,3 +1,11 @@
+
+<!--Spinner-->
+<div class="loading" *ngIf="showSpinner">
+    <div class="loading-div-logo">
+        <img class="loading-logo" [src]="dirs.images + 'logo.png'">
+    </div>
+</div>
+
 <div id="fh5co-main">
 	<form [formGroup]="adminForm" (ngSubmit)="savePreferences()">
 		<div class="cover text-center" [ngStyle]="{'background-image': 'url(' + dirs.images + 'varta.jpg' + ')', 'background-position': 'center center'}">
@@ -54,7 +62,7 @@
 								<div class="form-group">
 									<label for="authorName">Author's name <span class="text-warning"><strong>*</strong></span></label>
 									<input type="text" class="form-control" formControlName="authorName" name="authorName" aria-describedby="authorName" placeholder="Author's name" [(ngModel)] = "authorName">
-									<small class="form-text text-muted">Used {{ authorName | limitChars: '25' }} characters</small>
+									<small class="form-text text-muted">Used {{ authorName | limitCharsForInput: '25' }} characters</small>
 									<div class="alert alert-danger" *ngIf="adminForm.controls['authorName'].hasError('required') && adminForm.controls['authorName'].touched">You must enter a name.</div>
 									<div class="alert alert-warning" *ngIf="adminForm.controls['authorName'].hasError('maxlength') && adminForm.controls['authorName'].touched">Length limit exceeded.</div>
 									<div class="alert alert-warning" *ngIf="adminForm.controls['authorName'].hasError('minlength') && adminForm.controls['authorName'].touched">Add more characters.</div>
@@ -63,7 +71,7 @@
 								<div class="form-group">
 									<label for="blogName">Blog name <span class="text-warning"><strong>*</strong></span></label>
 									<input type="text" class="form-control" formControlName="blogName" name="blogName" aria-describedby="name" placeholder="Blog name" [(ngModel)] = "blogName">
-									<small class="form-text text-muted">Used {{ blogName | limitChars: '15' }} characters</small>
+									<small class="form-text text-muted">Used {{ blogName | limitCharsForInput: '15' }} characters</small>
 									<div class="alert alert-danger" *ngIf="adminForm.controls['blogName'].hasError('required') && adminForm.controls['blogName'].touched">You must enter a name.</div>
 									<div class="alert alert-warning" *ngIf="adminForm.controls['blogName'].hasError('maxlength') && adminForm.controls['blogName'].touched">Length limit exceeded.</div>
 									<div class="alert alert-warning" *ngIf="adminForm.controls['blogName'].hasError('minlength') && adminForm.controls['blogName'].touched">Add more characters.</div>
@@ -72,7 +80,7 @@
 								<div class="form-group">
 									<label for="heading">Blog heading <span class="text-warning"><strong>*</strong></span></label>
 									<input type="text" class="form-control" formControlName="heading" name="heading" aria-describedby="heading" placeholder="Blog heading" [(ngModel)] = "blogHeading">
-									<small class="form-text text-muted">Used {{ blogHeading | limitChars: '25' }} characters</small>
+									<small class="form-text text-muted">Used {{ blogHeading | limitCharsForInput: '25' }} characters</small>
 									<div class="alert alert-danger" *ngIf="adminForm.controls['heading'].hasError('required') && adminForm.controls['heading'].touched">You must enter a heading.</div>
 									<div class="alert alert-warning" *ngIf="adminForm.controls['heading'].hasError('maxlength') && adminForm.controls['heading'].touched">Length limit exceeded.</div>
 									<div class="alert alert-warning" *ngIf="adminForm.controls['heading'].hasError('minlength') && adminForm.controls['heading'].touched">Add more characters.</div>
@@ -81,7 +89,7 @@
 								<div class="form-group">
 									<label for="subheading">Sub-heading <span class="text-warning"><strong>*</strong></span></label>
 									<input type="text" class="form-control" formControlName="subheading" name="subheading" aria-describedby="subheading" placeholder="Blog subheading" [(ngModel)] = "blogSubheading">
-									<small class="form-text text-muted">Used {{ blogSubheading | limitChars: '45' }} characters</small>
+									<small class="form-text text-muted">Used {{ blogSubheading | limitCharsForInput: '45' }} characters</small>
 									<div class="alert alert-danger" *ngIf="adminForm.controls['subheading'].hasError('required') && adminForm.controls['subheading'].touched">You must enter a subheading.</div>
 									<div class="alert alert-warning" *ngIf="adminForm.controls['subheading'].hasError('maxlength') && adminForm.controls['subheading'].touched">Length limit exceeded.</div>
 									<div class="alert alert-warning" *ngIf="adminForm.controls['subheading'].hasError('minlength') && adminForm.controls['subheading'].touched">Add more characters.</div>
@@ -95,30 +103,42 @@
 	</form>
 
 	<!--Manage articles-->
-	<div class="col-sm-10 col-sm-offset-2 col-md-8 col-md-offset-2" *ngIf="accountAlreadyCreated">
-		<h3>Manage articles</h3>
 
-		<div class="alert alert-success" *ngIf="userUpdated">Blog preferences updated</div>
-		<div class="alert alert-danger" *ngIf="keyError">Wrong VartaKey inserted</div>
-		<div class="alert alert-warning" *ngIf="allArticles.length == 0">You have 0 published articles.</div>
-
-		<ul class="buttons-ul">
-			<li class="buttons-li" *ngFor="let article of allArticles; let i = index">
-				<div class="buttons-div" [ngClass]="{'published': article.published, 'unpublished': !article.published}">
-					{{ article.title }}
-					<p class="text-right buttons-li-p">
-						<small>{{ article.category}}, {{ (article.date / 1000 | amFromUnix) | amDateFormat:'LL'  }}</small>
-					</p>
-
-					<div class="buttons text-right">
-						<!--<i class="material-icons button" [routerLink]="article.link" target="_new">open_in_new</i>-->
-						<i class="material-icons button" (click)="publishArticle(article._id)" *ngIf="!article.published">cloud_queue</i>
-						<i class="material-icons button" (click)="unpublishArticle(article._id)" *ngIf="article.published">cloud_off</i>
-						<i class="material-icons button" (click)="deleteArticle(article._id)">delete_forever</i>
-					</div>
+	<div class="cover text-center">
+		<div class="container-fluid text-center card-heading">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2" *ngIf="accountAlreadyCreated">
+					<h1 class="intro-lead">Manage your articles</h1>
+					<p class="">You can publish or unpublish your articles, or you can delete them permanently.</p>
 				</div>
-			</li>
-		</ul>
-		
+				<div class="col-md-10 col-md-offset-1 text-left" *ngIf="accountAlreadyCreated">
+					<ul class="buttons-ul">
+						<li class="buttons-li" *ngFor="let article of allArticles; let i = index">
+							<div class="buttons-div" [ngClass]="{'published': article.published, 'unpublished': !article.published}">
+								<!--Spinner-->
+								<div class="buttons-busy text-center" *ngIf="isBusyPublishUnpublish[article._id] > 0">
+									<i class="material-icons icon-busy">autorenew</i>
+								</div>
+
+								<!--Data-->
+								{{ article.title | limitChars : 26 }}
+								<p class="text-right buttons-li-p">
+									<small>{{ article.published ? 'Published' : 'Unpublished' }}</small><br/>
+									<small>{{ article.category}}, {{ (article.date / 1000 | amFromUnix) | amDateFormat:'LL'  }}</small>
+								</p>
+
+								<div class="buttons text-right">
+
+									<!--<i class="material-icons button" [routerLink]="article.link" target="_new">open_in_new</i>-->
+									<i class="material-icons button" (click)="publishArticle(article._id)" *ngIf="!article.published">cloud_queue</i>
+									<i class="material-icons button" (click)="unpublishArticle(article._id)" *ngIf="article.published">cloud_off</i>
+									<i class="material-icons button" (click)="deleteArticle(article._id)">delete_forever</i>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>

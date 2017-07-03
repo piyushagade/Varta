@@ -20,6 +20,7 @@ import { ApiService } from '../services/api.service';
 import { DashifyPipe } from '../pipes/dashify.pipe';
 import { CapitalizePipe } from '../pipes/capitalize.pipe';
 import { LimitCharsPipe } from '../pipes/limitChars.pipe';
+import { LimitCharsForInputPipe } from '../pipes/limitCharsForInput.pipe';
 import { MomentModule } from 'angular2-moment';
 
 @NgModule({
@@ -38,6 +39,7 @@ import { MomentModule } from 'angular2-moment';
     DashifyPipe,
     CapitalizePipe,
     LimitCharsPipe,
+    LimitCharsForInputPipe,
   ],
   imports: [
     BrowserModule,

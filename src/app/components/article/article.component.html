@@ -1,3 +1,11 @@
+
+<!--Spinner-->
+<div class="loading" *ngIf="showSpinner">
+    <div class="loading-div-logo">
+        <img class="loading-logo" [src]="dirs.images + 'logo.png'">
+    </div>
+</div>
+
 <div id="fh5co-main" *ngIf="data != undefined">
 	<div class="cover" [ngStyle]="{'background-image': 'url(' + data.image + ')', 'background-position': 'center center'}">
 		<div class="container-fluid text-center card-heading">

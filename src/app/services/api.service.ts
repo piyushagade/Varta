@@ -47,8 +47,6 @@ export class ApiService{
         let key = article.key;
         delete article.key;
         article.username = username;
-
-        console.log(username);
         
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
@@ -108,7 +106,7 @@ export class ApiService{
             .map(response => response.json())
             .catch(error => {
                 console.log("Error fetching JSON");
-                return Observable.throw(error.json())
+                return Observable.throw(error)
             });
     }
 
@@ -116,10 +114,12 @@ export class ApiService{
     // Publish article
     publishArticle(id){
         return this._http.get(config.constants.server.url + ':' + config.constants.server.port + "/blog/publish/" + id)
-            .map(response => response.json())
+            .map(response => {
+                'done'
+            })
             .catch(error => {
                 console.log("Error fetching JSON");
-                return Observable.throw(error.json())
+                return Observable.throw(error)
             });
     }
 
@@ -127,7 +127,9 @@ export class ApiService{
     // Unpublish article
     unpublishArticle(id){
         return this._http.get(config.constants.server.url + ':' + config.constants.server.port + "/blog/unpublish/" + id)
-            .map(response => response.json())
+            .map(response => {
+                'done'
+            })
             .catch(error => {
                 console.log("Error fetching JSON");
                 return Observable.throw(error.json())

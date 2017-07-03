@@ -16,7 +16,7 @@
 									<div class="alert alert-warning" *ngIf="(userForm.controls['username'].hasError('minlength') && userForm.controls['username'].touched) || notEnoughCharsError">Add more characters.</div>
 									<div class="alert alert-success" *ngIf="available && userForm.valid">Username available</div>
 									<div class="alert alert-danger" *ngIf="!available && userForm.valid">Username already taken.</div>
-									<small class="form-text text-muted">Used {{ newUsername | limitChars: '20' }} characters</small>
+									<small class="form-text text-muted">Used {{ newUsername | limitCharsForInput: '20' }} characters</small>
 									
 									<div style="margin: 60px 0 10px 0;">All set? Click below.</div>
 									<button type="submit" class="btn btn-primary" [disabled]="!userForm.valid || !available || newUsername == ''">Next Step</button>

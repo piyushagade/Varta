@@ -2,6 +2,7 @@ import { Component, trigger, state, animate, transition, style } from '@angular/
 import * as config from '../../config/config';
 import { ApiService } from '../../services/api.service';
 import { Router } from '@angular/router';
+import {Observable} from 'rxjs/Rx';
 
 @Component({
   selector: 'app-articles',
@@ -12,11 +13,10 @@ import { Router } from '@angular/router';
     ],
   providers: [ ApiService ],
   animations: [
-    trigger("fadeInOut", [
+    trigger("fadeOut", [
       state("open", style({opacity: 1})),
       state("closed", style({opacity: 0})),
       transition("open => closed", animate( "1200ms" )),
-      transition("closed => open", animate( "400ms" )),
     ])
   ],
 })
@@ -30,53 +30,56 @@ export class ArticlesComponent {
   username;
   userAlreadyExists;
   user = {};
-  isBusy = 0;
+  isBusy = 100;
+  showSpinner = true;
 
   constructor(private _r: Router, private _api : ApiService){
     this.username = this._r.url.substr(1).split("/")[0];
 
+    // Initialize isBusy
+    this.isBusy = 0;
+
     // Check if user exists
     this.userExists(this.username);
   }
-  
+
   // Check if user exists
   userExists(value){
     
     this._api.getUserAvailability(value).subscribe(
       res => {
-        //Set busy
-        this.isBusy++;
 
         // User exists
         if(!res.available){
-          //Set busy
-          this.isBusy++;
-
           this.userAlreadyExists = true;
           
           this._api.getPublishedArticles(this.username).subscribe(
             res => this.onGetArticles(res)
           );
 
+          // Set busy
+          this.setBusy();
+          
           // Get user data
           this._api.getUserData(this.username).subscribe(
             res => {
-
               // Set user data
               this.user = res;
+              
+              // Set idle
+              this.setIdle();
             }
           );
         }
 
         // No user with that username, then show a 404
         else{
-          //Set busy
-          this.isBusy--;
-          
           this.userAlreadyExists = false;
           this.noArticles = true;
-
           this._r.navigateByUrl('/404');
+
+          //Set idle
+          this.setIdle();
         }
       }
     );
@@ -84,12 +87,26 @@ export class ArticlesComponent {
 
   // On get articles data
   onGetArticles(res){
-    // Set idle
-    this.isBusy--;
-
     // Set articles data
     this.blog = res;
     if(this.blog.length == 0) this.noArticles = true;
     else this.noArticles = false;
+  }
+
+  // Set busy
+  setBusy(){
+    this.isBusy++;
+  }
+
+  // Set idle
+  setIdle(){
+    this.isBusy--;
+    if(this.isBusy == 0){
+      let timer = Observable.timer(1200);
+      timer.subscribe(
+        t => {
+         this.showSpinner = false;
+      });
+    }
   }
 }
