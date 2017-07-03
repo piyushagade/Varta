@@ -12,7 +12,7 @@
 					<!--Menu when not on login page-->
 					<div *ngIf="!onLoginPage" id="fh5co-navbar" class="navbar-collapse collapse">
 						<ul class="nav navbar-nav navbar-right">
-							<li *ngFor="let menuItem of menuItems" [ngClass]="{'active': activeMenuItem == menuItem }"><a (click)="activateMenuItem(menuItem.title);" [routerLink]="username + '/' + menuItem.link"><span>{{ menuItem.title }} <span class="border"></span></span></a></li>
+							<li *ngFor="let menuItem of menuItems" [ngClass]="{'active': activeMenuItem == menuItem }"><a (click)="activateMenuItem(menuItem.title);" [routerLink]="'/' + username + '/' + menuItem.link"><span>{{ menuItem.title }} <span class="border"></span></span></a></li>
 						</ul>
 					</div>
 				</div>

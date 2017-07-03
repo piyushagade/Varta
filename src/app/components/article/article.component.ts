@@ -15,6 +15,9 @@ export class ArticleComponent {
     image : ''
   };
   username;
+  dirs = config.constants.dirs;
+  admin = config.constants.admin;
+  parameters = config.constants.parameters;
 
   constructor(private _r : Router, private _api : ApiService){
     this.username = this._r.url.substr(1).split('/')[0];

@@ -18,6 +18,7 @@ export class HeaderComponent {
   @Input() username;
   user = {};
   onLoginPage = false;
+  accountAlreadyCreated = false;
 
   activateMenuItem(item){
     this.activeMenuItem = item;
@@ -32,6 +33,11 @@ export class HeaderComponent {
   ngOnInit(){
     if(this.username == 'varta-key' || this.username == 'login' || this.username == '404'){
       this.onLoginPage = true;
+      this.userExists(this.username);
+    }
+    else{
+      this.onLoginPage = false;
+      this.userExists(this.username);
     }
   }
 
@@ -56,6 +62,8 @@ export class HeaderComponent {
       }
     } 
 
+    
+
     // Get user data
     if(this.username != 'varta-key')
     this._api.getUserData(this.username).subscribe(
@@ -64,4 +72,21 @@ export class HeaderComponent {
       }
     );
   }
+
+  // Check if a user exists
+  userExists(value){
+    this._api.getUserAvailability(value).subscribe(
+        res => {
+
+          // User exists
+          if(!res.available){
+            this.onLoginPage = false;
+          }
+          else{
+            this.onLoginPage = true;
+          }
+        }
+      );
+  }
+
 }

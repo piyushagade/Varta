@@ -27,6 +27,7 @@ export class ArticlesComponent {
 
     
   }
+  
   // Check if user exists
   userExists(value){
     this._api.getUserAvailability(value).subscribe(
@@ -58,7 +59,6 @@ export class ArticlesComponent {
       }
     );
   }
-
 
 
   onGetArticles(res){

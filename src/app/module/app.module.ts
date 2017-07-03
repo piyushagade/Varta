@@ -15,6 +15,7 @@ import { ThumbnailComponent } from '../components/thumbnail/thumbnail.component'
 import { GetComponent } from '../components/get/get.component';
 import { AdminComponent } from '../components/admin/admin.component';
 import { LoginComponent } from '../components/login/login.component';
+import { Four04Component } from '../components/404/404.component';
 import { ApiService } from '../services/api.service';
 import { DashifyPipe } from '../pipes/dashify.pipe';
 import { CapitalizePipe } from '../pipes/capitalize.pipe';
@@ -33,6 +34,7 @@ import { MomentModule } from 'angular2-moment';
     AdminComponent,
     LoginComponent,
     AddComponent,
+    Four04Component,
     DashifyPipe,
     CapitalizePipe,
     LimitCharsPipe,
