@@ -28,12 +28,6 @@ export class ArticlesComponent {
     
   }
 
-  onGetArticles(res){
-    this.blog = res;
-    if(this.blog.length == 0) this.noArticles = true;
-    else this.noArticles = false;
-  }
-
     userExists(value){
       this._api.getUserAvailability(value).subscribe(
         res => {
@@ -42,7 +36,7 @@ export class ArticlesComponent {
           if(!res.available){
             this.userAlreadyExists = true;
             
-            this._api.getArticles(this.username).subscribe(
+            this._api.getPublishedArticles(this.username).subscribe(
               res => this.onGetArticles(res)
             );
 
@@ -61,5 +55,13 @@ export class ArticlesComponent {
           }
         }
       );
+  }
+
+
+
+  onGetArticles(res){
+    this.blog = res;
+    if(this.blog.length == 0) this.noArticles = true;
+    else this.noArticles = false;
   }
 }

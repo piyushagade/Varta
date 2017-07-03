@@ -55,8 +55,9 @@ export class AddComponent {
     data.author = config.constants.admin.name;
     data.date = new Date().getTime();
     data.category = this.category;
+    data.published = true;
     if(data.image == undefined) data.image = '';
-
+    
     // Update data store
     this._api.addArticle(data, this.username).subscribe(
         res => {

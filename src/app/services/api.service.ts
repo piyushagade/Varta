@@ -12,7 +12,18 @@ export class ApiService{
     constructor(private _http: Http){
     }
 
+    getPublishedArticles(username){
+
+        return this._http.get('http://localhost:3000' + "/blog/published/" + username)
+            .map(response => response.json())
+            .catch(error => {
+                console.log("Error fetching JSON");
+                return Observable.throw(error.json())
+            });
+    }
+
     getArticles(username){
+
         return this._http.get('http://localhost:3000' + "/blog/" + username)
             .map(response => response.json())
             .catch(error => {
@@ -36,6 +47,8 @@ export class ApiService{
         let key = article.key;
         delete article.key;
         article.username = username;
+
+        console.log(username);
         
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
@@ -92,6 +105,39 @@ export class ApiService{
     // Get user data
     getUserData(username){
         return this._http.get('http://localhost:3000' + "/user/get/" + username)
+            .map(response => response.json())
+            .catch(error => {
+                console.log("Error fetching JSON");
+                return Observable.throw(error.json())
+            });
+    }
+
+
+    // Publish article
+    publishArticle(id){
+        return this._http.get('http://localhost:3000' + "/blog/publish/" + id)
+            .map(response => response.json())
+            .catch(error => {
+                console.log("Error fetching JSON");
+                return Observable.throw(error.json())
+            });
+    }
+
+
+    // Unpublish article
+    unpublishArticle(id){
+        return this._http.get('http://localhost:3000' + "/blog/unpublish/" + id)
+            .map(response => response.json())
+            .catch(error => {
+                console.log("Error fetching JSON");
+                return Observable.throw(error.json())
+            });
+    }
+
+
+    // Delete article
+    deleteArticle(id){
+        return this._http.get('http://localhost:3000' + "/blog/remove/" + id)
             .map(response => response.json())
             .catch(error => {
                 console.log("Error fetching JSON");

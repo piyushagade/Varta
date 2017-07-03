@@ -12,6 +12,7 @@
 
 		<!--Articles thumbnails-->
 		<div id="fh5co-portfolio">
+			<!--If articles present-->
 			<div *ngFor='let article of blog; let i = index;'>
 				<app-thumbnail *ngIf="i < parameters.maxNoOfThumbnails"
 					[data] = "article"
@@ -20,8 +21,10 @@
 				</app-thumbnail>
 			</div>
 
+			<!--If not signed in and no articles exists-->
 			<div *ngIf="noArticles">
 				<div class="fh5co-img-right" class="fh5co-portfolio-item">
+
 					<div class="fh5co-portfolio-figure animate-box-disabled blur" [ngStyle]="{'background-image': 'url(' + dirs.images + 'varta.jpg' + ')'}"></div>
 					<div class="fh5co-portfolio-description" style="padding: 50px 60px 44px 70px;" *ngIf="userAlreadyExists">
 						<h2>Hey {{ user.name == 'Anonymous' ? 'there.' : user.name}}</h2>
@@ -37,7 +40,7 @@
 						</div>
 					</div>
 
-
+					<!--If no account with the username exists-->
 					<div class="fh5co-portfolio-description" style="padding: 50px 60px 44px 70px;" *ngIf="!userAlreadyExists">
 						<h2>Hey there.</h2>
 						<div class="form-group">
@@ -50,6 +53,8 @@
 					</div>
 				</div>
 			</div>
+
+			
 		</div>
 		<!--Article thumbnails END-->
 

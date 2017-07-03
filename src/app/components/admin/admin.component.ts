@@ -19,6 +19,7 @@ export class AdminComponent {
   username: string;
   userUpdated = false;
   keyError = false;
+  allArticles = [];
 
   public adminForm = this._fb.group({
       authorName: ["", Validators.compose([Validators.required, Validators.maxLength(25), Validators.minLength(3)])],
@@ -31,8 +32,12 @@ export class AdminComponent {
   constructor(private _fb: FormBuilder, private _api : ApiService){
     this.username = document.location.pathname.substr(1).split('/')[0];
 
-    // check if the username in the config exists on the backend
+    // Check if the username in the config exists on the backend
     this.userExists(this.username);
+
+    
+    // Get articles
+    this.getArticles();
   }
 
   userExists(value){
@@ -69,5 +74,35 @@ export class AdminComponent {
         }
       }
     );
+  }
+
+  getArticles(){
+    // Get all articles
+    this._api.getArticles(this.username).subscribe(
+      res => {
+        this.allArticles = res;
+      } 
+    )
+  }
+
+
+  publishArticle(i){
+    this._api.publishArticle(i).subscribe(
+      res => {
+        this.getArticles();
+      }
+    )
+  }
+
+  unpublishArticle(i){
+    this._api.unpublishArticle(i).subscribe(
+      res => {
+        this.getArticles();
+      }
+    )
+  }
+
+  deleteArticle(i){
+    console.log(i);
   }
 }
