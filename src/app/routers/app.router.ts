@@ -7,6 +7,7 @@ import { AddComponent } from '../components/add/add.component';
 import { GetComponent } from '../components/get/get.component';
 import { AdminComponent } from '../components/admin/admin.component';
 import { LoginComponent } from '../components/login/login.component';
+import { Four04Component } from '../components/404/404.component';
 
 export const router: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -14,11 +15,7 @@ export const router: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'varta-key', component: GetComponent },
 
-    
-    { path: 'add', component: ArticleComponent },
-    { path: 'admin', component: ArticleComponent },
-    { path: 'me', component: ArticleComponent },
-    { path: '404', component: ArticleComponent },
+    { path: '404', component: Four04Component },
 
     { path: ':username', redirectTo: ':username/home', pathMatch: 'full' },
     { path: ':username/home', component: ArticlesComponent },

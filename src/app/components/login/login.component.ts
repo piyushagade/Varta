@@ -36,8 +36,6 @@ export class LoginComponent {
   userExists(value){
     this._api.getUserAvailability(value).subscribe(
       res => {
-        console.log(res.available);
-        
         // User exists
         if(!res.available){
           this.userAlreadyExists = true;

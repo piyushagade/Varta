@@ -2,8 +2,17 @@
     [username] = "username">
 </app-header>
 
-<router-outlet (activate)="onActivate($event, outlet)" (deactivate)="onDeactivate()" #outlet>
+<router-outlet 
+    (activate)="onActivate($event, outlet)" 
+    (deactivate)="onDeactivate()"
+    #outlet>
 </router-outlet>
 
 <app-footer>
 </app-footer>
+
+<!--<div class="loading" [@fadeInOut]="isBusy ? 'open' : 'closed'">
+    <div class="loading-div-logo">
+        <img class="loading-logo" [src]="dirs.images + 'logo.png'">
+    </div>
+</div>-->

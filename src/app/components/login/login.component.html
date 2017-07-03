@@ -5,15 +5,25 @@
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2">
 							<h1 class="intro-lead">Welcome to Varta.</h1>
-							<p>Varta is a free-forever, and an ads-free blogging service. <br/>To continue, enter a username of the blog you wish to visit. Or, you can login to your Varta blog by entering your username.</p>
+							<p>
+								Varta is a free-forever and an ads-free blogging service. <br/>
+								The name Varta is derived from the word 'vartalap', which translates to 'a conversation'.
+							</p>
+							<p>
+								And Varta aims to be your means of conversing with the world.
+							</p>
+							<p>
+								To continue, enter a username of the blog you wish to visit. <br/>
+								Or, you can login to your Varta blog by entering your username.
+							</p>
 						</div>
 					</div>
 
 					<div class="row card-heading">
 						<div class="form-group">
-							<div class="col-md-2 col-md-offset-5 text-left">
+							<div class="col-md-4 col-md-offset-4 text-center">
 								<label for="username">Varta Username <span class="text-warning"><strong>*</strong></span></label>
-								<input type="text" class="form-control" formControlName="username" aria-describedby="username" placeholder="bruce-wayne" (keyup)="onUserNameChange(username)" [(ngModel)]="username">
+								<input type="text" class="form-control text-center" formControlName="username" aria-describedby="username" placeholder="bruce-wayne" (keyup)="onUserNameChange(username)" [(ngModel)]="username">
 								<div class="alert alert-danger" *ngIf="loginForm.controls['username'].hasError('required') && loginForm.controls['username'].touched">You must enter a username.</div>
 								<div class="alert alert-warning" *ngIf="loginForm.controls['username'].hasError('maxlength') && loginForm.controls['username'].touched">Length limit exceeded.</div>
 								<div class="alert alert-danger" *ngIf="!userAlreadyExists && loginForm.valid">This username doesn't exist.</div>

@@ -6,7 +6,10 @@ import { ApiService } from '../../services/api.service';
 @Component({
   selector: 'app-article',
   templateUrl: './article.component.html',
-  styleUrls: ['./article.component.css'],
+  styleUrls: [
+    './article.component.css',
+    '../../../assets/css/spinner.css'
+    ],
   providers: [ ApiService ]
 })
 export class ArticleComponent {

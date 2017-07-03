@@ -195,3 +195,10 @@
 		</div>-->
 
 	</div>
+
+<!--Spinner-->
+<div class="loading" [@fadeInOut]="isBusy == 0 ? 'open' : 'closed'">
+    <div class="loading-div-logo">
+        <img class="loading-logo" [src]="dirs.images + 'logo.png'">
+    </div>
+</div>
