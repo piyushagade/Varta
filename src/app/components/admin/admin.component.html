@@ -103,41 +103,59 @@
 	</form>
 
 	<!--Manage articles-->
-
-	<div class="cover text-center">
+	<div class="cover text-center" *ngIf="accountAlreadyCreated">
 		<div class="container-fluid text-center card-heading">
 			<div class="row">
-				<div class="col-md-8 col-md-offset-2" *ngIf="accountAlreadyCreated">
-					<h1 class="intro-lead">Manage your articles</h1>
-					<p class="">You can publish or unpublish your articles, or you can delete them permanently.</p>
-				</div>
-				<div class="col-md-10 col-md-offset-1 text-left" *ngIf="accountAlreadyCreated">
-					<ul class="buttons-ul">
-						<li class="buttons-li" *ngFor="let article of allArticles; let i = index">
-							<div class="buttons-div" [ngClass]="{'published': article.published, 'unpublished': !article.published}">
-								<!--Spinner-->
-								<div class="buttons-busy text-center" *ngIf="isBusyPublishUnpublish[article._id] > 0">
-									<i class="material-icons icon-busy">autorenew</i>
+				<form [formGroup]="manageArticlesForm" (ngSubmit)="verifyKeyManageArticles()">
+					<div class="col-md-8 col-md-offset-2">
+						<h1 class="intro-lead">Manage your articles</h1>
+						<p class="">You can publish or unpublish your articles, or you can delete them permanently.</p><br/>
+						<p *ngIf="!showArticles">But first, enter the VartaKey corresponding to this blog website.</p>
+					</div>
+
+					<div class="col-md-4 col-md-offset-4" *ngIf="!showArticles">
+						<div class="form-group text-center">
+							<label for="key">VartaKey <span class="text-warning"><strong>*</strong></span></label>
+							<input type="password" class="form-control  text-center" formControlName="key" aria-describedby="key" placeholder="Your secret key">
+							<div class="alert alert-danger" *ngIf="manageArticlesForm.controls['key'].hasError('required') && manageArticlesForm.controls['key'].touched">You must enter the key.</div>
+							<div class="alert alert-warning" *ngIf="manageArticlesForm.controls['key'].hasError('maxlength') && manageArticlesForm.controls['key'].touched">Length limit exceeded.</div>
+							<div class="alert alert-warning" *ngIf="manageArticlesForm.controls['key'].hasError('minlength') && manageArticlesForm.controls['key'].touched">Add more characters.</div>
+							<div class="alert alert-danger" *ngIf="keyErrorManage && manageArticlesForm.controls['key'].touched">Wrong VartaKey</div>
+						</div>
+
+						<div class="form-group text-center">
+							<button class="btn btn-primary" type="submit" [disabled]="!manageArticlesForm.valid">Verify</button>
+						</div>
+					</div>
+
+					<div class="col-md-10 col-md-offset-1 text-left" *ngIf="showArticles">
+						<ul class="buttons-ul">
+							<li class="buttons-li" *ngFor="let article of allArticles; let i = index">
+								<div class="buttons-div" [ngClass]="{'published': article.published, 'unpublished': !article.published}">
+									<!--Spinner-->
+									<div class="buttons-busy text-center" *ngIf="isBusyPublishUnpublish[article._id] > 0">
+										<i class="material-icons icon-busy">autorenew</i>
+									</div>
+
+									<!--Data-->
+									{{ article.title | limitChars : 26 }}
+									<p class="text-right buttons-li-p">
+										<small>{{ article.published ? 'Published' : 'Unpublished' }}</small><br/>
+										<small>{{ article.category}}, {{ (article.date / 1000 | amFromUnix) | amDateFormat:'LL'  }}</small>
+									</p>
+
+									<div class="buttons text-right">
+
+										<i class="material-icons button" [routerLink]="'/' + username + '/' + article.link" target="_new">open_in_new</i>
+										<i class="material-icons button" (click)="publishArticle(article._id)" *ngIf="!article.published">cloud_queue</i>
+										<i class="material-icons button" (click)="unpublishArticle(article._id)" *ngIf="article.published">cloud_off</i>
+										<i class="material-icons button" (click)="deleteArticle(article._id)">delete_forever</i>
+									</div>
 								</div>
-
-								<!--Data-->
-								{{ article.title | limitChars : 26 }}
-								<p class="text-right buttons-li-p">
-									<small>{{ article.published ? 'Published' : 'Unpublished' }}</small><br/>
-									<small>{{ article.category}}, {{ (article.date / 1000 | amFromUnix) | amDateFormat:'LL'  }}</small>
-								</p>
-
-								<div class="buttons text-right">
-
-									<!--<i class="material-icons button" [routerLink]="article.link" target="_new">open_in_new</i>-->
-									<i class="material-icons button" (click)="publishArticle(article._id)" *ngIf="!article.published">cloud_queue</i>
-									<i class="material-icons button" (click)="unpublishArticle(article._id)" *ngIf="article.published">cloud_off</i>
-									<i class="material-icons button" (click)="deleteArticle(article._id)">delete_forever</i>
-								</div>
-							</div>
-						</li>
-					</ul>
-				</div>
+							</li>
+						</ul>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>

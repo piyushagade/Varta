@@ -67,7 +67,7 @@ export class ApiService{
             });
     }
 
-    // Register a username
+    // Get key
     getKey(username){
         return this._http.get(config.constants.server.url + ':' + config.constants.server.port + "/user/key/" + username)
             .map(response => response.json())

@@ -12,28 +12,42 @@
 			<div class="row">
 				<div class="col-md-12">
 					<h1 class="intro-lead">{{ data.title }}</h1>
-					<p class="">Written on {{ (data.date / 1000 | amFromUnix) | amDateFormat:'LL' }} by <a target="_blank">{{ data.author }}</a></p>
+					<p class="">Written by <a target="_blank">{{ data.author }}</a></p>
 				</div>
 			</div>
 		</div>
 	</div>
 
 	<div id="fh5co-content">
-		<div class="container">
+		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
 					<div class="row">
 						<div class="col-md-3 col-md-push-9 animate-box-disabled">
 							<h3>Summary</h3>
-							<p>{{ data.introduction }}</p>
-							<small>Category:</small><br/>
-							<span class="accent">{{ data.category }}</span>
+							<p class="text-justify">{{ data.introduction }}</p>
+							<p>
+								<small>Category:</small><br/>
+								<span class="accent">{{ data.category }}</span><br/>
+							</p>
+							<p>
+								<small>Status:</small><br/>
+								<span class="accent">{{ data.published ? 'Published' : 'Unpublished' }}</span><span *ngIf="data.published"> on {{ (data.date / 1000 | amFromUnix) | amDateFormat:'LL' }} </span><br/>
+							</p>
 							<!--<ul class="fh5co-list-check">
 								<li>{{ data.category }}</li>
 							</ul>-->
 						</div>
-						<div class="col-md-9 col-md-pull-3">
-							<p class="animate-box-disabled text-break roboto">{{ data.text }}</p>
+
+						<!--Article text-->
+						<div class="col-md-9 col-md-pull-3" *ngIf="data.published">
+							<p class="animate-box-disabled text-break text-justify roboto">{{ data.text }}</p>
+						</div>
+						
+						<!--If article is unpublished-->
+						<div class="col-md-9 col-md-pull-3" *ngIf="!data.published">
+							<h3>Article is unavailable</h3>
+							<p class="animate-box-disabled text-break text-justify roboto">The article has been unpublished by the author.</p>
 						</div>
 					</div>
 				</div>

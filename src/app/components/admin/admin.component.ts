@@ -24,10 +24,12 @@ export class AdminComponent {
   username: string;
   userUpdated = false;
   keyError = false;
+  keyErrorManage = false;
   allArticles = [];
   isBusy = 100;
   isBusyPublishUnpublish = {};
   showSpinner = true;
+  showArticles = false;
 
   public adminForm = this._fb.group({
       authorName: ["", Validators.compose([Validators.required, Validators.maxLength(25), Validators.minLength(3)])],
@@ -35,6 +37,10 @@ export class AdminComponent {
       heading: ["", Validators.compose([Validators.required, Validators.maxLength(25), Validators.minLength(3)])],
       subheading: ["", Validators.compose([Validators.required, Validators.maxLength(45), Validators.minLength(3)])],
       key: ["", Validators.compose([Validators.required, Validators.maxLength(8), Validators.minLength(4)])],
+  });
+
+  public manageArticlesForm = this._fb.group({
+     key: ["", Validators.compose([Validators.required, Validators.maxLength(8), Validators.minLength(4)])],
   });
 
   constructor(private _fb: FormBuilder, private _api : ApiService){
@@ -192,6 +198,24 @@ export class AdminComponent {
   // Set idle
   setIdlePublishUnpublish(i){
     this.isBusyPublishUnpublish[i] = this.isBusyPublishUnpublish[i] == undefined ? 0 : this.isBusyPublishUnpublish[i] - 1;
+  }
+
+  verifyKeyManageArticles(){
+    
+    // Get key
+    this._api.getKey(this.username).subscribe(
+      res => {
+        if(res.code != this.manageArticlesForm.value.key) {
+          this.keyErrorManage = true;
+          this.showArticles = false;
+        }
+        else{
+          this.keyErrorManage = false;
+          this.showArticles = true;
+        }       
+      }
+    );
+    
   }
 
 }
