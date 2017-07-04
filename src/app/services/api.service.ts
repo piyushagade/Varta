@@ -33,8 +33,8 @@ export class ApiService{
     }
 
     
-    getArticle(page_id, username){
-        return this._http.get(config.constants.server.url + ':' + config.constants.server.port + "/blog/" + username + '/' + page_id)
+    getArticle(article_identifier, username){
+        return this._http.get(config.constants.server.url + ':' + config.constants.server.port + "/blog/" + username + '/' + article_identifier)
             .map(response => response.json())
             .catch(error => {
                 console.log("Error fetching JSON");
@@ -156,5 +156,15 @@ export class ApiService{
                 headers: headers
             })
             
+    }
+
+    // Toggle comment state
+    toggleCommentsPublished(article_id, comment_id){
+        return this._http.get(config.constants.server.url + ':' + config.constants.server.port + "/blog/comment/toggle/" + article_id + '/' + comment_id)
+            .map(response => response.json())
+            .catch(error => {
+                console.log("Error fetching JSON");
+                return Observable.throw(error)
+            });
     }
 }

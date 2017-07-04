@@ -195,6 +195,9 @@ export class AdminComponent {
         this.getArticles();
       }
     )
+
+    // Hide manage comments panel if visible
+    this.commentsVisible = false;
   }
 
   // Set busy
@@ -257,8 +260,20 @@ export class AdminComponent {
   }
 
   // Toggle the state of comments between published and unpublished
-  togglePublished(j){
-    console.log(j);    
+  togglePublished(comment_id, article_id, article_identifier){
+    
+    this._api.toggleCommentsPublished(article_id, comment_id).subscribe(
+      res => {
+        if(res.status == 'success'){
+          // Get article whose where the comment with comment_id lies
+          this._api.getArticle(article_identifier.substr(1), this.username).subscribe(
+            res => {
+              if(res) this.manageCommentsArticle = res;
+            }
+          );
+        }
+      }
+    );   
   }
 
 }

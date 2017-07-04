@@ -115,7 +115,7 @@
 						<p *ngIf="!showArticles">But first, enter the VartaKey corresponding to this blog website.</p>
 					</div>
 
-					<div class="col-md-2 col-md-offset-5" *ngIf="!showArticles">
+					<div class="col-sm-4 col-sm-offset-4 col-md-2 col-md-offset-5" *ngIf="!showArticles">
 						<div class="form-group text-center">
 							<label for="key">VartaKey <span class="text-warning"><strong>*</strong></span></label>
 							<input type="password" class="form-control  text-center" formControlName="key" aria-describedby="key" placeholder="Your secret key">
@@ -130,7 +130,8 @@
 						</div>
 					</div>
 
-					<div class="col-md-10 col-md-offset-1 text-left list-inline" *ngIf="showArticles">
+					<!--Articles' thumbnails-->
+					<div class="col-md-10 col-md-offset-1 text-left" *ngIf="showArticles">
 						<ul class="buttons-ul">
 							<li class="buttons-li" *ngFor="let article of allArticles; let i = index">
 								<div class="buttons-div" [ngClass]="{'published': article.published, 'unpublished': !article.published}">
@@ -146,8 +147,8 @@
 										<small>{{ article.category}}, {{ (article.date / 1000 | amFromUnix) | amDateFormat:'LL'  }}</small>
 									</p>
 
+									<!--Action icons-->
 									<div class="buttons text-right">
-
 										<i class="material-icons button" (click)="showComments(article.link)">comment</i>
 										<i class="material-icons button" [routerLink]="'/' + username + '/' + article.link" target="_new">open_in_new</i>
 										<i class="material-icons button" (click)="publishArticle(article._id)" *ngIf="!article.published">cloud_queue</i>
@@ -159,29 +160,27 @@
 						</ul>
 					</div>
 
-					<!--Manage comments-->
-					<div class="col-md-12 text-left list-inline" *ngIf="showArticles && commentsVisible">
-						<ul class="comments-ul">
-							<li class="comments-li" *ngFor="let article of manageCommentsArticle; let i = index">
-									<!--Data-->
-									<h3>{{ article.title }}</h3>
-									<div *ngFor="let comment of article.comments.all.reverse(); let j = index">
-										<div (click)="togglePublished(j)" class="comments-div" [ngClass]="{ 'published-comment' : comment.published, 'unpublished-comment' : !comment.published }">
-											{{ comment.text }}
-											<p class="text-left comments-li-p">
-												<small>{{ comment.published ? 'Published' : 'Unpublished' }}</small><br/>
-											</p>
-										</div>
-									</div>
+					<!--Manage comments panel-->
+					<div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 text-left" *ngIf="commentsVisible">
+						<ul class="comments-ul" *ngFor="let article of manageCommentsArticle; let i = index">
+							<!--Data-->
+							<hr/>
+							<small> Manage comments for </small><br/>
+							<h3>{{ article.title }}</h3>
+							<p>Click on a comment to toggle between 'Published' and 'Unpublished' state.</p>
 
-									<div class="comments text-right">
-
-										<i class="material-icons button" (click)="showComments(article._id)">comment</i>
-										<i class="material-icons button" [routerLink]="'/' + username + '/' + article.link" target="_new">open_in_new</i>
-										<i class="material-icons button" (click)="publishArticle(article._id)" *ngIf="!article.published">cloud_queue</i>
-										<i class="material-icons button" (click)="unpublishArticle(article._id)" *ngIf="article.published">cloud_off</i>
-										<i class="material-icons button" (click)="deleteArticle(article._id)">delete_forever</i>
-									</div>
+							<li class="comments-li" *ngFor="let comment of article.comments.all.reverse(); let j = index">
+								<div class="comments-div" [ngClass]="{ 'published-comment' : comment.published, 'unpublished-comment' : !comment.published }">
+									{{ comment.text }}
+									<p class="text-left comments-li-p">
+										<small>{{ comment.published ? 'Published' : 'Unpublished' }}</small><br/>
+									</p>
+								</div>
+								<div class="comments-buttons">
+									<i class="material-icons comments-button" (click)="togglePublished(comment._id, article._id, article.link)" *ngIf="!comment.published">cloud_queue</i>
+									<i class="material-icons comments-button" (click)="togglePublished(comment._id, article._id, article.link)" *ngIf="comment.published">cloud_off</i>
+									<i class="material-icons comments-button" (click)="deleteComment(article._id)">delete_forever</i>
+								</div>
 							</li>
 						</ul>
 					</div>

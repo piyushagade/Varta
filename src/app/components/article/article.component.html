@@ -48,13 +48,15 @@
 							<!--Comments-->
 							<h3>Comments</h3>
 							<ul class="comments-ul">
-								<li *ngIf="data.comments.all.length == 0">No comments yet.</li>
-								<li class="comments-li" *ngFor="let comment of data.comments.all.reverse()">
-									<span class="roboto text-break text-justify">{{ comment.text }}</span><br/><br/>
-									<span class="comments-metadata">
-										<small class="">Posted on {{ (comment.date / 1000 | amFromUnix) | amDateFormat:'LL' }}</small>
-										<small class="">by {{ (comment.commentor || comment.commentor == '') ? 'Anonymous' : comment.commentor }} </small>
-									</span>
+								<li *ngIf="numberOfPublishedComments == 0 || data.comments.all.length == 0">No comments yet.</li>
+								<li *ngFor="let comment of data.comments.all.reverse()">
+									<div class="comments-li" *ngIf="comment.published">
+										<span class="roboto text-break text-justify">{{ comment.text }}</span><br/><br/>
+										<span class="comments-metadata">
+											<small class="">Posted on {{ (comment.date / 1000 | amFromUnix) | amDateFormat:'LL' }}</small>
+											<small class="">by {{ (comment.commentor || comment.commentor == '') ? 'Anonymous' : comment.commentor }} </small>
+										</span>
+									</div>
 								</li>
 							</ul>
 							
@@ -72,7 +74,7 @@
 								<div class="form-group col-sm-12 col-md-12 col-lg-12">
 									<button type="submit" [disabled]="!commentsForm.valid" class="btn btn-primary">Submit</button><br/>
 									<small class="form-text text-muted">The comment will be reviewed before it goes live.</small><br/>
-									<div class="alert alert-success" *ngIf="commentPosted">Comment posted.</div>
+									<div class="alert alert-success" *ngIf="commentPosted">Comment posted. Comment will be live once it is reviewed.</div>
 								</div>
 							</form>
 						</div>

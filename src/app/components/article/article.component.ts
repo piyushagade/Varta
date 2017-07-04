@@ -29,6 +29,7 @@ export class ArticleComponent {
   commentPosted = false;
   comment;
   commentor;
+  numberOfPublishedComments = 0;
 
 
   public commentsForm = this._fb.group({
@@ -61,7 +62,13 @@ export class ArticleComponent {
     // Set idle
     this.setIdle();
 
-    this.data = res;    
+    // Set article data variable
+    this.data = res;
+
+    // Set number of published comments
+    for(let comment of res.comments.all){
+      if(comment.published) this.numberOfPublishedComments++;
+    }
   }
 
   // Set busy
@@ -84,6 +91,7 @@ export class ArticleComponent {
   onCommentSubmit(){    
     let data = {
       comment : this.commentsForm.value.comment,
+      _id : Math.floor(Math.random() * 10000000) + 10000, 
       article : this.data['_id'],
       date : new Date().getTime(),
       published : false,
@@ -101,7 +109,7 @@ export class ArticleComponent {
           );
 
           if(this.isBusy == 0){
-          let timer = Observable.timer(3200);
+          let timer = Observable.timer(5200);
           timer.subscribe(
             t => {
             this.commentPosted = false;
