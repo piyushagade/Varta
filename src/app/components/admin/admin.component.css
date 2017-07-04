@@ -146,3 +146,40 @@
         -webkit-transform: rotate(359deg);
     }
 }
+
+
+.comments-ul{
+    display: block;
+    list-style-type: none;
+    width: auto;
+    max-height : 800px;
+    overflow-y: scroll;
+}
+
+.comments-li{
+    margin: 0;
+	word-wrap: break-word;
+    padding: 10px 20px 0px 20px;
+}
+
+.comments-metadata{
+    color: #ccc;
+}
+
+.comments-div{
+    padding: 12px 20px 1px 20px;
+    background: rgba(220, 220, 220, 0.2);
+    cursor: pointer;
+}
+
+.comments-div:hover{
+    background: rgba(240, 240, 240, 0.2);
+}
+
+.published-comment{
+    border-left: 4px solid #3cb904;
+}
+
+.unpublished-comment{
+    border-left: 4px solid #c91b12;
+}

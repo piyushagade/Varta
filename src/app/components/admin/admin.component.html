@@ -148,12 +148,40 @@
 
 									<div class="buttons text-right">
 
+										<i class="material-icons button" (click)="showComments(article.link)">comment</i>
 										<i class="material-icons button" [routerLink]="'/' + username + '/' + article.link" target="_new">open_in_new</i>
 										<i class="material-icons button" (click)="publishArticle(article._id)" *ngIf="!article.published">cloud_queue</i>
 										<i class="material-icons button" (click)="unpublishArticle(article._id)" *ngIf="article.published">cloud_off</i>
 										<i class="material-icons button" (click)="deleteArticle(article._id)">delete_forever</i>
 									</div>
 								</div>
+							</li>
+						</ul>
+					</div>
+
+					<!--Manage comments-->
+					<div class="col-md-12 text-left list-inline" *ngIf="showArticles && commentsVisible">
+						<ul class="comments-ul">
+							<li class="comments-li" *ngFor="let article of manageCommentsArticle; let i = index">
+									<!--Data-->
+									<h3>{{ article.title }}</h3>
+									<div *ngFor="let comment of article.comments.all.reverse(); let j = index">
+										<div (click)="togglePublished(j)" class="comments-div" [ngClass]="{ 'published-comment' : comment.published, 'unpublished-comment' : !comment.published }">
+											{{ comment.text }}
+											<p class="text-left comments-li-p">
+												<small>{{ comment.published ? 'Published' : 'Unpublished' }}</small><br/>
+											</p>
+										</div>
+									</div>
+
+									<div class="comments text-right">
+
+										<i class="material-icons button" (click)="showComments(article._id)">comment</i>
+										<i class="material-icons button" [routerLink]="'/' + username + '/' + article.link" target="_new">open_in_new</i>
+										<i class="material-icons button" (click)="publishArticle(article._id)" *ngIf="!article.published">cloud_queue</i>
+										<i class="material-icons button" (click)="unpublishArticle(article._id)" *ngIf="article.published">cloud_off</i>
+										<i class="material-icons button" (click)="deleteArticle(article._id)">delete_forever</i>
+									</div>
 							</li>
 						</ul>
 					</div>

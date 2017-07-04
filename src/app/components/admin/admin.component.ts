@@ -35,6 +35,8 @@ export class AdminComponent {
   blogName;
   blogHeading;
   blogSubheading;
+  manageCommentsArticle;
+  commentsVisible;
 
   public adminForm = this._fb.group({
       authorName: ["", Validators.compose([Validators.required, Validators.maxLength(25), Validators.minLength(3)])],
@@ -239,6 +241,24 @@ export class AdminComponent {
       }
     );
     
+  }
+
+  //Show comments waiting to be reviewed
+  showComments(id){
+    id = id.substr(1);
+
+    this.commentsVisible = true;
+
+    // Get article whose identifier is id
+    this._api.getArticle(id, this.username).subscribe(
+      res => this.manageCommentsArticle = res
+    );
+    
+  }
+
+  // Toggle the state of comments between published and unpublished
+  togglePublished(j){
+    console.log(j);    
   }
 
 }
