@@ -113,6 +113,8 @@
 						<h1 class="intro-lead">Manage your articles</h1>
 						<p class="">You can publish or unpublish your articles, or you can delete them permanently.</p><br/>
 						<p *ngIf="!showArticles">But first, enter the VartaKey corresponding to this blog website.</p>
+						<p *ngIf="showArticles && allArticles.length == 0">You haven't written any articles yet.</p>
+						<button *ngIf="showArticles && allArticles.length == 0" [routerLink]="'/' + username + '/add'" class="btn btn-primary">Add an article</button>
 					</div>
 
 					<div class="col-sm-4 col-sm-offset-4 col-md-2 col-md-offset-5" *ngIf="!showArticles">
@@ -128,6 +130,10 @@
 						<div class="form-group text-center">
 							<button class="btn btn-primary" type="submit" [disabled]="!manageArticlesForm.valid">Verify</button>
 						</div>
+					</div>
+
+					<div class="col-md-10 col-md-offset-1 text-center">
+						
 					</div>
 
 					<!--Articles' thumbnails-->
