@@ -66,6 +66,7 @@ export class ArticleComponent {
     this.data = res;
 
     // Set number of published comments
+    if(res)
     for(let comment of res.comments.all){
       if(comment.published) this.numberOfPublishedComments++;
     }
@@ -109,7 +110,7 @@ export class ArticleComponent {
           );
 
           if(this.isBusy == 0){
-          let timer = Observable.timer(5200);
+          let timer = Observable.timer(1200);
           timer.subscribe(
             t => {
             this.commentPosted = false;

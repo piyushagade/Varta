@@ -200,6 +200,25 @@ export class AdminComponent {
     this.commentsVisible = false;
   }
 
+  deleteComment(comment_id, article_id, article_identifier){
+    this._api.deleteComment(article_id, comment_id).subscribe(
+      res => {
+        // Update comments list on the admin page
+        this._api.getArticle(article_identifier.substr(1), this.username).subscribe(
+          res => this.manageCommentsArticle = res
+        );
+      }
+    )
+  }
+
+  // Refresh comments
+  refreshComments(article_identifier){
+    // Update comments list on the admin page
+        this._api.getArticle(article_identifier.substr(1), this.username).subscribe(
+          res => this.manageCommentsArticle = res
+        );
+  }
+
   // Set busy
   setBusy(){
     this.isBusy++;
@@ -248,15 +267,22 @@ export class AdminComponent {
 
   //Show comments waiting to be reviewed
   showComments(id){
-    id = id.substr(1);
+    if(id == 'hide') this.commentsVisible = false;
+    else{
+      id = id.substr(1);
 
-    this.commentsVisible = true;
-
-    // Get article whose identifier is id
-    this._api.getArticle(id, this.username).subscribe(
-      res => this.manageCommentsArticle = res
-    );
-    
+      this.commentsVisible = true;
+      
+      // Refresh comments in some time interval
+      let timer = Observable.timer(1, 60000);
+        timer.subscribe(
+          t => {
+          // Get comments of the article whose identifier is id
+          this._api.getArticle(id, this.username).subscribe(
+            res => this.manageCommentsArticle = res
+          );
+        });
+    }
   }
 
   // Toggle the state of comments between published and unpublished

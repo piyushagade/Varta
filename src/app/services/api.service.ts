@@ -158,6 +158,20 @@ export class ApiService{
             
     }
 
+
+    // Delete comment
+    deleteComment(article_id, comment_id){
+        console.log("Deleteting: " + comment_id, article_id);
+        
+        return this._http.get(config.constants.server.url + ':' + config.constants.server.port + "/blog/comment/remove/" + article_id + '/' + comment_id)
+            .map(response => response.json())
+            .catch(error => {
+                console.log("Error fetching JSON");
+                return Observable.throw(error.json())
+            });
+    }
+
+
     // Toggle comment state
     toggleCommentsPublished(article_id, comment_id){
         return this._http.get(config.constants.server.url + ':' + config.constants.server.port + "/blog/comment/toggle/" + article_id + '/' + comment_id)

@@ -165,21 +165,28 @@
 						<ul class="comments-ul" *ngFor="let article of manageCommentsArticle; let i = index">
 							<!--Data-->
 							<hr/>
+							<div class="text-right" style="position: absolute; top: 80px; right: 60px;">
+								<i (click)="refreshComments(article.link)" class="material-icons" style="cursor: pointer; margin-right: 14px;">cached</i>
+								<i (click)="showComments('hide')" class="material-icons" style="cursor: pointer;">close</i>
+							</div>
+
 							<small> Manage comments for </small><br/>
 							<h3>{{ article.title }}</h3>
-							<p>Click on a comment to toggle between 'Published' and 'Unpublished' state.</p>
-
+							<p *ngIf="article.comments.all.length != 0">Click on a comment to toggle between 'Published' and 'Unpublished' state.</p>
+							<p *ngIf="article.comments.all.length == 0">This article has no comments yet.</p>
+							
 							<li class="comments-li" *ngFor="let comment of article.comments.all.reverse(); let j = index">
 								<div class="comments-div" [ngClass]="{ 'published-comment' : comment.published, 'unpublished-comment' : !comment.published }">
-									{{ comment.text }}
+									<span class="roboto"> {{ comment.published ? (comment.text | limitChars : 60) : comment.text }} </span>
 									<p class="text-left comments-li-p">
+										<br/>
 										<small>{{ comment.published ? 'Published' : 'Unpublished' }}</small><br/>
 									</p>
 								</div>
 								<div class="comments-buttons">
 									<i class="material-icons comments-button" (click)="togglePublished(comment._id, article._id, article.link)" *ngIf="!comment.published">cloud_queue</i>
 									<i class="material-icons comments-button" (click)="togglePublished(comment._id, article._id, article.link)" *ngIf="comment.published">cloud_off</i>
-									<i class="material-icons comments-button" (click)="deleteComment(article._id)">delete_forever</i>
+									<i class="material-icons comments-button" (click)="deleteComment(comment._id, article._id, article.link)">delete_forever</i>
 								</div>
 							</li>
 						</ul>
