@@ -7462,7 +7462,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Roboto Slab", arial, sans-serif;
 }
 
-#fh5co-portfolio {
+#fh5co-articles {
   margin-bottom: 7em;
   padding-left: 4em;
   padding-right: 4em;
@@ -7473,17 +7473,17 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
 }
 @media screen and (max-width: 768px) {
-  #fh5co-portfolio {
+  #fh5co-articles {
     margin-bottom: 4em;
   }
 }
 @media screen and (max-width: 1200px) {
-  #fh5co-portfolio {
+  #fh5co-articles {
     padding-left: 0em;
     padding-right: 0em;
   }
 }
-#fh5co-portfolio .fh5co-portfolio-item {
+#fh5co-articles .fh5co-articles-item {
   float: left;
   width: 100%;
   position: relative;
@@ -7494,65 +7494,65 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
 }
 @media screen and (max-width: 768px) {
-  #fh5co-portfolio .fh5co-portfolio-item {
+  #fh5co-articles .fh5co-articles-item {
     display: block;
   }
 }
-#fh5co-portfolio .fh5co-portfolio-item .fh5co-portfolio-description,
-#fh5co-portfolio .fh5co-portfolio-item .fh5co-portfolio-figure {
+#fh5co-articles .fh5co-articles-item .fh5co-articles-description,
+#fh5co-articles .fh5co-articles-item .fh5co-articles-figure {
   width: 50%;
 }
 @media screen and (max-width: 768px) {
-  #fh5co-portfolio .fh5co-portfolio-item .fh5co-portfolio-description,
-  #fh5co-portfolio .fh5co-portfolio-item .fh5co-portfolio-figure {
+  #fh5co-articles .fh5co-articles-item .fh5co-articles-description,
+  #fh5co-articles .fh5co-articles-item .fh5co-articles-figure {
     display: block;
     width: 100%;
   }
 }
-#fh5co-portfolio .fh5co-portfolio-item .fh5co-portfolio-figure {
+#fh5co-articles .fh5co-articles-item .fh5co-articles-figure {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
   overflow: hidden;
 }
 @media screen and (max-width: 768px) {
-  #fh5co-portfolio .fh5co-portfolio-item .fh5co-portfolio-figure {
+  #fh5co-articles .fh5co-articles-item .fh5co-articles-figure {
     height: 400px;
   }
 }
-#fh5co-portfolio .fh5co-portfolio-item .fh5co-portfolio-description {
+#fh5co-articles .fh5co-articles-item .fh5co-articles-description {
   background: #fff;
   padding: 4em;
   font-size: 20px;
   line-height: 36px;
 }
 @media screen and (max-width: 1200px) {
-  #fh5co-portfolio .fh5co-portfolio-item .fh5co-portfolio-description {
+  #fh5co-articles .fh5co-articles-item .fh5co-articles-description {
     padding: 2em;
   }
 }
 @media screen and (max-width: 768px) {
-  #fh5co-portfolio .fh5co-portfolio-item .fh5co-portfolio-description {
+  #fh5co-articles .fh5co-articles-item .fh5co-articles-description {
     padding: 1em;
   }
 }
-#fh5co-portfolio .fh5co-portfolio-item .fh5co-portfolio-description h2 {
+#fh5co-articles .fh5co-articles-item .fh5co-articles-description h2 {
   font-family: "Roboto Slab", arial, sans-serif;
   font-size: 30px;
   line-height: 34px;
   font-weight: 300;
 }
-#fh5co-portfolio .fh5co-portfolio-item.fh5co-img-right .fh5co-portfolio-figure {
+#fh5co-articles .fh5co-articles-item.fh5co-img-right .fh5co-articles-figure {
   position: absolute;
   right: 0px;
   top: 0;
   bottom: 0;
 }
 @media screen and (max-width: 768px) {
-  #fh5co-portfolio .fh5co-portfolio-item.fh5co-img-right .fh5co-portfolio-figure {
+  #fh5co-articles .fh5co-articles-item.fh5co-img-right .fh5co-articles-figure {
     position: relative;
     top: auto;
-    bototm: auto;
+    bottom: auto;
     height: 400px;
   }
 }

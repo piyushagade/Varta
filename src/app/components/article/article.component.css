@@ -40,3 +40,10 @@
 .text-break{
      white-space: pre-line;
 }
+
+.roboto{
+    font-family: "Roboto Slab", arial, sans-serif;
+    font-size: 18px;
+    line-height: 30px;
+    font-weight: 300;
+}

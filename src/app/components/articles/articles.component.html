@@ -22,7 +22,7 @@
 	</div>
 
 	<!--Articles thumbnails-->
-	<div id="fh5co-portfolio">
+	<div id="fh5co-articles">
 		<!--If articles present-->
 		<div *ngFor='let article of blog; let i = index;'>
 			<app-thumbnail *ngIf="i < parameters.maxNoOfThumbnails"
@@ -30,16 +30,6 @@
 				[index] = "i"
 				[username]="username"> 
 			</app-thumbnail>
-
-			<!--<div  [ngClass]="i % 2 != 0 ? 'fh5co-img-right' : ''" class="fh5co-portfolio-item">
-				<div class="fh5co-portfolio-figure animate-box-disabled blur" *ngIf="article.image !== ''" [ngStyle]="{'background-image': 'url(' + article.image + ')'}"></div>
-				<div class="fh5co-portfolio-figure animate-box-disabled blur" *ngIf="article.image === ''" [ngStyle]="{'background-image': 'url(' + dirs.images + 'work_1.jpg' + ')'}"></div>
-				<div class="fh5co-portfolio-description">
-					<h2>{{ article.title }}</h2>
-					<p>{{ article.introduction }}</p>
-					<p><button [routerLink]="'/' + username + article.link" class="btn btn-primary">Continue reading</button></p>
-				</div>
-			</div>-->
 		</div>
 
 		<!--If not signed in and no articles exists-->
