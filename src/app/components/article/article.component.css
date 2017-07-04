@@ -3,10 +3,17 @@
     font-size: 16px;
 }
 
+.alert{
+    padding: 4px 10px 4px 10px;
+    margin-top: 10px;
+    margin-bottom: 6px;
+    width: 160px !important;
+}
+
 .center {
-    display:table-cell;
-    vertical-align:middle;
-    float:none;
+    display: table-cell;
+    vertical-align: middle;
+    float: none;
 }
 
 .card-heading{
@@ -46,4 +53,23 @@
     font-size: 18px;
     line-height: 30px;
     font-weight: 300;
+}
+
+
+.comments-ul{
+    list-style-type: none;
+    width: auto;
+    max-height : 800px;
+    overflow-y: scroll;
+}
+
+.comments-li{
+    margin: 12px;
+	word-wrap: break-word;
+    background: rgba(220, 220, 220, 0.2);
+    padding: 10px 20px 0px 20px;
+}
+
+.comments-metadata{
+    color: #ccc;
 }

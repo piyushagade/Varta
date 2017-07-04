@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import * as config from '../../config/config';
 import { ApiService } from '../../services/api.service';
 import {Observable} from 'rxjs/Rx';
+import { FormBuilder, Validators } from '@angular/forms'
 
 @Component({
   selector: 'app-article',
@@ -25,8 +26,17 @@ export class ArticleComponent {
   parameters = config.constants.parameters;
   isBusy = 100;
   showSpinner = true;
+  commentPosted = false;
+  comment;
+  commentor;
 
-  constructor(private _r : Router, private _api : ApiService){
+
+  public commentsForm = this._fb.group({
+      comment: ["", Validators.compose([Validators.required, Validators.maxLength(1200), Validators.minLength(2)])],
+      commentor: ["", Validators.compose([ Validators.maxLength(20), Validators.minLength(6)])],
+  });
+
+  constructor(private _r : Router, private _api : ApiService, private _fb : FormBuilder){
     this.username = this._r.url.substr(1).split('/')[0];
 
     // Initialize isBusy
@@ -41,6 +51,7 @@ export class ArticleComponent {
     // Set busy
     this.setBusy();
 
+    // Get article data
     this._api.getArticle(this._r.url.substr(1).split("/")[1], this.username).subscribe(
       res => this.onGetArticle(res[0])
     );
@@ -50,7 +61,7 @@ export class ArticleComponent {
     // Set idle
     this.setIdle();
 
-    this.data = res;
+    this.data = res;    
   }
 
   // Set busy
@@ -68,5 +79,39 @@ export class ArticleComponent {
          this.showSpinner = false;
       });
     }
+  }
+
+  onCommentSubmit(){    
+    let data = {
+      comment : this.commentsForm.value.comment,
+      article : this.data['_id'],
+      date : new Date().getTime(),
+      published : false,
+      commentor : this.commentsForm.value.commentor ? this.commentsForm.value.commentor : ''
+    }
+    
+    this._api.postComment(data).subscribe(
+      res => {
+        if(JSON.parse(res['_body']).status == 'success'){
+          this.commentPosted = true;
+          
+          // Get article data
+          this._api.getArticle(this._r.url.substr(1).split("/")[1], this.username).subscribe(
+            res => this.onGetArticle(res[0])
+          );
+
+          if(this.isBusy == 0){
+          let timer = Observable.timer(3200);
+          timer.subscribe(
+            t => {
+            this.commentPosted = false;
+          });
+        }
+
+          // Reset form
+          this.comment = '';
+        }
+      }
+    );
   }
 }

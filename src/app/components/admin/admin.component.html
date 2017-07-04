@@ -35,10 +35,7 @@
 						<div class="row">
 
 							<!--Main form-->
-							<div class="col-md-8 col-md-push-3">
-								<div class="alert alert-success" *ngIf="userUpdated">Blog preferences updated</div>
-								<div class="alert alert-danger" *ngIf="keyError">Wrong VartaKey inserted</div>
-								
+							<div class="col-md-8 col-md-push-3">								
 								<div class="form-group">
 									<label for="authorName">Author's name <span class="text-warning"><strong>*</strong></span></label>
 									<input type="text" class="form-control" formControlName="authorName" name="authorName" aria-describedby="authorName" placeholder="Author's name" [(ngModel)] = "authorName">
@@ -91,7 +88,10 @@
 								<div class="form-group text-left">
 									<div style="margin: 20px 0 10px 0;">If everything looks good, click below</div>
 									<button class="btn btn-primary" [disabled]="!adminForm.valid" (click)="savePreferences(adminForm)">Save</button>
-											
+
+									<div class="alert alert-success" *ngIf="userUpdated">Blog preferences updated</div>
+									<div class="alert alert-danger" *ngIf="keyError">Wrong VartaKey inserted</div>
+									
 									<div style="margin: 36px 0 10px 0;">Or, did you forget your VartaKey? <br/>Click below to reset it.</div>
 									<button class="btn btn-grey" [routerLink]="'/' + username + '/reset-key'">Reset my VartaKey</button>
 								</div>
@@ -115,11 +115,11 @@
 						<p *ngIf="!showArticles">But first, enter the VartaKey corresponding to this blog website.</p>
 					</div>
 
-					<div class="col-md-4 col-md-offset-4" *ngIf="!showArticles">
+					<div class="col-md-2 col-md-offset-5" *ngIf="!showArticles">
 						<div class="form-group text-center">
 							<label for="key">VartaKey <span class="text-warning"><strong>*</strong></span></label>
 							<input type="password" class="form-control  text-center" formControlName="key" aria-describedby="key" placeholder="Your secret key">
-							<div class="alert alert-danger" *ngIf="manageArticlesForm.controls['key'].hasError('required') && manageArticlesForm.controls['key'].touched">You must enter the key.</div>
+							<div class="alert alert-danger" *ngIf="manageArticlesForm.controls['key'].hasError('required') && manageArticlesForm.controls['key'].touched">You must enter a key.</div>
 							<div class="alert alert-warning" *ngIf="manageArticlesForm.controls['key'].hasError('maxlength') && manageArticlesForm.controls['key'].touched">Length limit exceeded.</div>
 							<div class="alert alert-warning" *ngIf="manageArticlesForm.controls['key'].hasError('minlength') && manageArticlesForm.controls['key'].touched">Add more characters.</div>
 							<div class="alert alert-danger" *ngIf="keyErrorManage && manageArticlesForm.controls['key'].touched">Wrong VartaKey</div>
@@ -130,7 +130,7 @@
 						</div>
 					</div>
 
-					<div class="col-md-10 col-md-offset-1 text-left" *ngIf="showArticles">
+					<div class="col-md-10 col-md-offset-1 text-left list-inline" *ngIf="showArticles">
 						<ul class="buttons-ul">
 							<li class="buttons-li" *ngFor="let article of allArticles; let i = index">
 								<div class="buttons-div" [ngClass]="{'published': article.published, 'unpublished': !article.published}">

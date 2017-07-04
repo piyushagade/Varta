@@ -71,6 +71,7 @@ export class AddComponent {
     data.date = new Date().getTime();
     data.category = this.category;
     data.published = true;
+    data.comments = { 'all' : []};
     if(data.image == undefined) data.image = '';
     
     // Update data store

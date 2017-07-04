@@ -146,4 +146,15 @@ export class ApiService{
                 return Observable.throw(error.json())
             });
     }
+
+    // Post comment
+    postComment(data){        
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        return this._http.post(config.constants.server.url + ':' + config.constants.server.port + "/blog/comment/add", data, { 
+                headers: headers
+            })
+            
+    }
 }

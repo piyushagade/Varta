@@ -42,18 +42,22 @@
     line-height:1px;
     font-size:1px;
     position:absolute;
-    top:0;left:0;
+    top:0;
+    left:0;
 }
+
 .hscrollerbase {
-    height: 18px;
+    height: 10px;
 }
+
 .hscrollerbar {
-    height:8px;
-    background:#f44;
+    height: 10px;
+    background:rgba(44, 44, 44, 0.3);
     cursor: pointer;
-    padding:3px;
-    border-radius: 8px;
+    padding: 0px;
+    border-radius: 0px;
 }
+
 .hscrollerbar:hover {
-    background:#B44;
+    background:rgba(44, 44, 44, 0.48);
 }

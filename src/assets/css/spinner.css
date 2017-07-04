@@ -61,3 +61,50 @@
 .loading-spinner{
 
 }
+
+
+
+
+/*animations*/
+@keyframes swing {
+  0%, 100% { transform: rotate(6deg); }
+  20% {transform:scale(.98);}
+  50% { transform: rotate(10deg); }
+  80% {transform:scale(.98);}
+}
+
+
+@-webkit-keyframes pulsate {
+    0% {-webkit-transform: scale(0.1, 0.1); opacity: 0.1;}
+    50% {-webkit-transform: scale(1.08, 1.08); opacity: 0.8;}
+    100% {opacity: 1.0;}
+}
+
+
+
+@-webkit-keyframes scared {
+    0% {-webkit-transform: scale(0.99, 0.99); opacity: 0.98;}
+    25% {-webkit-transform: scale(1.0, 1.0); opacity: 1.0;}
+    75% {-webkit-transform: scale(1.02, 1.02); opacity: 0.98;}
+    100% {-webkit-transform: scale(1.0, 1.0); opacity: 1.0;}
+}
+
+@keyframes wobble {
+	0%{transform: rotate(0deg)}
+	33%{transform: rotate(-3deg)}
+	66%{transform: rotate(3deg) scale(1.0) }
+	99.99%{transform: rotate(0deg)}
+}
+
+
+@keyframes fadeAndScale {
+    from {
+        opacity: 1;
+        transform: scale(1, 1);
+    }
+    to {
+        opacity: 0;
+        display: none;
+        transform: scale(3, 3);
+    }
+}

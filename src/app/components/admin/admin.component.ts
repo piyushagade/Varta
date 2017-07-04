@@ -30,6 +30,11 @@ export class AdminComponent {
   isBusyPublishUnpublish = {};
   showSpinner = true;
   showArticles = false;
+  user = {};
+  authorName;
+  blogName;
+  blogHeading;
+  blogSubheading;
 
   public adminForm = this._fb.group({
       authorName: ["", Validators.compose([Validators.required, Validators.maxLength(25), Validators.minLength(3)])],
@@ -72,6 +77,9 @@ export class AdminComponent {
 
           if(!res.available){
             this.accountAlreadyCreated = true;
+
+            // Get user data
+            this.getUserData();
           }
         }
       );
@@ -124,6 +132,21 @@ export class AdminComponent {
     )
   }
 
+  getUserData(){
+    // Get user data
+    this._api.getUserData(this.username).subscribe(
+      res => {
+        // Set user data
+        this.user = res;
+        
+        // Set form input
+        this.authorName = res.name;
+        this.blogName = res.blogName;
+        this.blogHeading = res.heading;
+        this.blogSubheading = res.subheading;
+      }
+    );
+  }
 
   publishArticle(i){
     // Set busy

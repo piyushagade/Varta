@@ -56,8 +56,16 @@
 
 .buttons-ul{
     list-style-type: none;
-    display: inline-flex;
     padding: 4px;
+    width: auto;
+    
+}
+
+.buttons-li{
+    margin: 12px;
+    float: left; 
+	display: inline-flex;
+	word-wrap: break-word;
 }
 
 .buttons-busy{
@@ -85,7 +93,7 @@
     color: #555;
     padding: 20px 20px 4px 20px;
     background: #fff;
-    min-width: 260px;
+    width: 260px;
     border: 1px #BBB solid;
     transition: 0.4s all ease-in-out;
 }
@@ -97,10 +105,6 @@
     display: inline-block;
     cursor: pointer;
     transition: 0.4s all ease-in-out;
-}
-
-.buttons-li{
-    margin: 12px;
 }
 
 .button{
