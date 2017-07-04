@@ -24,61 +24,10 @@
 				<div class="row">
 					<div class="col-md-10 col-md-offset-1">
 						<div class="row">
-							<!--Options-->
-							<div class="col-md-4 col-md-push-9 animate-box-disabled">
-								<h3>Review</h3>
-								<div class="form-group">
-									<ul class="fh5co-list-check">
-										<li><small id="disclaimer" class="form-text text-muted">Article's identifier: <br/>{{ articleTitle | dashify}}</small></li>
-										<li>
-											<small id="disclaimer" class="form-text text-muted">
-												Permalink: <br/>
-												<a *ngIf="(articleTitle | dashify) != 'N/A'">{{ origin }}/{{ username }}/{{ articleTitle | dashify}}</a>
-												<a *ngIf="(articleTitle | dashify) == 'N/A'">N/A</a>
-											</small>
-										</li>
-									</ul>
-								</div>
-
-								<!--Category-->
-								<div class="btn-group">
-									<label for="category">Select a category <span class="text-warning"><strong>*</strong></span></label>
-									<button type="button" class="form-control" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name="category">{{ category }}</button>
-									<div class="dropdown-menu">
-										<a class="dropdown-item" (click)="selectCategory('Journal')">Journal</a>
-										<a class="dropdown-item" (click)="selectCategory('Politics')">Politics</a>
-										<a class="dropdown-item" (click)="selectCategory('Travel')">Travel</a>
-										<a class="dropdown-item" (click)="selectCategory('Food')">Food</a>
-										<a class="dropdown-item" (click)="selectCategory('Academics')">Academics</a>
-										<a class="dropdown-item" (click)="selectCategory('Fitness')">Fitness</a>
-										<a class="dropdown-item" (click)="selectCategory('Sports')">Sports</a>
-										<a class="dropdown-item" (click)="selectCategory('Skills')">Skills</a>
-										<a class="dropdown-item" (click)="selectCategory('How-to')">How-to</a>
-									</div>
-								</div>
-
-								<!--VartaKey-->
-								<div class="form-group">
-									<label for="key">Author VartaKey <span class="text-warning"><strong>*</strong></span></label>
-									<input type="password" class="form-control" formControlName="key" aria-describedby="key" placeholder="Your secret key">
-									<div class="alert alert-danger" *ngIf="articleForm.controls['key'].hasError('required') && articleForm.controls['key'].touched">You must enter the key.</div>
-									<div class="alert alert-danger" *ngIf="articleForm.controls['key'].hasError('maxlength') && articleForm.controls['key'].touched">Length limit exceeded.</div>
-									<div class="alert alert-danger" *ngIf="articleForm.controls['key'].hasError('minlength') && articleForm.controls['key'].touched">Add more characters.</div>
-									
-									<div style="margin: 20px 0 10px 0;">If you don't have one, click below</div>
-									<button [routerLink]="'/' + username + '/varta-key'" class="btn btn-grey">Get a VartaKey</button>
-								</div>
-
-								<!--Submit-->
-								<div class="form-group">
-									<div style="margin: 0 0 10px 0;">Everything looks good?</div>
-									<button type="submit" class="btn btn-primary" [disabled]="!articleForm.valid">Publish</button>
-									<div class="alert alert-danger" *ngIf="keyError">You entered wrong VartaKey</div>
-								</div>
-							</div>
+							
 
 							<!--Main form-->
-							<div class="col-md-8 col-md-pull-3">
+							<div class="col-md-8 col-md-push-3">
 								<p class="animate-box-disabled">To add a new article, fill the data below and click on 'Publish'.</p>
 								<!--Title-->
 								<div class="form-group">
@@ -155,6 +104,61 @@
 									</div>
 								</div>								
 							</div>
+
+							<!--Options-->
+							<div class="col-md-4 col-md-pull-9 animate-box-disabled">
+								<h3>Review</h3>
+								<div class="form-group">
+									<ul class="fh5co-list-check">
+										<li><small id="disclaimer" class="form-text text-muted">Article's identifier: <br/>{{ articleTitle | dashify}}</small></li>
+										<li>
+											<small id="disclaimer" class="form-text text-muted">
+												Permalink: <br/>
+												<a *ngIf="(articleTitle | dashify) != 'N/A'">{{ origin }}/{{ username }}/{{ articleTitle | dashify}}</a>
+												<a *ngIf="(articleTitle | dashify) == 'N/A'">N/A</a>
+											</small>
+										</li>
+									</ul>
+								</div>
+
+								<!--Category-->
+								<div class="btn-group">
+									<label for="category">Select a category <span class="text-warning"><strong>*</strong></span></label>
+									<button type="button" class="form-control" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name="category">{{ category }}</button>
+									<div class="dropdown-menu">
+										<a class="dropdown-item" (click)="selectCategory('Journal')">Journal</a>
+										<a class="dropdown-item" (click)="selectCategory('Politics')">Politics</a>
+										<a class="dropdown-item" (click)="selectCategory('Travel')">Travel</a>
+										<a class="dropdown-item" (click)="selectCategory('Food')">Food</a>
+										<a class="dropdown-item" (click)="selectCategory('Academics')">Academics</a>
+										<a class="dropdown-item" (click)="selectCategory('Fitness')">Fitness</a>
+										<a class="dropdown-item" (click)="selectCategory('Sports')">Sports</a>
+										<a class="dropdown-item" (click)="selectCategory('Skills')">Skills</a>
+										<a class="dropdown-item" (click)="selectCategory('How-to')">How-to</a>
+									</div>
+								</div>
+
+								<!--VartaKey-->
+								<div class="form-group">
+									<label for="key">Author VartaKey <span class="text-warning"><strong>*</strong></span></label>
+									<input type="password" class="form-control" formControlName="key" aria-describedby="key" placeholder="Your secret key">
+									<div class="alert alert-danger" *ngIf="articleForm.controls['key'].hasError('required') && articleForm.controls['key'].touched">You must enter the key.</div>
+									<div class="alert alert-danger" *ngIf="articleForm.controls['key'].hasError('maxlength') && articleForm.controls['key'].touched">Length limit exceeded.</div>
+									<div class="alert alert-danger" *ngIf="articleForm.controls['key'].hasError('minlength') && articleForm.controls['key'].touched">Add more characters.</div>
+									
+									<div style="margin: 20px 0 10px 0;">If you don't have one, click below</div>
+									<button [routerLink]="'/' + username + '/varta-key'" class="btn btn-grey">Get a VartaKey</button>
+								</div>
+
+								<!--Submit-->
+								<div class="form-group">
+									<div style="margin: 0 0 10px 0;">Everything looks good?</div>
+									<button type="submit" class="btn btn-primary" [disabled]="!articleForm.valid">Publish</button>
+									<div class="alert alert-danger" *ngIf="keyError">You entered wrong VartaKey</div>
+								</div>
+							</div>
+
+							
 						</div>
 					</div>
 				</div>

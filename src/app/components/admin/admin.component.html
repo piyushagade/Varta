@@ -33,29 +33,9 @@
 				<div class="row">
 					<div class="col-md-10 col-md-offset-1">
 						<div class="row">
-							<!--Options-->
-							<div class="col-md-4 col-md-push-9 animate-box-disabled">
-								<h3>Review</h3>
-
-								<div class="form-group text-left">
-									<label for="key">VartaKey <span class="text-warning"><strong>*</strong></span></label>
-									<input type="password" class="form-control" formControlName="key" aria-describedby="key" placeholder="Your secret key">
-									<div class="alert alert-danger" *ngIf="adminForm.controls['key'].hasError('required') && adminForm.controls['key'].touched">You must enter the key.</div>
-									<div class="alert alert-warning" *ngIf="adminForm.controls['key'].hasError('maxlength') && adminForm.controls['key'].touched">Length limit exceeded.</div>
-									<div class="alert alert-warning" *ngIf="adminForm.controls['key'].hasError('minlength') && adminForm.controls['key'].touched">Add more characters.</div>
-								</div>
-
-								<div class="form-group text-left">
-									<div style="margin: 20px 0 10px 0;">If everything looks good, click below</div>
-									<button class="btn btn-primary" [disabled]="!adminForm.valid" (click)="savePreferences(adminForm)">Save</button>
-											
-									<div style="margin: 36px 0 10px 0;">Or, did you forget your VartaKey? <br/>Click below to reset it.</div>
-									<button class="btn btn-grey" [routerLink]="'/' + username + '/reset-key'">Reset my VartaKey</button>
-								</div>
-							</div>
 
 							<!--Main form-->
-							<div class="col-md-8 col-md-pull-3">
+							<div class="col-md-8 col-md-push-3">
 								<div class="alert alert-success" *ngIf="userUpdated">Blog preferences updated</div>
 								<div class="alert alert-danger" *ngIf="keyError">Wrong VartaKey inserted</div>
 								
@@ -95,6 +75,28 @@
 									<div class="alert alert-warning" *ngIf="adminForm.controls['subheading'].hasError('minlength') && adminForm.controls['subheading'].touched">Add more characters.</div>
 								</div>
 							</div>
+
+							<!--Options-->
+							<div class="col-md-4 col-md-pull-9 animate-box-disabled">
+								<h3>Review</h3>
+
+								<div class="form-group text-left">
+									<label for="key">VartaKey <span class="text-warning"><strong>*</strong></span></label>
+									<input type="password" class="form-control" formControlName="key" aria-describedby="key" placeholder="Your secret key">
+									<div class="alert alert-danger" *ngIf="adminForm.controls['key'].hasError('required') && adminForm.controls['key'].touched">You must enter the key.</div>
+									<div class="alert alert-warning" *ngIf="adminForm.controls['key'].hasError('maxlength') && adminForm.controls['key'].touched">Length limit exceeded.</div>
+									<div class="alert alert-warning" *ngIf="adminForm.controls['key'].hasError('minlength') && adminForm.controls['key'].touched">Add more characters.</div>
+								</div>
+
+								<div class="form-group text-left">
+									<div style="margin: 20px 0 10px 0;">If everything looks good, click below</div>
+									<button class="btn btn-primary" [disabled]="!adminForm.valid" (click)="savePreferences(adminForm)">Save</button>
+											
+									<div style="margin: 36px 0 10px 0;">Or, did you forget your VartaKey? <br/>Click below to reset it.</div>
+									<button class="btn btn-grey" [routerLink]="'/' + username + '/reset-key'">Reset my VartaKey</button>
+								</div>
+							</div>
+
 						</div>
 					</div>
 				</div>
@@ -139,7 +141,7 @@
 
 									<!--Data-->
 									{{ article.title | limitChars : 26 }}
-									<p class="text-right buttons-li-p">
+									<p class="text-left buttons-li-p">
 										<small>{{ article.published ? 'Published' : 'Unpublished' }}</small><br/>
 										<small>{{ article.category}}, {{ (article.date / 1000 | amFromUnix) | amDateFormat:'LL'  }}</small>
 									</p>
