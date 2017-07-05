@@ -1,3 +1,33 @@
+<div *ngIf="index == 0" class="fh5co-articles-item fh5co-img-right">
+	<div class="fh5co-articles-description animate-box-disabled"  style="background: #fff;">
+		<h2>Hey there!</h2>
+		<p>
+			Welcome to this Varta blog.<br/>
+			Select an article from the list below, or search of one using the search box on the right.
+		</p>
+	</div>
+
+	<div class="fh5co-articles-description padding-0" [ngStyle]="{'background-image': 'url(' + dirs.images + 'varta.jpg' + ')'}">
+		<div class="card-heading">
+			<form [formGroup]="searchForm" (ngSubmit)="searchArticles()">
+				<div *ngIf="!searchResultsLoaded">
+					<h2>Search this blog</h2>
+					<input formControlName="searchString" type="text" placeholder="Enter a keyword" class="form-control search-box">
+					<small style="margin-left: 6px;">ex. 'Nikola Tesla', 'Edward Snowden', 'Stephen Hawkings'</small><br/>
+					<button class="btn btn-primary" type="submit">Submit</button>
+				</div>
+
+				<div *ngIf="searchResultsLoaded">
+					<small>Showing search results for</small> 
+					<h2>{{ searchString }}</h2>
+					<button class="btn btn-primary">Another search</button>
+					<button class="btn btn-grey">Show all articles</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
 <div [ngClass]="index % 2 != 0 ? 'fh5co-img-right' : ''" class="fh5co-articles-item">
 	<div class="fh5co-articles-figure animate-box-disabled blur" *ngIf="data.image !== ''" [ngStyle]="{'background-image': 'url(' + data.image + ')'}"></div>
 	<div class="fh5co-articles-figure animate-box-disabled blur" *ngIf="data.image === ''" [ngStyle]="{'background-image': 'url(' + dirs.images + 'work_1.jpg' + ')'}"></div>

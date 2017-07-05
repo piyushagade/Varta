@@ -29,8 +29,8 @@ export class AddComponent {
   accountAlreadyCreated = false;
 
   public articleForm = this._fb.group({
-      title: ["", Validators.compose([Validators.required, Validators.maxLength(35), Validators.minLength(6)])],
-      introduction: ["", Validators.compose([Validators.required, Validators.maxLength(200), Validators.minLength(15)])],
+      title: ["", Validators.compose([Validators.required, Validators.maxLength(55), Validators.minLength(6)])],
+      introduction: ["", Validators.compose([Validators.required, Validators.maxLength(400), Validators.minLength(15)])],
       text: ["", Validators.compose([Validators.required, Validators.minLength(20)])],
       key: ["", Validators.compose([Validators.required, Validators.maxLength(8), Validators.minLength(4)])],
       image: [""]

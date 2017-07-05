@@ -33,7 +33,7 @@
 								<div class="form-group">
 									<label for="title">Title <span class="text-warning"><strong>*</strong></span></label>
 									<input type="text" class="form-control" formControlName="title" name="title" aria-describedby="title" placeholder="Article title" [(ngModel)] = "articleTitle">
-									<small class="form-text text-muted">Used {{ articleTitle | limitCharsForInput: '35' }} characters</small>
+									<small class="form-text text-muted">Used {{ articleTitle | limitCharsForInput: '55' }} characters</small>
 									<div class="alert alert-danger" *ngIf="articleForm.controls['title'].hasError('required') && articleForm.controls['title'].touched">You must enter a title.</div>
 									<div class="alert alert-danger" *ngIf="articleForm.controls['title'].hasError('maxlength') && articleForm.controls['title'].touched">Length limit exceeded.</div>
 									<div class="alert alert-danger" *ngIf="articleForm.controls['title'].hasError('minlength') && articleForm.controls['title'].touched">Add more characters.</div>
@@ -44,7 +44,7 @@
 								<div class="form-group">
 									<label for="article">Article introduction <span class="text-warning"><strong>*</strong></span></label>
 									<textarea class="form-control" formControlName="introduction" name="articleIntroduction" rows="4" [(ngModel)] = "articleIntroduction"></textarea>
-									<small class="form-text text-muted">Used {{ articleIntroduction | limitCharsForInput: '200' }} characters</small>
+									<small class="form-text text-muted">Used {{ articleIntroduction | limitCharsForInput: '400' }} characters</small>
 									<div class="alert alert-danger" *ngIf="articleForm.controls['introduction'].hasError('required') && articleForm.controls['introduction'].touched">You must enter an introduction.</div>
 									<div class="alert alert-danger" *ngIf="articleForm.controls['introduction'].hasError('maxlength') && articleForm.controls['introduction'].touched">Length limit exceeded.</div>
 									<div class="alert alert-danger" *ngIf="articleForm.controls['introduction'].hasError('minlength') && articleForm.controls['introduction'].touched">Add more characters.</div>
@@ -114,7 +114,7 @@
 										<li>
 											<small id="disclaimer" class="form-text text-muted">
 												Permalink: <br/>
-												<a *ngIf="(articleTitle | dashify) != 'N/A'">{{ origin }}/{{ username }}/{{ articleTitle | dashify}}</a>
+												<a *ngIf="(articleTitle | dashify) != 'N/A'" class="wrap-word" style="padding-right: 10px;">{{ origin }}/{{ username }}/{{ articleTitle | dashify}}</a>
 												<a *ngIf="(articleTitle | dashify) == 'N/A'">N/A</a>
 											</small>
 										</li>
@@ -127,6 +127,7 @@
 									<button type="button" class="form-control" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name="category">{{ category }}</button>
 									<div class="dropdown-menu">
 										<a class="dropdown-item" (click)="selectCategory('Journal')">Journal</a>
+										<a class="dropdown-item" (click)="selectCategory('Opinion')">Opinion</a>
 										<a class="dropdown-item" (click)="selectCategory('Politics')">Politics</a>
 										<a class="dropdown-item" (click)="selectCategory('Travel')">Travel</a>
 										<a class="dropdown-item" (click)="selectCategory('Food')">Food</a>

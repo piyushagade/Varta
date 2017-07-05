@@ -179,4 +179,15 @@ export class ApiService{
                 return Observable.throw(error)
             });
     }
+
+
+    // Search articles
+    searchArticles(username, str){
+        return this._http.get(config.constants.server.url + ':' + config.constants.server.port + "/blog/search/" + username + '/' + str)
+            .map(response => response.json())
+            .catch(error => {
+                console.log("Error fetching JSON");
+                return Observable.throw(error)
+            });
+    }
 }

@@ -28,7 +28,8 @@
 			<app-thumbnail *ngIf="i < parameters.maxNoOfThumbnails"
 				[data] = "article"
 				[index] = "i"
-				[username]="username"> 
+				[username]="username"
+				(searchEvent)="searchArticles($event)"> 
 			</app-thumbnail>
 		</div>
 

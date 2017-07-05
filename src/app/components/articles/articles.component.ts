@@ -2,7 +2,7 @@ import { Component, trigger, state, animate, transition, style } from '@angular/
 import * as config from '../../config/config';
 import { ApiService } from '../../services/api.service';
 import { Router } from '@angular/router';
-import {Observable} from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-articles',
@@ -108,5 +108,14 @@ export class ArticlesComponent {
          this.showSpinner = false;
       });
     }
+  }
+
+  // Search articles
+  searchArticles(searchString){
+    this._api.searchArticles(this.username, searchString).subscribe(
+      res => {
+        this.blog = res;
+      }
+    )
   }
 }
