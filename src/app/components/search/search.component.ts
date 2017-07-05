@@ -3,12 +3,13 @@ import * as config from '../../config/config';
 import { ApiService } from '../../services/api.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
+import { FormBuilder, Validators } from '@angular/forms'
 
 @Component({
-  selector: 'app-articles',
-  templateUrl: './articles.component.html',
+  selector: 'app-search',
+  templateUrl: './search.component.html',
   styleUrls: [
-    './articles.component.css',
+    './search.component.css',
     '../../../assets/css/spinner.css'
     ],
   providers: [ ApiService ],
@@ -21,8 +22,8 @@ import { Observable } from 'rxjs/Rx';
   ],
 })
 
-export class ArticlesComponent {
-  blog;
+export class SearchComponent {
+  blog = [];
   noArticles;
   dirs = config.constants.dirs;
   admin = config.constants.admin;
@@ -32,9 +33,15 @@ export class ArticlesComponent {
   user = {};
   isBusy = 100;
   showSpinner = true;
+  query;
 
-  constructor(private _r: Router, private _api : ApiService){
+  public searchForm = this._fb.group({
+      searchString: ["", Validators.compose([Validators.required, Validators.maxLength(1200), Validators.minLength(2)])],
+  });
+
+  constructor(private _r: Router, private _api : ApiService, private _fb : FormBuilder){
     this.username = this._r.url.substr(1).split("/")[0];
+    this.query = this._r.url.substr(1).split("/")[2];    
 
     // Initialize isBusy
     this.isBusy = 0;
@@ -45,20 +52,24 @@ export class ArticlesComponent {
 
   // Check if user exists
   userExists(value){
-    
     this._api.getUserAvailability(value).subscribe(
       res => {
-
         // User exists
         if(!res.available){
           this.userAlreadyExists = true;
-          
-          this._api.getPublishedArticles(this.username).subscribe(
-            res => this.onGetArticles(res)
-          );
 
           // Set busy
           this.setBusy();
+          
+          // Get articles that matches the search term in the route
+          this._api.searchArticles(this.username, this.query).subscribe(
+            res => {
+              this.blog = res;
+
+              // Set Idle
+              this.setIdle();
+            }
+          )
           
           // Get user data
           this._api.getUserData(this.username).subscribe(
@@ -72,11 +83,9 @@ export class ArticlesComponent {
           );
         }
 
-        // No user with that username, then show a 404
+        // No user with that username
         else{
           this.userAlreadyExists = false;
-          this.noArticles = true;
-          this._r.navigateByUrl('/404');
 
           //Set idle
           this.setIdle();
@@ -89,8 +98,6 @@ export class ArticlesComponent {
   onGetArticles(res){
     // Set articles data
     this.blog = res;
-    if(this.blog.length == 0) this.noArticles = true;
-    else this.noArticles = false;
   }
 
   // Set busy
@@ -100,13 +107,33 @@ export class ArticlesComponent {
 
   // Set idle
   setIdle(){
+    
     this.isBusy--;
-    if(this.isBusy == 0){
+    if(this.isBusy <= 0){
       let timer = Observable.timer(1200);
       timer.subscribe(
         t => {
          this.showSpinner = false;
       });
     }
+  }
+
+  // Search articles
+  searchArticles(){
+    // Set busy
+    this.setBusy();
+    
+    this._api.searchArticles(this.username, this.searchForm.value.searchString).subscribe(
+      res => {
+        this.blog = res;
+
+        // Set Idle
+        this.setIdle();
+
+        // Change route
+        if(this.searchForm.value.searchString && this.searchForm.value.searchString.length != 0)
+          this._r.navigateByUrl('/' + this.username + '/search/' + this.searchForm.value.searchString);
+      }
+    )
   }
 }

@@ -132,10 +132,6 @@
 						</div>
 					</div>
 
-					<div class="col-md-10 col-md-offset-1 text-center">
-						
-					</div>
-
 					<!--Articles' thumbnails-->
 					<div class="col-md-10 col-md-offset-1 text-left" *ngIf="showArticles">
 						<ul class="buttons-ul">
@@ -155,8 +151,9 @@
 
 									<!--Action icons-->
 									<div class="buttons text-right">
-										<i class="material-icons button" (click)="showComments(article.link)">comment</i>
 										<i class="material-icons button" [routerLink]="'/' + username + '/' + article.link" target="_new">open_in_new</i>
+										<!--<i class="material-icons button" (click)="editArticle(article.link)">mode_edit</i>-->
+										<i class="material-icons button" (click)="showComments(article.link)">comment</i>
 										<i class="material-icons button" (click)="publishArticle(article._id)" *ngIf="!article.published">cloud_queue</i>
 										<i class="material-icons button" (click)="unpublishArticle(article._id)" *ngIf="article.published">cloud_off</i>
 										<i class="material-icons button" (click)="deleteArticle(article._id)">delete_forever</i>

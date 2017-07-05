@@ -8,6 +8,7 @@ import { GetComponent } from '../components/get/get.component';
 import { AdminComponent } from '../components/admin/admin.component';
 import { LoginComponent } from '../components/login/login.component';
 import { Four04Component } from '../components/404/404.component';
+import { SearchComponent } from '../components/search/search.component';
 
 export const router: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -21,6 +22,8 @@ export const router: Routes = [
     { path: ':username/home', component: ArticlesComponent },
     { path: ':username/add', component: AddComponent },
     { path: ':username/varta-key', component: GetComponent },
+    { path: ':username/search', component: SearchComponent },
+    { path: ':username/search/:query', component: SearchComponent },
     { path: ':username/admin', component: AdminComponent },
     { path: ':username/:article', component: ArticleComponent },
     { path: '**', component: ArticleComponent },

@@ -109,4 +109,13 @@ export class ArticlesComponent {
       });
     }
   }
+
+  // Search articles
+  searchArticles(searchString){
+    this._api.searchArticles(this.username, searchString).subscribe(
+      res => {
+        this.blog = res;
+      }
+    )
+  }
 }
