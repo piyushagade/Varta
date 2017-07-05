@@ -5,10 +5,7 @@ Varta is a play on a Hindi word 'Vartalap', which translates to 'a conversation'
 
 ## Make your own Varta blogging website
 To make a Varta blog for yourself, perform the following steps:
-1. Click 'Get a VartaKey', fill in the form and hit 'Next Step'. 
-2. You will see a secret key which would be needed to add articles to your Varta website. 
-3. Open config.ts file in /src/app/config folder.
-4. Change the value against 'username' to whatever you had set in step 1).
-5. Also change the 'name', 'heading', 'subheading' to whatever you like.
-
-This should do it!
+1. Go to <a href="http://piyushagade.xyz/varta" target="_new">http://piyushagade.xyz/varta</a>.
+2. Click on 'Create an account'. Enter a username and click on proceed.
+3. You will see a secret key which would be needed to add articles to your Varta website. 
+4. At this point you account is created.
