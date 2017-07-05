@@ -178,7 +178,7 @@
 							<p *ngIf="article.comments.all.length != 0">Click on a comment to toggle between 'Published' and 'Unpublished' state.</p>
 							<p *ngIf="article.comments.all.length == 0">This article has no comments yet.</p>
 							
-							<li class="comments-li" *ngFor="let comment of article.comments.all.reverse(); let j = index">
+							<li class="comments-li" *ngFor="let comment of article.comments.all; let j = index">
 								<div class="comments-div" [ngClass]="{ 'published-comment' : comment.published, 'unpublished-comment' : !comment.published }">
 									<span class="roboto"> {{ comment.published ? (comment.text | limitChars : 60) : comment.text }} </span>
 									<p class="text-left comments-li-p">
