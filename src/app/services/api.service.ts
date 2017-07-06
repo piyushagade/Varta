@@ -77,6 +77,16 @@ export class ApiService{
             });
     }
 
+    // Verify key
+    verifyKey(username, key){
+        return this._http.get(config.constants.server.url + ':' + config.constants.server.port + "/user/verify/" + username + '/' + key)
+            .map(response => response.json())
+            .catch(error => {
+                console.log("Error fetching JSON");
+                return Observable.throw(error.json())
+            });
+    }
+
     // Reset key
     resetKey(email){
         return this._http.get(config.constants.server.url + ':' + config.constants.server.port + "/user/reset/" + email)

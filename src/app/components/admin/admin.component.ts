@@ -87,6 +87,7 @@ export class AdminComponent {
       );
   }
 
+  // Save preferences
   savePreferences(){
     // Set busy
     this.setBusy();
@@ -134,6 +135,7 @@ export class AdminComponent {
     )
   }
 
+  // Get user data like name, heading, subheading
   getUserData(){
     // Get user data
     this._api.getUserData(this.username).subscribe(
@@ -150,6 +152,7 @@ export class AdminComponent {
     );
   }
 
+  // Publish article
   publishArticle(i){
     // Set busy
     this.setBusyPublishUnpublish(i);
@@ -166,6 +169,7 @@ export class AdminComponent {
     )
   }
 
+  // Unpublish article
   unpublishArticle(i){
     // Set busy
     this.setBusyPublishUnpublish(i);
@@ -182,6 +186,7 @@ export class AdminComponent {
     )
   }
 
+  // Delete article
   deleteArticle(i){
     // Set busy
     this.setBusyPublishUnpublish(i);
@@ -200,6 +205,7 @@ export class AdminComponent {
     this.commentsVisible = false;
   }
 
+  // Delete comment
   deleteComment(comment_id, article_id, article_identifier){
     this._api.deleteComment(article_id, comment_id).subscribe(
       res => {
@@ -236,23 +242,23 @@ export class AdminComponent {
     }
   }
 
-
-  // Set busy
+  // Set busy for pubunpub
   setBusyPublishUnpublish(i){
     this.isBusyPublishUnpublish[i] = this.isBusyPublishUnpublish[i] == undefined ? 1 : this.isBusyPublishUnpublish[i] + 1;
   }
 
-  // Set idle
+  // Set idle for pubunpub
   setIdlePublishUnpublish(i){
     this.isBusyPublishUnpublish[i] = this.isBusyPublishUnpublish[i] == undefined ? 0 : this.isBusyPublishUnpublish[i] - 1;
   }
 
+  // Verify key so that user could manage articles
   verifyKeyManageArticles(){
     
     // Get key
-    this._api.getKey(this.username).subscribe(
+    this._api.verifyKey(this.username, this.manageArticlesForm.value.key).subscribe(
       res => {
-        if(res.code != this.manageArticlesForm.value.key) {
+        if(res.verified) {
           this.keyErrorManage = true;
           this.showArticles = false;
         }

@@ -109,6 +109,8 @@ export class AddComponent {
   }
 
   selectCategory(category){
+    console.log(category);
+    
     this.category = category;
   }
 
