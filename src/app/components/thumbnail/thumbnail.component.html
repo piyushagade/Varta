@@ -11,19 +11,10 @@
 	<div class="fh5co-articles-description padding-0" [ngStyle]="{'background-image': 'url(' + dirs.images + 'varta.jpg' + ')'}">
 		<div class="card-heading">
 			<form [formGroup]="searchForm" (ngSubmit)="searchArticles()">
-				<div *ngIf="!searchResultsLoaded">
-					<h2>Search this blog</h2>
-					<input formControlName="searchString" type="text" placeholder="Enter a keyword" class="form-control search-box">
-					<small style="margin-left: 6px;">ex. 'Nikola Tesla', 'Edward Snowden', 'Stephen Hawkings'</small><br/>
-					<button class="btn btn-primary" type="submit" [disabled]="!searchForm.valid">Submit</button>
-				</div>
-
-				<div *ngIf="searchResultsLoaded">
-					<small>Showing search results for</small> 
-					<h2>{{ searchString }}</h2>
-					<button class="btn btn-primary">Another search</button>
-					<button class="btn btn-grey">Show all articles</button>
-				</div>
+				<h2>Search this blog</h2>
+				<input formControlName="searchString" type="text" placeholder="Enter a keyword" class="form-control search-box">
+				<small style="margin-left: 6px;">ex. 'Nikola Tesla', 'Edward Snowden', 'Stephen Hawkings'</small><br/>
+				<button class="btn btn-primary" type="submit" [disabled]="!searchForm.valid">Submit</button>
 			</form>
 		</div>
 	</div>
@@ -32,14 +23,14 @@
 
 <!--Articles list-->
 <div [ngClass]="index % 2 != 0 ? 'fh5co-img-right' : ''" class="fh5co-articles-item">
-	<div class="fh5co-articles-figure animate-box-disabled blur" *ngIf="data.image !== ''" [ngStyle]="{'background-image': 'url(' + data.image + ')'}"></div>
-	<div class="fh5co-articles-figure animate-box-disabled blur" *ngIf="data.image === ''" [ngStyle]="{'background-image': 'url(' + dirs.images + 'work_1.jpg' + ')'}"></div>
-	<div class="fh5co-articles-description">
+	<div class="fh5co-articles-figure animate-box-disabled" *ngIf="data.image !== ''" [ngStyle]="{'background-image': 'url(' + data.image + ')'}"></div>
+	<div class="fh5co-articles-figure animate-box-disabled" *ngIf="data.image === ''" [ngStyle]="{'background-image': 'url(' + dirs.images + 'work_1.jpg' + ')'}"></div>
+	<div class="fh5co-articles-description" style="padding: 40px; cursor: pointer;" [routerLink]="'/' + username + data.link">
 		<h2>
 			{{ data.title }} <br/>
 			<small style="font-weight: 300; font-size: 16px;" class="roboto">{{ (data.date / 1000 | amFromUnix) | amDateFormat:'LL' }}</small><br/>
 		</h2>
-		<p>{{ data.introduction | limitChars : 100 }}</p>
-		<p class="text-right"><a [routerLink]="'/' + username + data.link" >Continue reading</a></p>
+		<p>{{ data.introduction | limitChars : 220 }}</p>
+		<p class="text-right" style="margin-bottom: 0px"><a [routerLink]="'/' + username + data.link" >Continue reading</a></p>
 	</div>
 </div>
