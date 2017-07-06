@@ -10,7 +10,8 @@ import { ApiService } from '../../services/api.service';
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
-  styleUrls: ['./add.component.css'],
+  styleUrls: ['./add.component.css',
+    '../../../assets/css/spinner.css'],
   providers: [
     ApiService
   ]
@@ -28,7 +29,7 @@ export class AddComponent {
   previewVisible = false;
   user = {};
   accountAlreadyCreated = false;
-  showSpinner;
+  showSpinner = true;
   isBusy = 0;
 
   public articleForm = this._fb.group({
