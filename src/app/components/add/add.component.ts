@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 
+import { Observable } from 'rxjs/Rx';
 import { Router } from '@angular/router';
 import * as config from '../../config/config';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -27,6 +28,8 @@ export class AddComponent {
   previewVisible = false;
   user = {};
   accountAlreadyCreated = false;
+  showSpinner;
+  isBusy = 0;
 
   public articleForm = this._fb.group({
       title: ["", Validators.compose([Validators.required, Validators.maxLength(55), Validators.minLength(6)])],
@@ -40,6 +43,9 @@ export class AddComponent {
     this.origin = document.location.origin;
     this.username = document.location.pathname.substr(1).split('/')[0];
 
+    // Set busy
+    this.setBusy();
+
     // Check if the username exists
     this.userExists(this.username);
 
@@ -47,6 +53,9 @@ export class AddComponent {
     this._api.getUserData(this.username).subscribe(
       res => {
         this.user = res;
+
+        // Set idle
+        this.setIdle();
       }
     );
   }
@@ -57,6 +66,10 @@ export class AddComponent {
         res => {
           if(!res.available){
             this.accountAlreadyCreated = true;
+          }
+          else{
+            // Set idle
+            this.setIdle();
           }
         }
       );
@@ -105,5 +118,22 @@ export class AddComponent {
 
   hidePreview(){
     this.previewVisible = false;
+  }
+
+  // Set busy
+  setBusy(){
+    this.isBusy++;
+  }
+
+  // Set idle
+  setIdle(){
+    this.isBusy--;
+    if(this.isBusy == 0){
+      let timer = Observable.timer(1200);
+      timer.subscribe(
+        t => {
+         this.showSpinner = false;
+      });
+    }
   }
 }
