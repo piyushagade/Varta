@@ -3,6 +3,7 @@ import * as config from '../../config/config';
 import { ApiService } from '../../services/api.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-articles',
@@ -33,7 +34,11 @@ export class ArticlesComponent {
   isBusy = 100;
   showSpinner = true;
 
-  constructor(private _r: Router, private _api : ApiService){
+  public searchForm = this._fb.group({
+      searchString: ["", Validators.compose([Validators.required, Validators.maxLength(100), Validators.minLength(2)])]
+  });
+
+  constructor(private _r: Router, private _api : ApiService, private _fb : FormBuilder){
     this.username = this._r.url.substr(1).split("/")[0];
 
     // Initialize isBusy

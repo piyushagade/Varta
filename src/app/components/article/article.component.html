@@ -42,7 +42,7 @@
 						<!--Article data-->
 						<div class="col-md-9 col-md-pull-3" *ngIf="data.published">
 							<!--Article text-->
-							<p class="animate-box-disabled text-break text-justify roboto">{{ data.text }}</p>
+							<p class="animate-box-disabled text-break text-justify roboto" [innerHTML]="data.text"></p>
 							<br/><hr/>
 							
 							<!--Comments-->

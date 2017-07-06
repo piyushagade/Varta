@@ -1,15 +1,19 @@
 export const menuItems = {
     items : [
       { 
-        title : 'All',
+        title : 'Home',
         link : '/home'
       },
       { 
-        title : 'Add',
+        title : 'All Articles',
+        link : '/all'
+      },
+      { 
+        title : 'Add Article',
         link : 'add'
       },
       { 
-        title : 'Admin',
+        title : 'Admin Panel',
         link : '/admin'
       },
     ]

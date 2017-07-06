@@ -37,7 +37,6 @@
 									<div class="alert alert-danger" *ngIf="articleForm.controls['title'].hasError('required') && articleForm.controls['title'].touched">You must enter a title.</div>
 									<div class="alert alert-danger" *ngIf="articleForm.controls['title'].hasError('maxlength') && articleForm.controls['title'].touched">Length limit exceeded.</div>
 									<div class="alert alert-danger" *ngIf="articleForm.controls['title'].hasError('minlength') && articleForm.controls['title'].touched">Add more characters.</div>
-									
 								</div>
 
 								<!--Introduction-->
@@ -54,7 +53,8 @@
 								<div class="form-group">
 									<label for="article">Article body <span class="text-warning"><strong>*</strong></span></label>
 									<textarea class="form-control" formControlName="text" name="articleText" rows="16" [(ngModel)] = "articleText"></textarea>
-									<small class="form-text text-muted">Used {{ articleText | limitCharsForInput: 'Infinite' }} characters</small>
+									<small class="form-text text-muted">Used {{ articleText | limitCharsForInput: 'Infinite' }} characters</small><br/>
+									<small class="form-text text-muted">You can use any HTML tag in the article body.</small>
 									<div class="alert alert-danger" *ngIf="articleForm.controls['text'].hasError('required') && articleForm.controls['text'].touched">You must enter a body.</div>
 									<div class="alert alert-danger" *ngIf="articleForm.controls['text'].hasError('maxlength') && articleForm.controls['text'].touched">Length limit exceeded.</div>
 									<div class="alert alert-danger" *ngIf="articleForm.controls['text'].hasError('minlength') && articleForm.controls['text'].touched">Add more characters.</div>
@@ -135,6 +135,7 @@
 										<a class="dropdown-item" (click)="selectCategory('Fitness')">Fitness</a>
 										<a class="dropdown-item" (click)="selectCategory('Sports')">Sports</a>
 										<a class="dropdown-item" (click)="selectCategory('Skills')">Skills</a>
+										<a class="dropdown-item" (click)="selectCategory('Skills')">Entertainment</a>
 										<a class="dropdown-item" (click)="selectCategory('How-to')">How-to</a>
 									</div>
 								</div>
