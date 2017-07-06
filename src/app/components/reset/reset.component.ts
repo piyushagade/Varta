@@ -39,6 +39,7 @@ export class ResetComponent {
   onReset(email){
     // Reset errors
     this.emailError = false;
+    this.emailSent = false;
     
     this._api.resetKey(email).subscribe(
       res => {

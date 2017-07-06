@@ -24,9 +24,9 @@ export class LoginComponent {
   });
 
   constructor(private _r: Router, private _api : ApiService, private _fb : FormBuilder){
-    this._r.events.subscribe((val) => {
-      // this.onRouteChange();
-    });
+    // this._r.events.subscribe((val) => {
+    //   this.onRouteChange();
+    // });
   }
 
 

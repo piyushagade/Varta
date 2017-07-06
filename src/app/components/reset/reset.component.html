@@ -16,7 +16,7 @@
 					<div class="col-md-8 col-md-offset-2 text-center" *ngIf="accountAlreadyCreated">						
 						<form [formGroup]="resetForm" (ngSubmit)="onReset(email)">
 							<h1 class="intro-lead">Forgot your VartaKey?</h1>
-							<p>Don't worry. We have your back. <br/>Type in the email you registered Varta with and we will email the VartaKey to you.</p>
+							<p>Don't worry. We got your back. <br/>Type in the email you registered Varta with and we will email the VartaKey to you.</p>
 							<div class="alert alert-success" *ngIf="emailSent">Email has been sent.</div>
 							<div class="alert alert-warning" *ngIf="emailError">The email you entered isn't associated with your account.</div>
 
