@@ -9,6 +9,7 @@ import { AdminComponent } from '../components/admin/admin.component';
 import { LoginComponent } from '../components/login/login.component';
 import { Four04Component } from '../components/404/404.component';
 import { SearchComponent } from '../components/search/search.component';
+import { ResetComponent } from '../components/reset/reset.component';
 
 export const router: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -25,6 +26,7 @@ export const router: Routes = [
     { path: ':username/search', component: SearchComponent },
     { path: ':username/search/:query', component: SearchComponent },
     { path: ':username/admin', component: AdminComponent },
+    { path: ':username/reset-key', component: ResetComponent },
     { path: ':username/:article', component: ArticleComponent },
     { path: '**', component: ArticleComponent },
 ];

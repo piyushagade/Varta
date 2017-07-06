@@ -2,72 +2,45 @@
 		<div class="fh5co-intro text-center">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-8 col-md-offset-2" *ngIf="!accountAlreadyCreated && key == ''">
-						<h1 class="intro-lead">Get a VartaKey</h1>
-						<p>Fill in the form to get your own VartaKey</p>
-
-						<form [formGroup]="userForm" (ngSubmit)="onUserNameSubmit(newUsername, email)">
-								<!--Username-->
-								<div class="form-group col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-									<label for="username" style="margin: 30px 0 10px 0;">Enter a username </label>
-									<input autocomplete="off" type="text" class="form-control text-center" formControlName="username" aria-describedby="username" placeholder="bruce-wayne" (keyup)="onUsernameChange(newUsername)" [(ngModel)]="newUsername">
-									<div class="alert alert-danger" *ngIf="userForm.controls['username'].hasError('required') && userForm.controls['username'].touched">You must enter a username.</div>
-									<div class="alert alert-warning" *ngIf="userForm.controls['username'].hasError('maxlength') && userForm.controls['username'].touched">Length limit exceeded.</div>
-									<div class="alert alert-warning" *ngIf="(userForm.controls['username'].hasError('minlength') && userForm.controls['username'].touched) || notEnoughCharsError">Add more characters.</div>
-									<div class="alert alert-success" *ngIf="available && userForm.controls['username'].valid">Username available.</div>
-									<div class="alert alert-danger" *ngIf="!available && userForm.controls['username'].valid">Username already taken.</div>
-									<small class="form-text text-muted">Used {{ newUsername | limitCharsForInput: '20' }} characters</small>
-								</div>
-
-								<!--User email-->
-								<div  class="form-group col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-									<label for="email" style="margin: 10px 0 10px 0;">Your email </label>
-									<input email type="text" class="form-control text-center" formControlName="email" aria-describedby="email" placeholder="batman@who.com" [(ngModel)]="email">
-									<div class="alert alert-danger" *ngIf="userForm.controls['email'].hasError('required') && userForm.controls['email'].touched">You must enter an email.</div>
-									<div class="alert alert-warning" *ngIf="userForm.controls['email'].hasError('maxlength') && userForm.controls['email'].touched">Length limit exceeded.</div>
-									<div class="alert alert-warning" *ngIf="(userForm.controls['email'].hasError('minlength') && userForm.controls['email'].touched) || notEnoughCharsError">Add more characters.</div>
-									<div class="alert alert-danger" *ngIf="!userForm.controls['email'].valid && userForm.controls['email'].touched">Invalid email.</div>
-									<small class="form-text text-muted">Used {{ email | limitCharsForInput: '50' }} characters</small>
-								</div>
-
-								<!--Buttons-->
-								<div class="form-group col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-									<div style="margin: 18px 0 10px 0;">All set? Click below.</div>
-									<button type="submit" class="btn btn-primary" [disabled]="!userForm.valid || !available || newUsername == ''">Next Step</button>
-									
-									<div style="margin: 26px 0 10px 0;">Or, did you forget your VartaKey?</div>
-									<button [routerLink]="'/' + username + '/reset-key'" class="btn btn-grey">Reset my VartaKey</button>
-								</div>
-						</form>
-					</div>
-
-					<div class="col-md-8 col-md-offset-2" *ngIf="!accountAlreadyCreated && key != ''">
-						<h1 class="intro-lead">Congrats!</h1>
-						<p>You have successfully created a Varta account</p>
-
-						<form [formGroup]="userForm">
-								<!--Username-->
-								<div class="form-group col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-									<label for="username" style="margin: 40px 0 10px 0;">Your VartaKey is </label>
-									<p class="key accent">{{ key }}</p>
-									<small class="form-text text-muted">Keep it safe, don't share it with anyone.</small>
-									
-									<div style="margin: 80px 0 10px 0;">Great, click below to change the name, heading, and sub-heading of your blog.</div>
-									<button style="margin: 40px 0 10px 0;" [disabled]="!userCreated" class="btn btn-primary" [routerLink]="'/' + newUsername + '/admin'">Proceed</button>
-								</div>
-						</form>
-					</div>
-
-					<div class="col-md-8 col-md-offset-2" *ngIf="accountAlreadyCreated">
-						<h1 class="intro-lead">Is there a problem?</h1>
-						<p>You already have Varta account. And you should have a VartaKey.</p>
+					<!--If user does not exist-->
+					<div class="col-md-8 col-md-offset-2" *ngIf="!accountAlreadyCreated">
+						<h1 class="intro-lead">Reset VartaKey</h1>
+						<p>No Varta account with the name '{{ username }}' found. </p>
 						<div class="form-group col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">							
-							<div style="margin: 20px 0 10px 0;">If you landed here by mistake</div>
-							<button class="btn btn-primary" [routerLink]="'/' + username + '/home'">Home Page</button>
-									
-							<div style="margin: 60px 0 10px 0;">Or, did you forget your VartaKey? <br/>Click below to reset it.</div>
-							<button class="btn btn-grey" [routerLink]="'/' + username + '/reset-key'">Reset my VartaKey</button>
+							<div style="margin: 20px 0 10px 0;">Let's change that.</div>
+							<button class="btn btn-primary" [routerLink]="'/' + username + '/varta-key'">Create Account</button>
 						</div>
+					</div>
+
+					<!--If user exists-->
+					<div class="col-md-8 col-md-offset-2 text-center" *ngIf="accountAlreadyCreated">						
+						<form [formGroup]="resetForm" (ngSubmit)="onReset(email)">
+							<h1 class="intro-lead">Forgot your VartaKey?</h1>
+							<p>Don't worry. We have your back. <br/>Type in the email you registered Varta with and we will email the VartaKey to you.</p>
+							<div class="alert alert-success" *ngIf="emailSent">Email has been sent.</div>
+							<div class="alert alert-warning" *ngIf="emailError">The email you entered isn't associated with your account.</div>
+
+							<div class="form-group col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">	
+									<!--User email-->
+									<div  class="form-group">
+										<label for="email" style="margin: 10px 0 10px 0;">Your email </label>
+										<input email type="text" class="form-control text-center" formControlName="email" aria-describedby="email" placeholder="batman@who.com" [(ngModel)]="email">
+										<div class="alert alert-danger" *ngIf="resetForm.controls['email'].hasError('required') && resetForm.controls['email'].touched">You must enter an email.</div>
+										<div class="alert alert-warning" *ngIf="resetForm.controls['email'].hasError('maxlength') && resetForm.controls['email'].touched">Length limit exceeded.</div>
+										<div class="alert alert-warning" *ngIf="(resetForm.controls['email'].hasError('minlength') && resetForm.controls['email'].touched) || notEnoughCharsError">Add more characters.</div>
+										<div class="alert alert-danger" *ngIf="!resetForm.controls['email'].valid && resetForm.controls['email'].touched">Invalid email.</div>
+										<small class="form-text text-muted">Used {{ email | limitCharsForInput: '50' }} characters</small>
+									</div>
+
+									<!--Buttons-->
+									<div class="form-group">
+										<div style="margin: 18px 0 10px 0;">Click below to continue.</div>
+										<button type="submit" class="btn btn-primary" [disabled]="!resetForm.valid">Email me VartaKey</button>
+										
+										<button [routerLink]="'/' + username + '/home'" class="btn btn-grey">Home Page</button>
+									</div>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>

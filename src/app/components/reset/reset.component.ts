@@ -5,12 +5,13 @@ import { FormBuilder, Validators } from '@angular/forms';
 import {EmailValidators} from 'ngx-validators'
 
 @Component({
-  selector: 'app-get',
-  templateUrl: './get.component.html',
-  styleUrls: ['./get.component.css'],
+  selector: 'app-reset',
+  templateUrl: './reset.component.html',
+  styleUrls: ['./reset.component.css'],
   providers: [ ApiService ]
 })
-export class GetComponent {
+
+export class ResetComponent {
   dirs = config.constants.dirs;
   admin = config.constants.admin;
   parameters = config.constants.parameters;
@@ -21,40 +22,32 @@ export class GetComponent {
   username: string;
   notEnoughCharsError = false;
   userCreated = false;
+  emailSent;
+  emailError;
 
-  public userForm = this._fb.group({
-      username: ["", Validators.compose([Validators.required, Validators.maxLength(15), Validators.minLength(6)])],
+  public resetForm = this._fb.group({
       email: ["", Validators.compose([Validators.required, Validators.maxLength(50), Validators.minLength(6), EmailValidators.normal])],
   });
 
   constructor(private _fb: FormBuilder, private _api : ApiService){
     this.username = document.location.pathname.substr(1).split('/')[0];
-    this.username = this.username == 'varta-key' ? '' : this.username;
 
     // check if the username in the config exists on the backend
     if(this.username != '') this.userExists(this.username);
   }
 
-  onUserNameSubmit(username, email){
-    let data = {
-      username : username,
-      email : email,
-      key : '0',
-      name : 'Anonymous',
-      blogName : config.constants.parameters.blog,
-      heading : config.constants.parameters.heading,
-      subheading : config.constants.parameters.subheading
-    }
-
-    this._api.getKey(username).subscribe(
+  onReset(email){
+    // Reset errors
+    this.emailError = false;
+    
+    this._api.resetKey(email).subscribe(
       res => {
-        this.key = res.code;
+        if(res.status == "success")
+          this.emailSent = true;
+        else if(res.status == 'email-error')
+          this.emailError = true;
       }
     )
-
-    this._api.registerUsername(data).subscribe(() => {
-      this.userCreated = true;
-    });
   }
 
   // Check if user exists

@@ -16,6 +16,7 @@ import { GetComponent } from '../components/get/get.component';
 import { AdminComponent } from '../components/admin/admin.component';
 import { LoginComponent } from '../components/login/login.component';
 import { SearchComponent } from '../components/search/search.component';
+import { ResetComponent } from '../components/reset/reset.component';
 import { Four04Component } from '../components/404/404.component';
 import { ApiService } from '../services/api.service';
 import { DashifyPipe } from '../pipes/dashify.pipe';
@@ -23,6 +24,8 @@ import { CapitalizePipe } from '../pipes/capitalize.pipe';
 import { LimitCharsPipe } from '../pipes/limitChars.pipe';
 import { LimitCharsForInputPipe } from '../pipes/limitCharsForInput.pipe';
 import { MomentModule } from 'angular2-moment';
+
+import { EmailValidators } from 'ngx-validators'
 
 @NgModule({
   declarations: [
@@ -38,6 +41,7 @@ import { MomentModule } from 'angular2-moment';
     AddComponent,
     Four04Component,
     SearchComponent,
+    ResetComponent,
     DashifyPipe,
     CapitalizePipe,
     LimitCharsPipe,
