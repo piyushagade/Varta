@@ -3,6 +3,7 @@ import * as config from '../../config/config';
 import { ApiService } from '../../services/api.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import {Observable} from 'rxjs/Rx';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-admin',
@@ -37,6 +38,8 @@ export class AdminComponent {
   blogSubheading;
   manageCommentsArticle;
   commentsVisible;
+  backup_uri;
+  today;
 
   public adminForm = this._fb.group({
       authorName: ["", Validators.compose([Validators.required, Validators.maxLength(25), Validators.minLength(3)])],
@@ -50,7 +53,7 @@ export class AdminComponent {
      key: ["", Validators.compose([Validators.required, Validators.maxLength(8), Validators.minLength(4)])],
   });
 
-  constructor(private _fb: FormBuilder, private _api : ApiService){
+  constructor(private _fb: FormBuilder, private _api : ApiService, private _sanitizer : DomSanitizer){
     this.username = document.location.pathname.substr(1).split('/')[0];
 
     // Initialize isBusy
@@ -62,6 +65,8 @@ export class AdminComponent {
     // Check if the username in the config exists on the backend
     this.userExists(this.username);
 
+    // Set date
+    this.today = new Date().getMonth() + '_' + new Date().getDate() + '_' + new Date().getFullYear() + '.json';
     
     // Get articles
     this.getArticles();
@@ -258,13 +263,14 @@ export class AdminComponent {
     // Get key
     this._api.verifyKey(this.username, this.manageArticlesForm.value.key).subscribe(
       res => {
-        if(res.verified) {
+        if(!res.verified) {
           this.keyErrorManage = true;
           this.showArticles = false;
         }
         else{
           this.keyErrorManage = false;
           this.showArticles = true;
+          this.downloadArticlesData();
         }       
       }
     );
@@ -308,4 +314,29 @@ export class AdminComponent {
     );   
   }
 
+  downloadArticlesData(){
+    // Get JSON object
+    // Set busy
+    this.setBusy();
+    let obj;
+    
+    this._api.getArticles(this.username).subscribe(
+      res => {
+        // Set idle
+        this.setIdle();
+
+        // Set data of the object
+        obj = res;
+
+        // Make a file
+        var theJSON = JSON.stringify(obj);
+        this.backup_uri = "data:application/text;charset=UTF-8," + encodeURIComponent(JSON.stringify(obj));
+      } 
+    )
+  }
+
+  // Sanitize URL
+    sanitize(url:string){
+      return this._sanitizer.bypassSecurityTrustUrl(url);
+  }
 }

@@ -67,6 +67,14 @@
 	word-wrap: break-word;
 }
 
+.buttons-li-backup{
+    margin: 12px;
+    float: left; 
+    background: #aaa;
+	display: inline-flex;
+	word-wrap: break-word;
+}
+
 .buttons-busy{
     position: absolute;
     top: 0;

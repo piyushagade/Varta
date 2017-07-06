@@ -149,7 +149,7 @@
 								<!--VartaKey-->
 								<div class="form-group">
 									<label for="key">Author VartaKey <span class="text-warning"><strong>*</strong></span></label>
-									<input type="password" class="form-control" formControlName="key" aria-describedby="key" placeholder="Your secret key">
+									<input type="text" class="form-control" formControlName="key" aria-describedby="key" placeholder="Your secret key">
 									<div class="alert alert-danger" *ngIf="articleForm.controls['key'].hasError('required') && articleForm.controls['key'].touched">You must enter the key.</div>
 									<div class="alert alert-danger" *ngIf="articleForm.controls['key'].hasError('maxlength') && articleForm.controls['key'].touched">Length limit exceeded.</div>
 									<div class="alert alert-danger" *ngIf="articleForm.controls['key'].hasError('minlength') && articleForm.controls['key'].touched">Add more characters.</div>

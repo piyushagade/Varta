@@ -79,7 +79,7 @@
 
 								<div class="form-group text-left">
 									<label for="key">VartaKey <span class="text-warning"><strong>*</strong></span></label>
-									<input type="password" class="form-control" formControlName="key" aria-describedby="key" placeholder="Your secret key">
+									<input type="text" class="form-control" formControlName="key" aria-describedby="key" placeholder="Your secret key">
 									<div class="alert alert-danger" *ngIf="adminForm.controls['key'].hasError('required') && adminForm.controls['key'].touched">You must enter the key.</div>
 									<div class="alert alert-warning" *ngIf="adminForm.controls['key'].hasError('maxlength') && adminForm.controls['key'].touched">Length limit exceeded.</div>
 									<div class="alert alert-warning" *ngIf="adminForm.controls['key'].hasError('minlength') && adminForm.controls['key'].touched">Add more characters.</div>
@@ -120,7 +120,7 @@
 					<div class="col-sm-4 col-sm-offset-4 col-md-2 col-md-offset-5" *ngIf="!showArticles">
 						<div class="form-group text-center">
 							<label for="key">VartaKey <span class="text-warning"><strong>*</strong></span></label>
-							<input type="password" class="form-control  text-center" formControlName="key" aria-describedby="key" placeholder="Your secret key">
+							<input type="text" class="form-control  text-center" formControlName="key" aria-describedby="key" placeholder="Your secret key">
 							<div class="alert alert-danger" *ngIf="manageArticlesForm.controls['key'].hasError('required') && manageArticlesForm.controls['key'].touched">You must enter a key.</div>
 							<div class="alert alert-warning" *ngIf="manageArticlesForm.controls['key'].hasError('maxlength') && manageArticlesForm.controls['key'].touched">Length limit exceeded.</div>
 							<div class="alert alert-warning" *ngIf="manageArticlesForm.controls['key'].hasError('minlength') && manageArticlesForm.controls['key'].touched">Add more characters.</div>
@@ -135,6 +135,30 @@
 					<!--Articles' thumbnails-->
 					<div class="col-md-10 col-md-offset-1 text-left" *ngIf="showArticles">
 						<ul class="buttons-ul">
+
+							<!--Backup articles-->
+							<li class="buttons-li-backup">
+								<div class="buttons-div">
+									<!--Spinner-->
+									<div class="buttons-busy text-center" *ngIf="false">
+										<i class="material-icons icon-busy">autorenew</i>
+									</div>
+
+									<!--Data-->
+									Backup/Upload your data
+									<p class="text-left buttons-li-p">
+										<small>Download a JSON file with your articles' data.</small><br/>
+										<small>Or, you can upload a JSON backup file.</small><br/>
+									</p>
+
+									<!--Action icons-->
+									<div class="buttons text-right">
+										<a [download]="'varta_backup_' + today" [href]="sanitize(backup_uri)"><i class="material-icons button">cloud_download</i></a>
+										<!--<i (click)="uploadArticlesData()" class="material-icons button">file_upload</i>-->
+									</div>
+								</div>
+							</li>
+
 							<li class="buttons-li" *ngFor="let article of allArticles; let i = index">
 								<div class="buttons-div" [ngClass]="{'published': article.published, 'unpublished': !article.published}">
 									<!--Spinner-->
