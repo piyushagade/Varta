@@ -35,8 +35,11 @@
 	<div class="fh5co-articles-figure animate-box-disabled blur" *ngIf="data.image !== ''" [ngStyle]="{'background-image': 'url(' + data.image + ')'}"></div>
 	<div class="fh5co-articles-figure animate-box-disabled blur" *ngIf="data.image === ''" [ngStyle]="{'background-image': 'url(' + dirs.images + 'work_1.jpg' + ')'}"></div>
 	<div class="fh5co-articles-description">
-		<h2>{{ data.title }}</h2>
-		<p>{{ data.introduction | limitChars : 100}}</p>
+		<h2>
+			{{ data.title }} <br/>
+			<small style="font-weight: 300; font-size: 16px;" class="roboto">{{ (data.date / 1000 | amFromUnix) | amDateFormat:'LL' }}</small><br/>
+		</h2>
+		<p>{{ data.introduction | limitChars : 100 }}</p>
 		<p class="text-right"><a [routerLink]="'/' + username + data.link" >Continue reading</a></p>
 	</div>
 </div>
