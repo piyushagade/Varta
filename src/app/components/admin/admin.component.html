@@ -7,35 +7,63 @@
 </div>
 
 <div id="fh5co-main">
-	<form [formGroup]="adminForm" (ngSubmit)="savePreferences()">
-		<div class="cover text-center" [ngStyle]="{'background-image': 'url(' + dirs.images + 'varta.jpg' + ')', 'background-position': 'center center'}">
-			<div class="container-fluid text-center card-heading">
-				<div class="row">
-					<div class="col-md-8 col-md-offset-2" *ngIf="accountAlreadyCreated">
-						<h1 class="intro-lead">Admin Panel</h1>
-						<p class="">This is your admin panel. <br/>You need a VartaKey to make changes.</p>
+	<div class="cover text-center" [ngStyle]="{'background-image': 'url(' + dirs.images + 'varta.jpg' + ')', 'background-position': 'center center'}">
+		<div class="container-fluid text-center card-heading">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2" *ngIf="accountAlreadyCreated">
+					<h1 class="intro-lead">Admin Panel</h1>
+					<p class="">This is your admin panel.</p>
+				</div>
+
+				<form [formGroup]="manageArticlesForm" (ngSubmit)="verifyKeyManageArticles()">
+					<div class="col-md-8 col-md-offset-2 text-center">
+						<p *ngIf="!showArticles">Enter the VartaKey corresponding to this blog website.</p>
 					</div>
 
-					<div class="col-md-8 col-md-offset-2" *ngIf="!accountAlreadyCreated">
-						<h1 class="intro-lead">Admin panel</h1>
-						<p>No Varta account with the name '{{ username }}' found.</p>
-						<div class="form-group col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">							
-							<div style="margin: 20px 0 10px 0;">Let's change that.</div>
-							<button class="btn btn-primary" [routerLink]="'/' + username + '/varta-key'">Create Account</button>
+					<div class="col-sm-4 col-sm-offset-4 col-md-2 col-md-offset-5" *ngIf="!showArticles">
+						<div class="form-group text-center">
+							<label for="key">VartaKey <span class="text-warning"><strong>*</strong></span></label>
+							<input type="text" class="form-control  text-center" formControlName="key" aria-describedby="key" placeholder="Your secret key">
+							<div class="alert alert-danger" *ngIf="manageArticlesForm.controls['key'].hasError('required') && manageArticlesForm.controls['key'].touched">You must enter a key.</div>
+							<div class="alert alert-warning" *ngIf="manageArticlesForm.controls['key'].hasError('maxlength') && manageArticlesForm.controls['key'].touched">Length limit exceeded.</div>
+							<div class="alert alert-warning" *ngIf="manageArticlesForm.controls['key'].hasError('minlength') && manageArticlesForm.controls['key'].touched">Add more characters.</div>
+							<div class="alert alert-danger" *ngIf="keyErrorManage && manageArticlesForm.controls['key'].touched">Wrong VartaKey</div>
 						</div>
+
+						<div class="form-group text-center">
+							<button class="btn btn-primary" type="submit" [disabled]="!manageArticlesForm.valid">Verify</button>
+						</div>
+									
+						<div style="margin: 36px 0 10px 0;">Or, did you forget your VartaKey? <br/>Click below to reset it.</div>
+						<button class="btn btn-grey" [routerLink]="'/' + username + '/reset-key'">Reset my VartaKey</button>
+					</div>
+				</form>
+
+				<div class="col-md-8 col-md-offset-2" *ngIf="!accountAlreadyCreated">
+					<h1 class="intro-lead">Admin panel</h1>
+					<p>No Varta account with the name '{{ username }}' found.</p>
+					<div class="form-group col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">							
+						<div style="margin: 20px 0 10px 0;">Let's change that.</div>
+						<button class="btn btn-primary" [routerLink]="'/' + username + '/varta-key'">Create Account</button>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<div id="fh5co-content" *ngIf="accountAlreadyCreated">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-10 col-md-offset-1">
-						<div class="row">
+	<div id="fh5co-content" *ngIf="accountAlreadyCreated">
+		<div class="container">
+			<div class="row">
+				
+
+				<div class="col-md-10 col-md-offset-1" *ngIf="showArticles">
+					<div class="row">
+						<form [formGroup]="adminForm" (ngSubmit)="savePreferences()">
+						
 
 							<!--Main form-->
-							<div class="col-md-8 col-md-push-3">								
+							<div class="col-md-8 col-md-push-3">		
+								<h3>Preferences</h3>						
 								<div class="form-group">
 									<label for="authorName">Author's name <span class="text-warning"><strong>*</strong></span></label>
 									<input type="text" class="form-control" formControlName="authorName" name="authorName" aria-describedby="authorName" placeholder="Author's name" [(ngModel)] = "authorName">
@@ -79,87 +107,44 @@
 
 								<div class="form-group text-left">
 									<label for="key">VartaKey <span class="text-warning"><strong>*</strong></span></label>
-									<input type="text" class="form-control" formControlName="key" aria-describedby="key" placeholder="Your secret key">
+									<input type="text" class="form-control" formControlName="key" aria-describedby="key" placeholder="Your current VartaKey">
 									<div class="alert alert-danger" *ngIf="adminForm.controls['key'].hasError('required') && adminForm.controls['key'].touched">You must enter the key.</div>
 									<div class="alert alert-warning" *ngIf="adminForm.controls['key'].hasError('maxlength') && adminForm.controls['key'].touched">Length limit exceeded.</div>
 									<div class="alert alert-warning" *ngIf="adminForm.controls['key'].hasError('minlength') && adminForm.controls['key'].touched">Add more characters.</div>
 								</div>
 
 								<div class="form-group text-left">
-									<div style="margin: 20px 0 10px 0;">If everything looks good, click below</div>
+									<hr/>
+									<div style="margin: 20px 0 10px 0;">If everything looks good, click below to save the preferneces.</div>
 									<button class="btn btn-primary" [disabled]="!adminForm.valid" (click)="savePreferences(adminForm)">Save</button>
 
 									<div class="alert alert-success" *ngIf="userUpdated">Blog preferences updated</div>
 									<div class="alert alert-danger" *ngIf="keyError">Wrong VartaKey inserted</div>
-									
-									<div style="margin: 36px 0 10px 0;">Or, did you forget your VartaKey? <br/>Click below to reset it.</div>
-									<button class="btn btn-grey" [routerLink]="'/' + username + '/reset-key'">Reset my VartaKey</button>
 								</div>
 							</div>
-
-						</div>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
-	</form>
+	</div>
 
 	<!--Manage articles-->
 	<div class="cover text-center" *ngIf="accountAlreadyCreated">
 		<div class="container-fluid text-center card-heading">
 			<div class="row">
-				<form [formGroup]="manageArticlesForm" (ngSubmit)="verifyKeyManageArticles()">
-					<div class="col-md-8 col-md-offset-2">
-						<h1 class="intro-lead">Manage your articles</h1>
-						<p class="">You can publish or unpublish your articles, or you can delete them permanently.</p><br/>
-						<p *ngIf="!showArticles">But first, enter the VartaKey corresponding to this blog website.</p>
-						<p *ngIf="showArticles && allArticles.length == 0">You haven't written any articles yet.</p>
-						<button *ngIf="showArticles && allArticles.length == 0" [routerLink]="'/' + username + '/add'" class="btn btn-primary">Add an article</button>
-					</div>
-
-					<div class="col-sm-4 col-sm-offset-4 col-md-2 col-md-offset-5" *ngIf="!showArticles">
-						<div class="form-group text-center">
-							<label for="key">VartaKey <span class="text-warning"><strong>*</strong></span></label>
-							<input type="text" class="form-control  text-center" formControlName="key" aria-describedby="key" placeholder="Your secret key">
-							<div class="alert alert-danger" *ngIf="manageArticlesForm.controls['key'].hasError('required') && manageArticlesForm.controls['key'].touched">You must enter a key.</div>
-							<div class="alert alert-warning" *ngIf="manageArticlesForm.controls['key'].hasError('maxlength') && manageArticlesForm.controls['key'].touched">Length limit exceeded.</div>
-							<div class="alert alert-warning" *ngIf="manageArticlesForm.controls['key'].hasError('minlength') && manageArticlesForm.controls['key'].touched">Add more characters.</div>
-							<div class="alert alert-danger" *ngIf="keyErrorManage && manageArticlesForm.controls['key'].touched">Wrong VartaKey</div>
-						</div>
-
-						<div class="form-group text-center">
-							<button class="btn btn-primary" type="submit" [disabled]="!manageArticlesForm.valid">Verify</button>
-						</div>
-					</div>
-
 					<!--Articles' thumbnails-->
 					<div class="col-md-10 col-md-offset-1 text-left" *ngIf="showArticles">
+						<h3 style="margin-top: 40px;">Your articles </h3>
+						<p *ngIf="!showArticles || allArticles.length != 0">
+							You can publish or publish your articles. You can also delete them if needed.<br/>
+							This section also allows you to review and manage comments on your articles.
+						</p>
+
+						<p *ngIf="showArticles && allArticles.length == 0">You haven't written any articles yet.</p>
+						<button *ngIf="showArticles && allArticles.length == 0" [routerLink]="'/' + username + '/add'" class="btn btn-primary">Add an article</button>
+
 						<ul class="buttons-ul">
-
-							<!--Backup articles-->
-							<li class="buttons-li-backup">
-								<div class="buttons-div">
-									<!--Spinner-->
-									<div class="buttons-busy text-center" *ngIf="false">
-										<i class="material-icons icon-busy">autorenew</i>
-									</div>
-
-									<!--Data-->
-									Backup/Upload your data
-									<p class="text-left buttons-li-p">
-										<small>Download a JSON file with your articles' data.</small><br/>
-										<small>Or, you can upload a JSON backup file.</small><br/>
-									</p>
-
-									<!--Action icons-->
-									<div class="buttons text-right">
-										<a [download]="'varta_backup_' + today" [href]="sanitize(backup_uri)"><i class="material-icons button">cloud_download</i></a>
-										<!--<i (click)="fileChange(fileInput)" class="material-icons button">file_upload</i>
-										<input type="file" #fileInput (change)="fileChange($event)" placeholder="Upload file" accept=".json">-->
-									</div>
-								</div>
-							</li>
-
 							<li class="buttons-li" *ngFor="let article of allArticles; let i = index">
 								<div class="buttons-div" [ngClass]="{'published': article.published, 'unpublished': !article.published}">
 									<!--Spinner-->
@@ -187,6 +172,7 @@
 							</li>
 						</ul>
 					</div>
+
 
 					<!--Manage comments panel-->
 					<div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 text-left" *ngIf="commentsVisible">
@@ -219,7 +205,59 @@
 							</li>
 						</ul>
 					</div>
-				</form>
+
+
+					<div class="col-md-10 col-md-offset-1 text-left" *ngIf="showArticles">
+						<hr/>
+						<h3 style="margin-top: 40px;">Your data and account </h3>
+						<p>
+							You can make a backup and store it locally, so that you could restore your articles in case of an accidental delete.<br/>
+							You can also permenantly delete your account. Your articles won't be deleted, but no one will able to access those either.
+						</p>
+						
+						<ul class="buttons-ul">
+							<!--Backup articles-->
+							<li class="buttons-li-backup" *ngIf="!showArticles || allArticles.length != 0">
+								<div class="buttons-div">
+									<!--Data-->
+									Backup/Upload your data
+									<p class="text-left buttons-li-p">
+										<small>Download a JSON file with your articles' data.</small><br/>
+										<small>Or, you can upload a JSON backup file.</small><br/>
+									</p>
+
+									<!--Action icons-->
+									<div class="buttons text-right">
+										<a [download]="'varta_backup_' + today" [href]="sanitize(backup_uri)"><i class="material-icons button">cloud_download</i></a>
+										<!--<i (click)="fileChange(fileInput)" class="material-icons button">file_upload</i>
+										<input type="file" #fileInput (change)="fileChange($event)" placeholder="Upload file" accept=".json">-->
+									</div>
+								</div>
+							</li>
+						
+							<!--Backup articles-->
+							<li class="buttons-li-delete">
+								<div class="buttons-div">
+									<!--Spinner-->
+									<div class="buttons-busy text-center" *ngIf="false">
+										<i class="material-icons icon-busy">autorenew</i>
+									</div>
+
+									<!--Data-->
+									Delete your account
+									<p class="text-left buttons-li-p">
+										<small>Disabling your account will make your all your articles inaccessible to other users.</small><br/>
+										<small>You can always restore you account back to normal.</small><br/>
+									</p>
+
+									<!--Action icons-->
+									<div class="buttons text-right">
+										<i class="material-icons button">delete_forever</i>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
 			</div>
 		</div>
 	</div>

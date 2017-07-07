@@ -67,15 +67,6 @@
 	word-wrap: break-word;
 }
 
-.buttons-li-backup{
-    margin: 12px;
-    float: left; 
-    background: #aaa;
-	display: inline-flex;
-	word-wrap: break-word;
-    border-bottom: 4px solid #42a5f5  ;
-}
-
 .buttons-busy{
     position: absolute;
     top: 0;
@@ -135,6 +126,24 @@
 .buttons-li-p{
     color: #aaa;
     margin-bottom: 26px;
+}
+
+.buttons-li-backup{
+    margin: 12px;
+    float: left; 
+    background: #aaa;
+	display: inline-flex;
+	word-wrap: break-word;
+    border-bottom: 4px solid #42a5f5  ;
+}
+
+.buttons-li-delete{
+    margin: 12px;
+    float: left; 
+    background: #aaa;
+	display: inline-flex;
+	word-wrap: break-word;
+    border-bottom: 4px solid #f00;
 }
 
 .unpublished{
