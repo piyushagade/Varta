@@ -81,7 +81,7 @@ export class AddComponent {
     
     // Add some more information
     data.link = '/' + data.title.toLowerCase().replace(/\s/g, "-");    
-    data.author = config.constants.admin.name;
+    data.author = this.username;
     data.date = new Date().getTime();
     data.category = this.category;
     data.published = true;
