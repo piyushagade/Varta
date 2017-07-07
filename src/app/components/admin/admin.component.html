@@ -154,7 +154,8 @@
 									<!--Action icons-->
 									<div class="buttons text-right">
 										<a [download]="'varta_backup_' + today" [href]="sanitize(backup_uri)"><i class="material-icons button">cloud_download</i></a>
-										<!--<i (click)="uploadArticlesData()" class="material-icons button">file_upload</i>-->
+										<!--<i (click)="fileChange(fileInput)" class="material-icons button">file_upload</i>
+										<input type="file" #fileInput (change)="fileChange($event)" placeholder="Upload file" accept=".json">-->
 									</div>
 								</div>
 							</li>
@@ -177,7 +178,7 @@
 									<div class="buttons text-right">
 										<i class="material-icons button" [routerLink]="'/' + username + '/' + article.link" target="_new">open_in_new</i>
 										<!--<i class="material-icons button" (click)="editArticle(article.link)">mode_edit</i>-->
-										<i class="material-icons button" (click)="showComments(article.link)">comment</i>
+										<i class="material-icons button" (click)="showComments(article.link)">comment<div *ngIf="hasUnreviewedComments[i]" class="dot"></div></i>
 										<i class="material-icons button" (click)="publishArticle(article._id)" *ngIf="!article.published">cloud_queue</i>
 										<i class="material-icons button" (click)="unpublishArticle(article._id)" *ngIf="article.published">cloud_off</i>
 										<i class="material-icons button" (click)="deleteArticle(article._id)">delete_forever</i>
@@ -211,8 +212,8 @@
 									</p>
 								</div>
 								<div class="comments-buttons">
-									<i class="material-icons comments-button" (click)="togglePublished(comment._id, article._id, article.link)" *ngIf="!comment.published">cloud_queue</i>
-									<i class="material-icons comments-button" (click)="togglePublished(comment._id, article._id, article.link)" *ngIf="comment.published">cloud_off</i>
+									<i class="material-icons comments-button" (click)="toggleCommentsPublished(comment._id, article._id, article.link)" *ngIf="!comment.published">cloud_queue</i>
+									<i class="material-icons comments-button" (click)="toggleCommentsPublished(comment._id, article._id, article.link)" *ngIf="comment.published">cloud_off</i>
 									<i class="material-icons comments-button" (click)="deleteComment(comment._id, article._id, article.link)">delete_forever</i>
 								</div>
 							</li>

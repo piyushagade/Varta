@@ -4,6 +4,7 @@ import { ApiService } from '../../services/api.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import {Observable} from 'rxjs/Rx';
 import {DomSanitizer} from '@angular/platform-browser';
+import { Http, Jsonp, RequestOptions, Headers } from '@angular/http'
 
 @Component({
   selector: 'app-admin',
@@ -40,6 +41,7 @@ export class AdminComponent {
   commentsVisible;
   backup_uri;
   today;
+  hasUnreviewedComments = {};
 
   public adminForm = this._fb.group({
       authorName: ["", Validators.compose([Validators.required, Validators.maxLength(25), Validators.minLength(3)])],
@@ -53,7 +55,7 @@ export class AdminComponent {
      key: ["", Validators.compose([Validators.required, Validators.maxLength(8), Validators.minLength(4)])],
   });
 
-  constructor(private _fb: FormBuilder, private _api : ApiService, private _sanitizer : DomSanitizer){
+  constructor(private _fb: FormBuilder, private _api : ApiService, private _sanitizer : DomSanitizer, private _http : Http){
     this.username = document.location.pathname.substr(1).split('/')[0];
 
     // Initialize isBusy
@@ -125,7 +127,7 @@ export class AdminComponent {
     );
   }
 
-  // Get all articles
+  // Get all articles data
   getArticles(){
     // Set busy
     this.setBusy();
@@ -136,6 +138,18 @@ export class AdminComponent {
         this.setIdle();
 
         this.allArticles = res;
+
+        // Look for unpublished comments
+        for(let i = 0; i < res.length; i++){  // ith article
+          let comments = res[i].comments.all;
+          this.hasUnreviewedComments[i] = false;
+
+          for(let j = 0; j < comments.length; j++){ // jth comment
+            if(comments[j].published == false){
+              this.hasUnreviewedComments[i] = true;
+            }
+          }
+        }
       } 
     )
   }
@@ -168,7 +182,7 @@ export class AdminComponent {
         // Set idle
         this.setIdlePublishUnpublish(i);
 
-        // Update list on the admin page
+        // Update articles list on the admin page
         this.getArticles();
       }
     )
@@ -185,7 +199,7 @@ export class AdminComponent {
         // Set idle
         this.setIdlePublishUnpublish(i);
 
-        // Update list on the admin page
+        // Update articles list on the admin page
         this.getArticles();
       }
     )
@@ -201,33 +215,13 @@ export class AdminComponent {
         // Set idle
         this.setIdlePublishUnpublish(i);
 
-        // Update list on the admin page
+        // Update articles list on the admin page
         this.getArticles();
       }
     )
 
     // Hide manage comments panel if visible
     this.commentsVisible = false;
-  }
-
-  // Delete comment
-  deleteComment(comment_id, article_id, article_identifier){
-    this._api.deleteComment(article_id, comment_id).subscribe(
-      res => {
-        // Update comments list on the admin page
-        this._api.getArticle(article_identifier.substr(1), this.username).subscribe(
-          res => this.manageCommentsArticle = res
-        );
-      }
-    )
-  }
-
-  // Refresh comments
-  refreshComments(article_identifier){
-    // Update comments list on the admin page
-        this._api.getArticle(article_identifier.substr(1), this.username).subscribe(
-          res => this.manageCommentsArticle = res
-        );
   }
 
   // Set busy
@@ -277,8 +271,8 @@ export class AdminComponent {
     
   }
 
-  //Show comments waiting to be reviewed
-  showComments(id){
+  // Check if any article has unreviewd comments
+  checkForUnreviewedComments(id){
     if(id == 'hide') this.commentsVisible = false;
     else{
       id = id.substr(1);
@@ -297,9 +291,30 @@ export class AdminComponent {
     }
   }
 
+  // Show comments for an article
+  showComments(id){
+    if(id == 'hide') this.commentsVisible = false;
+    else{
+      id = id.substr(1);
+
+      this.commentsVisible = true;
+      
+      // Refresh comments in some time interval
+      let timer = Observable.timer(1, 60000);
+        timer.subscribe(
+          t => {
+          // Get comments of the article whose identifier is id
+          this._api.getArticle(id, this.username).subscribe(
+            res => {
+              this.manageCommentsArticle = res;
+            }
+          );
+        });
+    }
+  }
+
   // Toggle the state of comments between published and unpublished
-  togglePublished(comment_id, article_id, article_identifier){
-    
+  toggleCommentsPublished(comment_id, article_id, article_identifier){
     this._api.toggleCommentsPublished(article_id, comment_id).subscribe(
       res => {
         if(res.status == 'success'){
@@ -307,6 +322,22 @@ export class AdminComponent {
           this._api.getArticle(article_identifier.substr(1), this.username).subscribe(
             res => {
               if(res) this.manageCommentsArticle = res;
+              
+              // Look for unreviewed/unpublished comments
+              let comments = res[0].comments.all;
+              for(let j = 0; j < this.allArticles.length; j++){ // Every article
+                if(this.allArticles[j].link == res[0].link){  // Select the article which is current article
+                  // Update allArticles
+                  this.allArticles[j] = res[0];
+                  
+                  this.hasUnreviewedComments[j] = false;
+                  for(let i = 0; i < this.allArticles[j].comments.all.length; i++){ // Every comment
+                    if(this.allArticles[j].comments.all[i].published == false){
+                      this.hasUnreviewedComments[j] = true;
+                    }
+                  }
+                }
+              }
             }
           );
         }
@@ -314,6 +345,28 @@ export class AdminComponent {
     );   
   }
 
+  // Delete comment
+  deleteComment(comment_id, article_id, article_identifier){
+    this._api.deleteComment(article_id, comment_id).subscribe(
+      res => {
+        // Update comments list on the admin page
+        this._api.getArticle(article_identifier.substr(1), this.username).subscribe(
+          res => this.manageCommentsArticle = res
+        );
+      }
+    )
+  }
+
+  // Refresh comments
+  refreshComments(article_identifier){
+    // Update comments list on the admin page
+    this._api.getArticle(article_identifier.substr(1), this.username).subscribe(
+      res => this.manageCommentsArticle = res
+    );
+  }
+
+
+  // Backup data
   downloadArticlesData(){
     // Get JSON object
     // Set busy
@@ -335,8 +388,44 @@ export class AdminComponent {
     )
   }
 
+  uploadArticlesData(value){
+    console.log(value);
+    
+  }
+
   // Sanitize URL
     sanitize(url:string){
       return this._sanitizer.bypassSecurityTrustUrl(url);
+  }
+
+  
+fileChange(event) {
+    let fileList: FileList = event.target.files;
+
+    if(fileList.length > 0) {
+      let files = event.target.files;
+      if (files.length > 0) {
+        let data: FormData = new FormData();
+        for (let file of files) {
+          data.append('files', file, file.name);
+          console.log(file);
+        }
+
+        
+          
+
+        // let headers = new Headers();
+        // headers.append('Content-Type', 'multipart/form-data');
+        // headers.append('Accept', 'application/json');
+        // let options = new RequestOptions({ headers: headers });
+        // this._http.post(`${this.apiEndPoint}`, formData, options)
+        //     .map(res => res.json())
+        //     .catch(error => Observable.throw(error))
+        //     .subscribe(
+        //         data => console.log('success'),
+        //         error => console.log(error)
+        //     )
+      }
+    }
   }
 }

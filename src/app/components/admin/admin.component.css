@@ -73,6 +73,7 @@
     background: #aaa;
 	display: inline-flex;
 	word-wrap: break-word;
+    border-bottom: 4px solid #42a5f5  ;
 }
 
 .buttons-busy{
@@ -122,6 +123,7 @@
     margin-left: 4px;
     margin-right: 0px;
     transition: 0.4s all ease-in-out;
+    position: relative;
 }
 
 
@@ -227,3 +229,30 @@
 }
 
 
+.dot {
+        width: 10px;
+        height: 10px;
+        border: 0px solid #f22;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    .dot:before {
+        position: absolute;
+        content: '';
+        background-color:#f22;
+        border-radius:50%;
+        opacity: 0.9;
+        width: 6px;
+        height: 6px;
+        pointer-events: none;
+        top: -4px;
+        left: 12px;
+        -webkit-animation: blink 0.7s infinite linear alternate;
+        -webkit-font-smoothing: antialiased;
+    }
+
+@-webkit-keyframes blink {
+  0%     { opacity: 0 } 50% { opacity: 0 }
+  50.01% { opacity: 1 } 100% { opacity: 1 }
+}
