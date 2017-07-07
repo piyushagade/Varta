@@ -20,7 +20,7 @@ export class AdminComponent {
   dirs = config.constants.dirs;
   admin = config.constants.admin;
   parameters = config.constants.parameters;
-  accountAlreadyCreated = false;
+  accountAlreadyExists = false;
   newUsername = '';
   key = '';
   username: string;
@@ -31,7 +31,7 @@ export class AdminComponent {
   isBusy = 100;
   isBusyPublishUnpublish = {};
   showSpinner = true;
-  showArticles = false;
+  adminAuthenticated = false;
   user = {};
   authorName;
   blogName;
@@ -85,7 +85,7 @@ export class AdminComponent {
           this.setIdle();
 
           if(!res.available){
-            this.accountAlreadyCreated = true;
+            this.accountAlreadyExists = true;
 
             // Get user data
             this.getUserData();
@@ -259,11 +259,11 @@ export class AdminComponent {
       res => {
         if(!res.verified) {
           this.keyErrorManage = true;
-          this.showArticles = false;
+          this.adminAuthenticated = false;
         }
         else{
           this.keyErrorManage = false;
-          this.showArticles = true;
+          this.adminAuthenticated = true;
           this.downloadArticlesData();
         }       
       }
@@ -428,4 +428,13 @@ fileChange(event) {
       }
     }
   }
+
+  deleteAccount(){
+    this._api.deleteAccount(this.username).subscribe(
+      res => {
+        console.log(res);
+        this.accountAlreadyExists = false;
+        this.adminAuthenticated = false;
+      }
+    )};
 }

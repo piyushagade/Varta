@@ -10,17 +10,17 @@
 	<div class="cover text-center" [ngStyle]="{'background-image': 'url(' + dirs.images + 'varta.jpg' + ')', 'background-position': 'center center'}">
 		<div class="container-fluid text-center card-heading">
 			<div class="row">
-				<div class="col-md-8 col-md-offset-2" *ngIf="accountAlreadyCreated">
+				<div class="col-md-8 col-md-offset-2" *ngIf="accountAlreadyExists">
 					<h1 class="intro-lead">Admin Panel</h1>
 					<p class="">This is your admin panel.</p>
 				</div>
 
-				<form [formGroup]="manageArticlesForm" (ngSubmit)="verifyKeyManageArticles()">
+				<form [formGroup]="manageArticlesForm" *ngIf="accountAlreadyExists" (ngSubmit)="verifyKeyManageArticles()">
 					<div class="col-md-8 col-md-offset-2 text-center">
-						<p *ngIf="!showArticles">Enter the VartaKey corresponding to this blog website.</p>
+						<p *ngIf="!adminAuthenticated">Enter the VartaKey corresponding to this blog website.</p>
 					</div>
 
-					<div class="col-sm-4 col-sm-offset-4 col-md-2 col-md-offset-5" *ngIf="!showArticles">
+					<div class="col-sm-4 col-sm-offset-4 col-md-2 col-md-offset-5" *ngIf="!adminAuthenticated">
 						<div class="form-group text-center">
 							<label for="key">VartaKey <span class="text-warning"><strong>*</strong></span></label>
 							<input type="text" class="form-control  text-center" formControlName="key" aria-describedby="key" placeholder="Your secret key">
@@ -39,7 +39,7 @@
 					</div>
 				</form>
 
-				<div class="col-md-8 col-md-offset-2" *ngIf="!accountAlreadyCreated">
+				<div class="col-md-8 col-md-offset-2" *ngIf="!accountAlreadyExists">
 					<h1 class="intro-lead">Admin panel</h1>
 					<p>No Varta account with the name '{{ username }}' found.</p>
 					<div class="form-group col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">							
@@ -51,12 +51,12 @@
 		</div>
 	</div>
 
-	<div id="fh5co-content" *ngIf="accountAlreadyCreated">
+	<div id="fh5co-content" *ngIf="accountAlreadyExists">
 		<div class="container">
 			<div class="row">
 				
 
-				<div class="col-md-10 col-md-offset-1" *ngIf="showArticles">
+				<div class="col-md-10 col-md-offset-1" *ngIf="adminAuthenticated">
 					<div class="row">
 						<form [formGroup]="adminForm" (ngSubmit)="savePreferences()">
 						
@@ -130,134 +130,141 @@
 	</div>
 
 	<!--Manage articles-->
-	<div class="cover text-center" *ngIf="accountAlreadyCreated">
+	<div class="cover text-center" *ngIf="accountAlreadyExists">
 		<div class="container-fluid text-center card-heading">
 			<div class="row">
-					<!--Articles' thumbnails-->
-					<div class="col-md-10 col-md-offset-1 text-left" *ngIf="showArticles">
-						<h3 style="margin-top: 40px;">Your articles </h3>
-						<p *ngIf="!showArticles || allArticles.length != 0">
-							You can publish or publish your articles. You can also delete them if needed.<br/>
-							This section also allows you to review and manage comments on your articles.
-						</p>
+				<!--Articles' thumbnails-->
+				<div class="col-md-10 col-md-offset-1 text-left" *ngIf="adminAuthenticated">
+					<h3 style="margin-top: 40px;">Your articles </h3>
+					<p *ngIf="!adminAuthenticated || allArticles.length != 0">
+						You can publish or publish your articles. You can also delete them if needed.<br/>
+						This section also allows you to review and manage comments on your articles.
+					</p>
 
-						<p *ngIf="showArticles && allArticles.length == 0">You haven't written any articles yet.</p>
-						<button *ngIf="showArticles && allArticles.length == 0" [routerLink]="'/' + username + '/add'" class="btn btn-primary">Add an article</button>
+					<p *ngIf="adminAuthenticated && allArticles.length == 0">You haven't written any articles yet.</p>
+					<button *ngIf="adminAuthenticated && allArticles.length == 0" [routerLink]="'/' + username + '/add'" class="btn btn-primary">Add an article</button>
 
-						<ul class="buttons-ul">
-							<li class="buttons-li" *ngFor="let article of allArticles; let i = index">
-								<div class="buttons-div" [ngClass]="{'published': article.published, 'unpublished': !article.published}">
-									<!--Spinner-->
-									<div class="buttons-busy text-center" *ngIf="isBusyPublishUnpublish[article._id] > 0">
-										<i class="material-icons icon-busy">autorenew</i>
-									</div>
-
-									<!--Data-->
-									{{ article.title | limitChars : 26 }}
-									<p class="text-left buttons-li-p">
-										<small>{{ article.published ? 'Published' : 'Unpublished' }}</small><br/>
-										<small>{{ article.category}}, {{ (article.date / 1000 | amFromUnix) | amDateFormat:'LL'  }}</small>
-									</p>
-
-									<!--Action icons-->
-									<div class="buttons text-right">
-										<a [href]="'/' + username + article.link" target="_blank"><i class="material-icons button">open_in_new</i></a>
-										<!--<i class="material-icons button" (click)="editArticle(article.link)">mode_edit</i>-->
-										<i class="material-icons button" (click)="showComments(article.link)">comment<div *ngIf="hasUnreviewedComments[i]" class="dot"></div></i>
-										<i class="material-icons button" (click)="publishArticle(article._id)" *ngIf="!article.published">cloud_queue</i>
-										<i class="material-icons button" (click)="unpublishArticle(article._id)" *ngIf="article.published">cloud_off</i>
-										<i class="material-icons button" (click)="deleteArticle(article._id)">delete_forever</i>
-									</div>
+					<ul class="buttons-ul">
+						<li class="buttons-li" *ngFor="let article of allArticles; let i = index">
+							<div class="buttons-div" [ngClass]="{'published': article.published, 'unpublished': !article.published}">
+								<!--Spinner-->
+								<div class="buttons-busy text-center" *ngIf="isBusyPublishUnpublish[article._id] > 0">
+									<i class="material-icons icon-busy">autorenew</i>
 								</div>
-							</li>
-						</ul>
-					</div>
 
+								<!--Data-->
+								{{ article.title | limitChars : 26 }}
+								<p class="text-left buttons-li-p">
+									<small>{{ article.published ? 'Published' : 'Unpublished' }}</small><br/>
+									<small>{{ article.category}}, {{ (article.date / 1000 | amFromUnix) | amDateFormat:'LL'  }}</small>
+								</p>
 
-					<!--Manage comments panel-->
-					<div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 text-left" *ngIf="commentsVisible">
-						<ul class="comments-ul" *ngFor="let article of manageCommentsArticle; let i = index">
-							<!--Data-->
-							<hr/>
-							<div class="text-right" style="position: absolute; right: 60px;">
-								<i (click)="refreshComments(article.link)" class="material-icons" style="cursor: pointer; margin-right: 14px;">cached</i>
-								<i (click)="showComments('hide')" class="material-icons" style="cursor: pointer;">close</i>
+								<!--Action icons-->
+								<div class="buttons text-right">
+									<a [href]="'/' + username + article.link" target="_blank"><i class="material-icons button">open_in_new</i></a>
+									<!--<i class="material-icons button" (click)="editArticle(article.link)">mode_edit</i>-->
+									<i class="material-icons button" (click)="showComments(article.link)">comment<div *ngIf="hasUnreviewedComments[i]" class="dot"></div></i>
+									<i class="material-icons button" (click)="publishArticle(article._id)" *ngIf="!article.published">cloud_queue</i>
+									<i class="material-icons button" (click)="unpublishArticle(article._id)" *ngIf="article.published">cloud_off</i>
+									<i class="material-icons button" (click)="deleteArticle(article._id)">delete_forever</i>
+								</div>
 							</div>
-
-							<small> Manage comments for </small><br/>
-							<h3>{{ article.title }}</h3>
-							<p *ngIf="article.comments.all.length != 0">Click on a comment to toggle between 'Published' and 'Unpublished' state.</p>
-							<p *ngIf="article.comments.all.length == 0">This article has no comments yet.</p>
-							
-							<li class="comments-li" *ngFor="let comment of article.comments.all; let j = index">
-								<div class="comments-div" [ngClass]="{ 'published-comment' : comment.published, 'unpublished-comment' : !comment.published }">
-									<span class="roboto"> {{ comment.published ? (comment.text | limitChars : 60) : comment.text }} </span>
-									<p class="text-left comments-li-p">
-										<br/>
-										<small>{{ comment.published ? 'Published' : 'Unpublished' }}</small><br/>
-									</p>
-								</div>
-								<div class="comments-buttons">
-									<i class="material-icons comments-button" (click)="toggleCommentsPublished(comment._id, article._id, article.link)" *ngIf="!comment.published">cloud_queue</i>
-									<i class="material-icons comments-button" (click)="toggleCommentsPublished(comment._id, article._id, article.link)" *ngIf="comment.published">cloud_off</i>
-									<i class="material-icons comments-button" (click)="deleteComment(comment._id, article._id, article.link)">delete_forever</i>
-								</div>
-							</li>
-						</ul>
-					</div>
+						</li>
+					</ul>
+				</div>
 
 
-					<div class="col-md-10 col-md-offset-1 text-left" *ngIf="showArticles">
-						<hr style="margin-top: 60px;"/>
-						<h3 style="margin-top: 20px;">Your data and account </h3>
-						<p>
-							You can make a backup and store it locally, so that you could restore your articles in case of an accidental delete.<br/>
-							You can also permenantly delete your account. Your articles won't be deleted, but no one will able to access those either.
-						</p>
+				<!--Manage comments panel-->
+				<div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 text-left" *ngIf="commentsVisible">
+					<ul class="comments-ul" *ngFor="let article of manageCommentsArticle; let i = index">
+						<!--Data-->
+						<hr/>
+						<div class="text-right" style="position: absolute; right: 60px;">
+							<i (click)="refreshComments(article.link)" class="material-icons" style="cursor: pointer; margin-right: 14px;">cached</i>
+							<i (click)="showComments('hide')" class="material-icons" style="cursor: pointer;">close</i>
+						</div>
+
+						<small> Manage comments for </small><br/>
+						<h3>{{ article.title }}</h3>
+						<p *ngIf="article.comments.all.length != 0">Click on a comment to toggle between 'Published' and 'Unpublished' state.</p>
+						<p *ngIf="article.comments.all.length == 0">This article has no comments yet.</p>
 						
-						<ul class="buttons-ul">
-							<!--Backup articles-->
-							<li class="buttons-li-backup" *ngIf="!showArticles || allArticles.length != 0">
-								<div class="buttons-div">
-									<!--Data-->
-									Backup/Upload your data
-									<p class="text-left buttons-li-p">
-										<small>Download a JSON file with your articles' data.</small><br/>
-										<small>Or, you can upload a JSON backup file.</small><br/>
-									</p>
+						<li class="comments-li" *ngFor="let comment of article.comments.all; let j = index">
+							<div class="comments-div" [ngClass]="{ 'published-comment' : comment.published, 'unpublished-comment' : !comment.published }">
+								<span class="roboto"> {{ comment.published ? (comment.text | limitChars : 60) : comment.text }} </span>
+								<p class="text-left comments-li-p">
+									<small>{{ comment.published ? 'Published' : 'Unpublished' }}</small><br/>
+								</p>
+							</div>
+							<div class="comments-buttons">
+								<i class="material-icons comments-button" (click)="toggleCommentsPublished(comment._id, article._id, article.link)" *ngIf="!comment.published">cloud_queue</i>
+								<i class="material-icons comments-button" (click)="toggleCommentsPublished(comment._id, article._id, article.link)" *ngIf="comment.published">cloud_off</i>
+								<i class="material-icons comments-button" (click)="deleteComment(comment._id, article._id, article.link)">delete_forever</i>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
 
-									<!--Action icons-->
-									<div class="buttons text-right">
-										<a [download]="'varta_backup_' + today" [href]="sanitize(backup_uri)"><i class="material-icons button">cloud_download</i></a>
-										<!--<i (click)="fileChange(fileInput)" class="material-icons button">file_upload</i>
-										<input type="file" #fileInput (change)="fileChange($event)" placeholder="Upload file" accept=".json">-->
-									</div>
+			<div class="row">
+				<!--Manage data and account panel-->
+				<div class="col-md-10 col-md-offset-1 text-left" *ngIf="adminAuthenticated">
+					<hr style="margin-top: 60px;"/>
+					<h3 style="margin-top: 20px;">Your data and account </h3>
+					<p>
+						You can make a backup and store it locally, so that you could restore your articles in case of an accidental delete.<br/>
+						You can also temporarily disable your account. Your articles won't be deleted, but no one will able to access them.
+					</p>
+					
+					<ul class="buttons-ul">
+						<!--Backup articles-->
+						<li class="buttons-li-backup" *ngIf="!adminAuthenticated || allArticles.length != 0">
+							<div class="buttons-div">
+								<!--Data-->
+								Backup/Upload your data
+								<p class="text-left buttons-li-p">
+									<small>Download a JSON file with your articles' data.</small><br/>
+									<small>Or, you can upload a JSON backup file.</small><br/>
+								</p>
+
+								<!--Action icons-->
+								<div class="buttons text-right">
+									<a [download]="'varta_backup_' + today" [href]="sanitize(backup_uri)"><i class="material-icons button">cloud_download</i></a>
+									<!--<i (click)="fileChange(fileInput)" class="material-icons button">file_upload</i>
+									<input type="file" #fileInput (change)="fileChange($event)" placeholder="Upload file" accept=".json">-->
 								</div>
-							</li>
-						
-							<!--Backup articles-->
-							<li class="buttons-li-delete">
-								<div class="buttons-div">
-									<!--Spinner-->
-									<div class="buttons-busy text-center" *ngIf="false">
-										<i class="material-icons icon-busy">autorenew</i>
-									</div>
-
-									<!--Data-->
-									Delete your account
-									<p class="text-left buttons-li-p">
-										<small>Disabling your account will make your all your articles inaccessible to other users.</small><br/>
-										<small>You can always restore you account back to normal.</small><br/>
-									</p>
-
-									<!--Action icons-->
-									<div class="buttons text-right">
-										<i class="material-icons button">delete_forever</i>
-									</div>
+							</div>
+						</li>
+					
+						<!--Disable account-->
+						<li class="buttons-li-delete">
+							<div class="buttons-div">
+								<!--Spinner-->
+								<div class="buttons-busy text-center" *ngIf="false">
+									<i class="material-icons icon-busy">autorenew</i>
 								</div>
-							</li>
-						</ul>
-					</div>
+
+								<!--Data-->
+								Disable your account
+								<p class="text-left buttons-li-p">
+									<small>Disabling your account will make your all your articles inaccessible to other users.</small><br/>
+									<small>You can always restore you account back to normal.</small><br/>
+								</p>
+								
+
+								<!--Action icons-->
+								<div class="buttons">
+									<label>Confirm?
+										<input type="checkbox" [(ngModel)]="confirmDelete" style="margin-left: 6px;  margin-top: 4px;">
+									</label>
+									<span class="pull-right">
+										<i *ngIf="confirmDelete" (click)="deleteAccount()" class="material-icons button">delete_forever</i> 
+									</span>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -99,6 +99,7 @@
 
 .buttons{
     width: 100%;
+    position: relative;
     margin: 6px 0 0 6px; 
     padding: 0;
     display: inline-block;
@@ -134,7 +135,8 @@
     background: #aaa;
 	display: inline-flex;
 	word-wrap: break-word;
-    border-bottom: 4px solid #42a5f5  ;
+    border-bottom: 4px solid #42a5f5;
+    height: 180px;
 }
 
 .buttons-li-delete{
@@ -144,6 +146,7 @@
 	display: inline-flex;
 	word-wrap: break-word;
     border-bottom: 4px solid #f00;
+    height: 180px;
 }
 
 .unpublished{
@@ -191,7 +194,9 @@
 
 .comments-div{
     padding: 12px 20px 1px 20px;
-    background: rgba(220, 220, 220, 0.2);
+    background: rgba(230, 230, 230, 0.2);
+    min-width: 180px;
+    border: 1px #AAA solid;
 }
 
 .comments-div:hover{
