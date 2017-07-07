@@ -27,11 +27,4 @@ export class ThumbnailComponent {
   constructor(private _r : Router, private _fb : FormBuilder, private _api : ApiService){
     this.route = this._r.url.substr(1).split("/")[1];
   }
-
-  // Search articles
-  searchArticles(){
-    // Change route
-    if(this.searchForm.value.searchString && this.searchForm.value.searchString.length != 0)
-      this._r.navigateByUrl('/' + this.username + '/search/' + this.searchForm.value.searchString);
-  }
 }

@@ -4,11 +4,13 @@
 			<div class="row-fluid">
 				<div class="col-md-12">
 					<div class="navbar-header"> 
-					<!-- Mobile Toggle Menu Button -->
-					<a *ngIf="!onLoginPage" class="js-fh5co-nav-toggle fh5co-nav-toggle visible-xs-block" data-toggle="collapse" data-target="#fh5co-navbar" aria-expanded="false" aria-controls="navbar"><i></i></a>
+					<!--Blog name-->
 					<a class="navbar-brand" [routerLink]="onLoginPage ? '/login' : username + '/' + menuItems[0].link">{{ user.blogName || 'Varta' }}</a>
 					</div>
 
+					<!-- Mobile Toggle Menu Button -->
+					<a *ngIf="!onLoginPage" class="js-fh5co-nav-toggle fh5co-nav-toggle visible-xs-block" data-toggle="collapse" data-target="#fh5co-navbar" aria-expanded="false" aria-controls="navbar"><i></i></a>
+					
 					<!--Menu when not on login page-->
 					<div *ngIf="!onLoginPage" id="fh5co-navbar" class="navbar-collapse collapse">
 						<ul class="nav navbar-nav navbar-right">

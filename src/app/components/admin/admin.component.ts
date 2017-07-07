@@ -17,6 +17,7 @@ import { Http, Jsonp, RequestOptions, Headers } from '@angular/http'
 })
 
 export class AdminComponent {
+  lengths = config.constants.parameters.lengths;
   dirs = config.constants.dirs;
   admin = config.constants.admin;
   parameters = config.constants.parameters;
@@ -44,15 +45,15 @@ export class AdminComponent {
   hasUnreviewedComments = {};
 
   public adminForm = this._fb.group({
-      authorName: ["", Validators.compose([Validators.required, Validators.maxLength(25), Validators.minLength(3)])],
-      blogName: ["", Validators.compose([Validators.required, Validators.maxLength(15), Validators.minLength(3)])],
-      heading: ["", Validators.compose([Validators.required, Validators.maxLength(25), Validators.minLength(3)])],
-      subheading: ["", Validators.compose([Validators.required, Validators.maxLength(45), Validators.minLength(3)])],
-      key: ["", Validators.compose([Validators.required, Validators.maxLength(8), Validators.minLength(4)])],
+      authorName: ["", Validators.compose([Validators.required, Validators.maxLength(this.lengths.authorName.max), Validators.minLength(this.lengths.authorName.min)])],
+      blogName: ["", Validators.compose([Validators.required, Validators.maxLength(this.lengths.blogName.max), Validators.minLength(this.lengths.blogName.min)])],
+      heading: ["", Validators.compose([Validators.required, Validators.maxLength(this.lengths.heading.max), Validators.minLength(this.lengths.heading.min)])],
+      subheading: ["", Validators.compose([Validators.required, Validators.maxLength(this.lengths.subheading.max), Validators.minLength(this.lengths.subheading.min)])],
+      key: ["", Validators.compose([Validators.required, Validators.maxLength(this.lengths.key.max), Validators.minLength(this.lengths.key.min)])],
   });
 
   public manageArticlesForm = this._fb.group({
-     key: ["", Validators.compose([Validators.required, Validators.maxLength(8), Validators.minLength(4)])],
+     key: ["", Validators.compose([Validators.required, Validators.maxLength(this.lengths.key.max), Validators.minLength(this.lengths.key.min)])],
   });
 
   constructor(private _fb: FormBuilder, private _api : ApiService, private _sanitizer : DomSanitizer, private _http : Http){

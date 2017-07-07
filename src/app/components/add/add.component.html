@@ -40,7 +40,7 @@
 								<div class="form-group">
 									<label for="title">Title <span class="text-warning"><strong>*</strong></span></label>
 									<input type="text" class="form-control" formControlName="title" name="title" aria-describedby="title" placeholder="Article title" [(ngModel)] = "articleTitle">
-									<small class="form-text text-muted">Used {{ articleTitle | limitCharsForInput: '55' }} characters</small>
+									<small class="form-text text-muted">Used {{ articleTitle | limitCharsForInput: lengths.articleTitle.max }} characters</small>
 									<div class="alert alert-danger" *ngIf="articleForm.controls['title'].hasError('required') && articleForm.controls['title'].touched">You must enter a title.</div>
 									<div class="alert alert-danger" *ngIf="articleForm.controls['title'].hasError('maxlength') && articleForm.controls['title'].touched">Length limit exceeded.</div>
 									<div class="alert alert-danger" *ngIf="articleForm.controls['title'].hasError('minlength') && articleForm.controls['title'].touched">Add more characters.</div>
@@ -50,7 +50,7 @@
 								<div class="form-group">
 									<label for="article">Article introduction <span class="text-warning"><strong>*</strong></span></label>
 									<textarea class="form-control" formControlName="introduction" name="articleIntroduction" rows="4" [(ngModel)] = "articleIntroduction"></textarea>
-									<small class="form-text text-muted">Used {{ articleIntroduction | limitCharsForInput: '400' }} characters</small>
+									<small class="form-text text-muted">Used {{ articleIntroduction | limitCharsForInput: lengths.articleIntroduction.max }} characters</small>
 									<div class="alert alert-danger" *ngIf="articleForm.controls['introduction'].hasError('required') && articleForm.controls['introduction'].touched">You must enter an introduction.</div>
 									<div class="alert alert-danger" *ngIf="articleForm.controls['introduction'].hasError('maxlength') && articleForm.controls['introduction'].touched">Length limit exceeded.</div>
 									<div class="alert alert-danger" *ngIf="articleForm.controls['introduction'].hasError('minlength') && articleForm.controls['introduction'].touched">Add more characters.</div>

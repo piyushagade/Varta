@@ -28,6 +28,7 @@ export class ArticlesComponent {
   dirs = config.constants.dirs;
   admin = config.constants.admin;
   parameters = config.constants.parameters;
+  lengths = config.constants.parameters.lengths;
   username;
   userAlreadyExists;
   user = {};
@@ -35,7 +36,7 @@ export class ArticlesComponent {
   showSpinner = true;
 
   public searchForm = this._fb.group({
-      searchString: ["", Validators.compose([Validators.required, Validators.maxLength(100), Validators.minLength(2)])]
+      searchString: ["", Validators.compose([Validators.required, Validators.maxLength(this.lengths.search.max), Validators.minLength(this.lengths.search.min)])]
   });
 
   constructor(private _r: Router, private _api : ApiService, private _fb : FormBuilder){
@@ -113,5 +114,12 @@ export class ArticlesComponent {
          this.showSpinner = false;
       });
     }
+  }
+  
+  // Search articles
+  searchArticles(){
+    // Change route
+    if(this.searchForm.value.searchString && this.searchForm.value.searchString.length != 0)
+      this._r.navigateByUrl('/' + this.username + '/search/' + this.searchForm.value.searchString);
   }
 }

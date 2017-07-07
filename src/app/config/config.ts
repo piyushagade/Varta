@@ -4,6 +4,43 @@ export const constants = {
         heading : 'Write about something you love',
         subheading : 'This is my blog\'s slogan',
         maxNoOfThumbnails : 4, 
+        lengths : {
+          blogName: {
+            min: 3,
+            max: 15
+          },
+          authorName: {
+            min: 3,
+            max: 25
+          },
+          heading: {
+            min: 3,
+            max: 35
+          },
+          subheading: {
+            min: 3,
+            max: 45
+          },
+          key: {
+            min: 4,
+            max: 8
+          },
+          articleTitle: {
+            min: 6,
+            max: 55
+          },
+          articleIntroduction: {
+            min: 15,
+            max: 400
+          },
+          articleText: {
+            min: 20
+          },
+          search: {
+            min: 2,
+            max: 100
+          },
+        }
       },
       'admin' : {
         username : '',

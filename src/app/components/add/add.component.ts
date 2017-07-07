@@ -24,6 +24,7 @@ export class AddComponent {
   category = 'Journal';
   articleText;
   gallery = config.constants.gallery;
+  lengths = config.constants.parameters.lengths;
   imageGallery;
   galleryVisible = true;
   previewVisible = false;
@@ -33,10 +34,10 @@ export class AddComponent {
   isBusy = 0;
 
   public articleForm = this._fb.group({
-      title: ["", Validators.compose([Validators.required, Validators.maxLength(55), Validators.minLength(6)])],
-      introduction: ["", Validators.compose([Validators.required, Validators.maxLength(400), Validators.minLength(15)])],
-      text: ["", Validators.compose([Validators.required, Validators.minLength(20)])],
-      key: ["", Validators.compose([Validators.required, Validators.maxLength(8), Validators.minLength(4)])],
+      title: ["", Validators.compose([Validators.required, Validators.maxLength(this.lengths.articleTitle.max), Validators.minLength(this.lengths.articleTitle.min)])],
+      introduction: ["", Validators.compose([Validators.required, Validators.maxLength(this.lengths.articleIntroduction.max), Validators.minLength(this.lengths.articleIntroduction.min)])],
+      text: ["", Validators.compose([Validators.required, Validators.minLength(this.lengths.articleText.min)])],
+      key: ["", Validators.compose([Validators.required, Validators.maxLength(this.lengths.key.max), Validators.minLength(this.lengths.key.min)])],
       image: [""]
   });
 

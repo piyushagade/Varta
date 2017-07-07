@@ -9,7 +9,7 @@
 	<div class="fh5co-intro text-center">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-8 col-md-offset-2" *ngIf="isBusy != 0 || userAlreadyExists">
+				<div class="col-md-10 col-md-offset-1" *ngIf="isBusy != 0 || userAlreadyExists">
 					<h1 class="intro-lead" *ngIf="!userAlreadyExists">Ready to create your blog?</h1>
 					<h1 class="intro-lead" *ngIf="userAlreadyExists">{{ user.heading }}</h1>
 					<p *ngIf="!userAlreadyExists">Get started by creating a Varta account.</p>

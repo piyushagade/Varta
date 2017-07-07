@@ -28,6 +28,7 @@ export class SearchComponent {
   dirs = config.constants.dirs;
   admin = config.constants.admin;
   parameters = config.constants.parameters;
+  lengths = config.constants.parameters.lengths;
   username;
   userAlreadyExists;
   user = {};
@@ -36,7 +37,7 @@ export class SearchComponent {
   query;
 
   public searchForm = this._fb.group({
-      searchString: ["", Validators.compose([Validators.required, Validators.maxLength(1200), Validators.minLength(2)])],
+      searchString: ["", Validators.compose([Validators.required, Validators.maxLength(this.lengths.search.max), Validators.minLength(this.lengths.search.min)])],
   });
 
   constructor(private _r: Router, private _api : ApiService, private _fb : FormBuilder){
