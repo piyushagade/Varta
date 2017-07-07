@@ -1,13 +1,13 @@
 export const constants = {
       'parameters' : {
         blog : 'Varta',
-        heading : 'Make something you love',
+        heading : 'Write about something you love',
         subheading : 'This is my blog\'s slogan',
         maxNoOfThumbnails : 4, 
       },
       'admin' : {
-        username : 'piyushagade',
-        name : 'Piyush Agade',
+        username : '',
+        name : 'Anonymous',
         title : '',
         organization : '', 
       },

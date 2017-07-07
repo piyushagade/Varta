@@ -89,6 +89,7 @@ export class ArticleComponent {
     }
   }
 
+  // On comment submit by a user
   onCommentSubmit(){    
     let data = {
       comment : this.commentsForm.value.comment,

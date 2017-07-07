@@ -27,7 +27,7 @@ export class AddComponent {
   imageGallery;
   galleryVisible = true;
   previewVisible = false;
-  user = {};
+  user = { name : ''};
   accountAlreadyCreated = false;
   showSpinner = true;
   isBusy = 0;
@@ -81,7 +81,7 @@ export class AddComponent {
     
     // Add some more information
     data.link = '/' + data.title.toLowerCase().replace(/\s/g, "-");    
-    data.author = this.username;
+    data.author = this.user.name == '' || !(this.user.name) ? 'Anonymous' : this.user.name;
     data.date = new Date().getTime();
     data.category = this.category;
     data.published = true;

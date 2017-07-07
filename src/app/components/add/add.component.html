@@ -11,7 +11,8 @@
 			<div class="container-fluid text-center card-heading">
 				<div class="col-md-8 col-md-offset-2" *ngIf="accountAlreadyCreated">
 					<h1 class="intro-lead">Add an article</h1>
-					<p class="">Author: <a *ngIf="user.name == '' || !(user.name)" target="_blank">Anonymous</a><a *ngIf="user.name != ''">{{ user.name }}</a></p>
+					<p class="">Author: <a *ngIf="user.name == '' || !(user.name)" target="_blank">Anonymous</a>
+					<a *ngIf="user.name != ''">{{ user.name }}</a></p>
 				</div>
 
 				<div class="col-md-8 col-md-offset-2" *ngIf="!accountAlreadyCreated">
@@ -138,11 +139,14 @@
 										<a class="dropdown-item" (click)="selectCategory('Travel')">Travel</a>
 										<a class="dropdown-item" (click)="selectCategory('Food')">Food</a>
 										<a class="dropdown-item" (click)="selectCategory('Academics')">Academics</a>
+										<a class="dropdown-item" (click)="selectCategory('How-to')">How-to</a>
 										<a class="dropdown-item" (click)="selectCategory('Fitness')">Fitness</a>
+										<a class="dropdown-item" (click)="selectCategory('Lifestyle')">Lifestyle</a>
+										<a class="dropdown-item" (click)="selectCategory('Fashion')">Fashion</a>
 										<a class="dropdown-item" (click)="selectCategory('Sports')">Sports</a>
 										<a class="dropdown-item" (click)="selectCategory('Skills')">Skills</a>
 										<a class="dropdown-item" (click)="selectCategory('Entertainment')">Entertainment</a>
-										<a class="dropdown-item" (click)="selectCategory('How-to')">How-to</a>
+										<a class="dropdown-item" (click)="selectCategory('Music')">Music</a>
 									</div>
 								</div>
 

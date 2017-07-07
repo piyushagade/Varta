@@ -5,10 +5,6 @@ export const menuItems = {
         link : '/home'
       },
       { 
-        title : 'All Articles',
-        link : '/all'
-      },
-      { 
         title : 'Add Article',
         link : 'add'
       },
