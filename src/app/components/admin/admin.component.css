@@ -100,7 +100,7 @@
 .buttons{
     width: 100%;
     position: relative;
-    margin: 6px 0 0 6px; 
+    margin: 0px 0 0 6px; 
     padding: 0;
     display: inline-block;
     cursor: pointer;
@@ -136,7 +136,6 @@
 	display: inline-flex;
 	word-wrap: break-word;
     border-bottom: 4px solid #42a5f5;
-    height: 180px;
 }
 
 .buttons-li-delete{
@@ -146,7 +145,6 @@
 	display: inline-flex;
 	word-wrap: break-word;
     border-bottom: 4px solid #f00;
-    height: 180px;
 }
 
 .unpublished{
