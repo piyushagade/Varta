@@ -161,7 +161,7 @@
 
 									<!--Action icons-->
 									<div class="buttons text-right">
-										<i class="material-icons button" [routerLink]="'/' + username + '/' + article.link" target="_new">open_in_new</i>
+										<a [href]="'/' + username + article.link" target="_blank"><i class="material-icons button">open_in_new</i></a>
 										<!--<i class="material-icons button" (click)="editArticle(article.link)">mode_edit</i>-->
 										<i class="material-icons button" (click)="showComments(article.link)">comment<div *ngIf="hasUnreviewedComments[i]" class="dot"></div></i>
 										<i class="material-icons button" (click)="publishArticle(article._id)" *ngIf="!article.published">cloud_queue</i>
@@ -179,7 +179,7 @@
 						<ul class="comments-ul" *ngFor="let article of manageCommentsArticle; let i = index">
 							<!--Data-->
 							<hr/>
-							<div class="text-right" style="position: absolute; top: 80px; right: 60px;">
+							<div class="text-right" style="position: absolute; right: 60px;">
 								<i (click)="refreshComments(article.link)" class="material-icons" style="cursor: pointer; margin-right: 14px;">cached</i>
 								<i (click)="showComments('hide')" class="material-icons" style="cursor: pointer;">close</i>
 							</div>
@@ -208,8 +208,8 @@
 
 
 					<div class="col-md-10 col-md-offset-1 text-left" *ngIf="showArticles">
-						<hr/>
-						<h3 style="margin-top: 40px;">Your data and account </h3>
+						<hr style="margin-top: 60px;"/>
+						<h3 style="margin-top: 20px;">Your data and account </h3>
 						<p>
 							You can make a backup and store it locally, so that you could restore your articles in case of an accidental delete.<br/>
 							You can also permenantly delete your account. Your articles won't be deleted, but no one will able to access those either.
