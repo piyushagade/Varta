@@ -221,7 +221,7 @@
 
 					<ul class="buttons-ul">
 						<!--Backup articles-->
-						<li class="buttons-li-backup" *ngIf="!adminAuthenticated || allArticles.length != 0">
+						<li class="buttons-li-backup">
 							<div class="buttons-div">
 								<!--Data-->
 								Backup/Upload your data
@@ -232,7 +232,7 @@
 
 								<!--Action icons-->
 								<div class="buttons">
-									<input type="file" name="file-4[]" id="file-4" (change)="fileChange($event)" class="inputfile inputfile-3" data-multiple-caption="{count} file loaded" />
+									<input type="file" name="file-4[]" id="file-4" (change)="fileChange($event)" class="inputfile inputfile-3" data-multiple-caption="{count} file loaded" accept=".json" />
 									<label *ngIf="!fileSelected" for="file-4"><span>Choose a file&hellip;</span></label>
 									<label *ngIf="fileSelected" for="file-4"><span>Choose another file&hellip;</span></label>
 
