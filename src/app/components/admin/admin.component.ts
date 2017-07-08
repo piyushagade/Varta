@@ -43,6 +43,10 @@ export class AdminComponent {
   backup_uri;
   today;
   hasUnreviewedComments = {};
+  fileSelected = false;
+  fileToBeUploaded;
+  fileUploaded = false;
+  fileUploadError = false;
 
   public adminForm = this._fb.group({
       authorName: ["", Validators.compose([Validators.required, Validators.maxLength(this.lengths.authorName.max), Validators.minLength(this.lengths.authorName.min)])],
@@ -388,46 +392,76 @@ export class AdminComponent {
       } 
     )
   }
-
-  uploadArticlesData(value){
-    console.log(value);
-    
-  }
-
   // Sanitize URL
     sanitize(url:string){
       return this._sanitizer.bypassSecurityTrustUrl(url);
   }
 
   
-fileChange(event) {
-    let fileList: FileList = event.target.files;
+  fileChange(event) {
+    // Set file selected
+    this.fileSelected = true;
 
-    if(fileList.length > 0) {
-      let files = event.target.files;
-      if (files.length > 0) {
-        let data: FormData = new FormData();
-        for (let file of files) {
-          data.append('files', file, file.name);
-          console.log(file);
+    this.fileToBeUploaded = event.target.files; // FileList object
+  }
+
+  uploadFile(){
+    var self = this;
+    let files = this.fileToBeUploaded;
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    for (var i = 0, f; f = files[i]; i++) {
+      var reader = new FileReader();
+
+      // Closure to capture the file information.
+      reader.onload = (function (theFile) {
+        return function (e) {
+          try {
+            let data = JSON.parse(e.target.result);
+            
+            data = {
+              data : data,
+              username : self.username,
+            }
+
+            // Upload to server
+            self._api.uploadBackupFile(data).subscribe(
+              res => {
+                
+                if(JSON.parse(res['_body']).status == 'success'){
+                  self.fileUploaded = true;
+                  self.fileUploadError = false;
+
+                  let timer = Observable.timer(1200);
+                  timer.subscribe(
+                    t => {
+                    self.fileUploaded = false;
+                  });
+
+                  // Get articles
+                  self.getArticles();
+                }
+                else if(JSON.parse(res['_body']).status == 'not-found'){
+                  self.fileUploaded = false;
+                  self.fileUploadError = true;
+
+                  let timer = Observable.timer(1200);
+                  timer.subscribe(
+                    t => {
+                    self.fileUploadError = false;
+                  });
+                }
+              });
+
+          } catch (ex) {
+            console.log("Error reding the file uploaded. " + ex);
+          }
         }
+      })(f);
 
-        
-          
-
-        // let headers = new Headers();
-        // headers.append('Content-Type', 'multipart/form-data');
-        // headers.append('Accept', 'application/json');
-        // let options = new RequestOptions({ headers: headers });
-        // this._http.post(`${this.apiEndPoint}`, formData, options)
-        //     .map(res => res.json())
-        //     .catch(error => Observable.throw(error))
-        //     .subscribe(
-        //         data => console.log('success'),
-        //         error => console.log(error)
-        //     )
-      }
+      reader.readAsText(f);
     }
+    
   }
 
   deleteAccount(){

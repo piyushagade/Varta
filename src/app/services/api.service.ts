@@ -220,4 +220,15 @@ export class ApiService{
                 return Observable.throw(error)
             });
     }
+
+    // Upload backed up data
+    uploadBackupFile(data){
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        return this._http.post(config.constants.server.url + ':' + config.constants.server.port + "/user/upload/", data, { 
+            headers: headers
+        })
+    }
+
 }
