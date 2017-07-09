@@ -20,10 +20,11 @@
 	</div>
 
 	<!--Thumbnails-->
-	<div id="fh5co-articles" style="margin: 0px;">
+
+	<!--Home page search box-->
+	<div id="fh5co-articles" style="margin: 0px;"  *ngIf="!noArticles">
 		<div class="fh5co-articles-item fh5co-img-right">
 			
-			<!--Home page search box-->
 			<div class="fh5co-articles-description animate-box-disabled"  style="background: #fff;">
 				<h2>Hey there!</h2>
 				<p>
@@ -45,6 +46,7 @@
 		</div>
 	</div>
 
+	<!--Articles-->
 	<div id="fh5co-articles">
 		<!--If articles present-->
 		<div *ngFor='let article of blog; let i = index;'>
