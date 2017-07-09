@@ -175,20 +175,25 @@
 
 
 				<!--Manage comments panel-->
-				<div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 text-left" *ngIf="commentsVisible">
+				<div class="col-xs-12 col-sm-12 col-md-10 col-md-offset-1 text-left" *ngIf="commentsVisible">
 					<ul class="comments-ul" *ngFor="let article of manageCommentsArticle; let i = index">
 						<!--Data-->
 						<hr/>
+						
+						<!--Buttons-->
 						<div class="text-right" style="position: absolute; right: 60px;">
 							<i (click)="refreshComments(article.link)" class="material-icons" style="cursor: pointer; margin-right: 14px;">cached</i>
 							<i (click)="showComments('hide')" class="material-icons" style="cursor: pointer;">close</i>
 						</div>
+
+						<br/>
 
 						<small> Manage comments for </small><br/>
 						<h3>{{ article.title }}</h3>
 						<p *ngIf="article.comments.all.length != 0">Click on a comment to toggle between 'Published' and 'Unpublished' state.</p>
 						<p *ngIf="article.comments.all.length == 0">This article has no comments yet.</p>
 						
+						<!--Each comment-->
 						<li class="comments-li" *ngFor="let comment of article.comments.all; let j = index">
 							<div class="comments-div" [ngClass]="{ 'published-comment' : comment.published, 'unpublished-comment' : !comment.published }">
 								<span class="roboto"> {{ comment.published ? (comment.text | limitChars : 60) : comment.text }} </span>
