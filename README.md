@@ -13,4 +13,4 @@ To make a Varta blog for yourself, perform the following steps:
 
 
 ## See it in action
-<a href="varta.us/piyushagade/" target="_blank">Example blog</a>
+<a href="http://varta.us/piyushagade/" target="_blank">Example blog</a>
